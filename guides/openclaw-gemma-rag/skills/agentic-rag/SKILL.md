@@ -48,4 +48,4 @@ Set in `~/.openclaw/openclaw.json` under `skills.entries.agentic-rag.env` or exp
 
 - RAG calls can take **1–10+ minutes** on a laptop (CrewAI + local LLM). Do not retry aggressively.
 - After RAG returns, you may **shorten or reformat** the answer for the channel (Telegram/WhatsApp) but preserve factual content.
-- OpenClaw's chat model (e.g. `gemma4:e2b`) handles conversation; the RAG crew uses its own Ollama model from `guides/qwen-agentic-rag/.env` — both can run on the same Ollama daemon with different tags.
+- OpenClaw chat and the RAG crew both use `gemma4:e2b` via `guides/qwen-agentic-rag/.env` (`env.rag.example`).

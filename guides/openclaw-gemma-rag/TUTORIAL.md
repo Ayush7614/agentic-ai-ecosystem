@@ -9,7 +9,7 @@ Build a **personal AI assistant** that answers on Telegram/WhatsApp/CLI using **
 3. **agentic-rag skill** — shells out to `rag_query.sh` → `POST /predict` on LitServe
 4. **qwen-agentic-rag** — CrewAI Researcher + Writer + Qdrant (and optional Firecrawl)
 
-Two models can share one Ollama instance with different tags; on **16GB RAM**, prefer **Gemma for chat** and a **small tag for the RAG crew** (`qwen3.5:0.8b`).
+This integration uses **one Ollama model everywhere**: `gemma4:e2b` for OpenClaw chat and for the CrewAI RAG agents.
 
 ---
 
@@ -17,7 +17,7 @@ Two models can share one Ollama instance with different tags; on **16GB RAM**, p
 
 | Requirement | Check |
 |-------------|--------|
-| Node 24 (or 22.19+) | `node -v` |
+| Node **22.12+** or **24** (OpenClaw will not run on Node 20) | `node -v` |
 | Ollama | `ollama -v` |
 | Python 3.10+ | `python3 --version` |
 | curl + jq | `curl --version` && `jq --version` |
@@ -30,8 +30,12 @@ Two models can share one Ollama instance with different tags; on **16GB RAM**, p
 If you already finished the [Qwen Agentic RAG tutorial](https://ayush7614.github.io/agentic-ai-ecosystem/guides/qwen-agentic-rag/tutorial/), start the server only:
 
 ```bash
+ollama pull gemma4:e2b
 cd guides/qwen-agentic-rag
 source .venv/bin/activate
+cp ../openclaw-gemma-rag/env.rag.example .env   # sets OLLAMA_MODEL=ollama/gemma4:e2b
+# First time only:
+# pip install -r requirements.txt && python setup_vectordb.py
 python server.py
 ```
 
@@ -63,6 +67,22 @@ Recommended sampling (Ollama may already apply defaults): `temperature=1`, `top_
 ---
 
 ## Part 3 — Install OpenClaw
+
+### Node version (required)
+
+OpenClaw needs **Node >= 22.12**. If `node -v` shows v20, switch with nvm (you may already have 22 installed):
+
+```bash
+cd guides/openclaw-gemma-rag
+source ./use-node22.sh   # uses .nvmrc → 22.22.3
+node -v                # must be v22.12.0 or higher
+```
+
+Optional — make Node 22 the default in new terminals:
+
+```bash
+nvm alias default 22
+```
 
 ```bash
 npm install -g openclaw@latest
@@ -153,7 +173,7 @@ The skill teaches OpenClaw to run:
 ~/.openclaw/workspace/skills/agentic-rag/scripts/rag_query.sh "user question"
 ```
 
-That POSTs to LitServe and prints the crew answer. The **Gemma** model decides *when* to use the skill; the **RAG crew** uses `OLLAMA_MODEL` from `guides/qwen-agentic-rag/.env`.
+That POSTs to LitServe and prints the crew answer. The **Gemma** model decides *when* to use the skill; the **RAG crew** uses the same `OLLAMA_MODEL=ollama/gemma4:e2b` from `guides/qwen-agentic-rag/.env` (see `env.rag.example`).
 
 ---
 
@@ -217,7 +237,8 @@ Channel docs: [OpenClaw Channels](https://docs.openclaw.ai/).
 | OpenClaw ignores RAG | Confirm skill installed, `enabled: true`, gateway restarted; ask explicitly to "use agentic RAG" |
 | `ollama/gemma4:e2b` not found | `ollama pull gemma4:e2b`; check `openclaw models list` |
 | Tool calling errors | Ensure `api: "ollama"` and no `/v1` on baseUrl |
-| OOM on 16GB Mac | Use `qwen3.5:0.8b` for RAG only; stop other Ollama models between tests |
+| `openclaw requires Node >=22.12.0` | Run `source guides/openclaw-gemma-rag/use-node22.sh` or `nvm use 22` before any `openclaw` command |
+| OOM on 16GB Mac | Only run `gemma4:e2b`; quit other Ollama models (`ollama ps`) |
 | Skill `curl` fails | `brew install jq` or apt install jq |
 
 ---
@@ -235,7 +256,7 @@ Channel docs: [OpenClaw Channels](https://docs.openclaw.ai/).
 
 | Component | You run |
 |-----------|---------|
-| Ollama | `gemma4:e2b` + RAG model tag |
+| Ollama | `gemma4:e2b` (chat + RAG) |
 | RAG | `guides/qwen-agentic-rag/server.py` |
 | OpenClaw | `openclaw gateway` (daemon) |
 | Skill | `agentic-rag` → `rag_query.sh` → `/predict` |

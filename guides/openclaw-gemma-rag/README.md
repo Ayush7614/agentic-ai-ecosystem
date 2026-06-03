@@ -17,7 +17,7 @@ flowchart TB
     end
     subgraph ollama [Ollama]
         G[gemma4:e2b]
-        Q[qwen3.5:0.8b or other RAG model]
+        Q[gemma4:e2b]
     end
     subgraph rag [guides/qwen-agentic-rag]
         API[LitServe :8001]
@@ -39,7 +39,7 @@ flowchart TB
 | **OpenClaw** | Channels, sessions, tools, skills, daemon |
 | **gemma4:e2b** | Fast local chat + tool planning (~7GB) |
 | **agentic-rag skill** | Calls your LitServe `/predict` endpoint |
-| **qwen-agentic-rag** | Two-agent RAG API (separate Ollama model tag is fine) |
+| **qwen-agentic-rag** | Two-agent RAG API (same `gemma4:e2b` via `.env`) |
 
 ## Prerequisites
 
@@ -56,8 +56,8 @@ flowchart TB
 cd guides/qwen-agentic-rag
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env
-ollama pull qwen3.5:0.8b   # RAG crew model; 16GB Mac-friendly
+ollama pull gemma4:e2b
+cp ../openclaw-gemma-rag/env.rag.example .env   # OLLAMA_MODEL=ollama/gemma4:e2b
 python setup_vectordb.py   # once
 python server.py           # default http://127.0.0.1:8001
 ```
@@ -65,6 +65,7 @@ python server.py           # default http://127.0.0.1:8001
 ### 2. OpenClaw + Gemma (terminal B)
 
 ```bash
+cd guides/openclaw-gemma-rag && source ./use-node22.sh   # Node 22+ required
 ollama pull gemma4:e2b
 npm install -g openclaw@latest
 openclaw onboard --install-daemon
@@ -97,6 +98,9 @@ openclaw agent --message "What is cross-validation? Use the knowledge base if he
 | `skills/agentic-rag/SKILL.md` | OpenClaw skill instructions |
 | `skills/agentic-rag/scripts/rag_query.sh` | POST query to LitServe |
 | `install-skill.sh` | Copy skill into `~/.openclaw/workspace/skills/` |
+| `use-node22.sh` / `.nvmrc` | Switch to Node 22+ for OpenClaw CLI |
+| `env.rag.example` | Gemma `.env` for the RAG crew |
+| `test-local.sh` | Smoke test: Ollama, RAG API, skill scripts |
 | `config/openclaw.snippet.json5` | Model + skill env sample config |
 | `TUTORIAL.md` | Full setup (channels, security, troubleshooting) |
 
@@ -106,9 +110,9 @@ See [TUTORIAL.md](./TUTORIAL.md).
 
 ## Hardware (16GB Mac)
 
-- **OpenClaw chat:** `gemma4:e2b` (~7.2GB quantized)
-- **RAG crew:** `qwen3.5:0.8b` (or `gemma4:e2b` if you accept serial loading — not both loaded at once on 16GB)
-- Run one heavy Ollama model at a time, or set `keep_alive` lower on the smaller tag
+- This guide uses **one model**: `gemma4:e2b` (~7.2GB) for OpenClaw and the RAG crew
+- Ollama loads it once; both layers share the same tag
+- Close other apps during crew runs; first RAG answer can take several minutes
 
 ## Docs
 

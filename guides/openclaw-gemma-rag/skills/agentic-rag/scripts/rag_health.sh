@@ -6,9 +6,7 @@ BASE="${RAG_API_URL:-http://127.0.0.1:8001}"
 BASE="${BASE%/}"
 
 if curl -sS -o /dev/null -w "%{http_code}" --max-time 5 \
-  -X POST "${BASE}/predict" \
-  -H 'Content-Type: application/json' \
-  -d '{"query":"health"}' | grep -qE '^(200|422|400)$'; then
+  "${BASE}/" | grep -qE '^(200|404)$'; then
   echo "ok: RAG API reachable at ${BASE}"
   exit 0
 fi
