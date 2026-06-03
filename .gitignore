@@ -17,3 +17,7 @@ venv/
 
 # Logs
 *.log
+
+# MkDocs build output
+site/
+docs/guides/**/assets/

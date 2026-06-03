@@ -1,0 +1,67 @@
+site_name: Agentic AI Ecosystem
+site_description: Hands-on guides for local, private agentic AI — RAG, multi-agent crews, MCP, and production APIs.
+site_url: https://ayush7614.github.io/agentic-ai-ecosystem/
+repo_url: https://github.com/Ayush7614/agentic-ai-ecosystem
+repo_name: Ayush7614/agentic-ai-ecosystem
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: deep purple
+      accent: amber
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep purple
+      accent: amber
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - content.code.copy
+    - content.action.edit
+
+plugins:
+  - search
+  - include-markdown:
+      rewrite_relative_urls: true
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Guides:
+    - Qwen Agentic RAG:
+      - Overview: guides/qwen-agentic-rag/index.md
+      - Full tutorial: guides/qwen-agentic-rag/tutorial.md
+  - Publishing: publishing.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/Ayush7614/agentic-ai-ecosystem

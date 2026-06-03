@@ -1,0 +1,34 @@
+# Agentic AI Ecosystem
+
+Hands-on guides for building **local, private agentic AI** systems — RAG, multi-agent crews, MCP tooling, and production-style APIs.
+
+Maintained by [Ayush Kumar](https://github.com/Ayush7614) · [NeuralVerse](https://neural-verse-peach.vercel.app/) · [Portfolio](https://ayushbuilds-dev.vercel.app/)
+
+## Guides
+
+| Guide | What you'll build |
+|-------|-------------------|
+| [Qwen Agentic RAG](guides/qwen-agentic-rag/index.md) | Private two-agent RAG API with Qwen (Ollama), CrewAI, Qdrant, Firecrawl, LitServe, and Gradio |
+
+Each guide is a self-contained project under `guides/<name>/` in the repo. The site pages mirror those READMEs and tutorials so you can read online without cloning.
+
+## Run locally (any guide)
+
+```bash
+git clone https://github.com/Ayush7614/agentic-ai-ecosystem.git
+cd agentic-ai-ecosystem/guides/<guide-name>
+python -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env
+# Follow the guide README on GitHub or the tutorial page here
+```
+
+## Add a new guide
+
+1. Create `guides/<your-guide-name>/` with `README.md`, `requirements.txt`, and `.env.example`.
+2. Add docs pages under `docs/guides/<your-guide-name>/` (see [Publishing](publishing.md)).
+3. Add a row to the table above and an entry in `mkdocs.yml` → `nav`.
+
+## License
+
+MIT — see [LICENSE](https://github.com/Ayush7614/agentic-ai-ecosystem/blob/main/LICENSE).

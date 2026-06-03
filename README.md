@@ -4,11 +4,13 @@ Hands-on guides for building **local, private agentic AI** systems — RAG, mult
 
 Maintained by [Ayush Kumar](https://github.com/Ayush7614) · [NeuralVerse](https://neural-verse-peach.vercel.app/) · [Portfolio](https://ayushbuilds-dev.vercel.app/)
 
+**Read the guides online:** [ayush7614.github.io/agentic-ai-ecosystem](https://ayush7614.github.io/agentic-ai-ecosystem/)
+
 ## Guides
 
 | Guide | Stack | Description |
 |-------|--------|-------------|
-| [qwen-agentic-rag](./guides/qwen-agentic-rag/) | Qwen (Ollama) · CrewAI · Qdrant · Firecrawl · LitServe · Gradio | Private two-agent RAG API with vector DB + optional web search |
+| [qwen-agentic-rag](./guides/qwen-agentic-rag/) · [blog](https://ayush7614.github.io/agentic-ai-ecosystem/guides/qwen-agentic-rag/) | Qwen (Ollama) · CrewAI · Qdrant · Firecrawl · LitServe · Gradio | Private two-agent RAG API with vector DB + optional web search |
 
 ## Quick start (any guide)
 
@@ -24,8 +26,9 @@ cp .env.example .env
 ## Adding a new guide
 
 1. Create `guides/<your-guide-name>/` with its own `README.md`, `requirements.txt`, and `.env.example`.
-2. Add a row to the table above.
-3. Open a PR or push to `main`.
+2. Add MkDocs pages under `docs/guides/<your-guide-name>/` and an entry in `mkdocs.yml` (see [docs/publishing.md](./docs/publishing.md)).
+3. Add a row to the table above.
+4. Push to `main` — GitHub Actions publishes the site automatically.
 
 ## License
 
