@@ -6,7 +6,7 @@ Part of the [Agentic AI Ecosystem](https://github.com/Ayush7614/agentic-ai-ecosy
 
 ## Architecture
 
-![Agentic RAG workflow — Retriever and Writer agents, Qdrant, Firecrawl, LitServe](./assets/agentic-rag-workflow.png)
+![Agentic RAG workflow — animated](./assets/agentic-rag-workflow.gif)
 
 1. User query hits the **LitServe** API  
 2. **Retriever** agent chooses **Qdrant** (ML FAQ) or **Firecrawl** (web)  
