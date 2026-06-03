@@ -11,6 +11,7 @@ Maintained by [Ayush Kumar](https://github.com/Ayush7614) · [NeuralVerse](https
 | Guide | Stack | Description |
 |-------|--------|-------------|
 | [qwen-agentic-rag](./guides/qwen-agentic-rag/) · [blog](https://ayush7614.github.io/agentic-ai-ecosystem/guides/qwen-agentic-rag/) | Qwen (Ollama) · CrewAI · Qdrant · Firecrawl · LitServe · Gradio | Private two-agent RAG API with vector DB + optional web search |
+| [openclaw-gemma-rag](./guides/openclaw-gemma-rag/) · [blog](https://ayush7614.github.io/agentic-ai-ecosystem/guides/openclaw-gemma-rag/) | OpenClaw · Gemma 4 E2B · RAG skill | Personal assistant on chat apps backed by local Agentic RAG |
 
 ## Quick start (any guide)
 

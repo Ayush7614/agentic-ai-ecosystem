@@ -1,4 +1,7 @@
 site_name: Agentic AI Ecosystem
+
+validation:
+  unrecognized_links: ignore
 site_description: Hands-on guides for local, private agentic AI — RAG, multi-agent crews, MCP, and production APIs.
 site_url: https://ayush7614.github.io/agentic-ai-ecosystem/
 repo_url: https://github.com/Ayush7614/agentic-ai-ecosystem
@@ -59,6 +62,9 @@ nav:
     - Qwen Agentic RAG:
       - Overview: guides/qwen-agentic-rag/index.md
       - Full tutorial: guides/qwen-agentic-rag/tutorial.md
+    - OpenClaw + Gemma + RAG:
+      - Overview: guides/openclaw-gemma-rag/index.md
+      - Full tutorial: guides/openclaw-gemma-rag/tutorial.md
   - Publishing: publishing.md
 
 extra:
