@@ -1,0 +1,47 @@
+// Merge into ~/.openclaw/openclaw.json (adjust paths and tokens as needed).
+{
+  // Primary chat brain — Gemma 4 edge model via local Ollama
+  agents: {
+    defaults: {
+      model: { primary: "ollama/gemma4:e2b" },
+      // Optional: only expose the RAG skill to the main agent
+      skills: ["agentic-rag"],
+    },
+  },
+
+  models: {
+    providers: {
+      ollama: {
+        apiKey: "ollama-local",
+        baseUrl: "http://127.0.0.1:11434",
+        api: "ollama",
+        timeoutSeconds: 300,
+        models: [
+          {
+            id: "gemma4:e2b",
+            name: "Gemma 4 E2B",
+            reasoning: true,
+            input: ["text", "image"],
+            contextWindow: 128000,
+            maxTokens: 8192,
+            params: { keep_alive: "15m" },
+          },
+        ],
+      },
+    },
+  },
+
+  skills: {
+    entries: {
+      "agentic-rag": {
+        enabled: true,
+        env: {
+          RAG_API_URL: "http://127.0.0.1:8001",
+        },
+      },
+    },
+  },
+
+  // Allow exec so the agent can run rag_query.sh (keep DM pairing on channels!)
+  // tools: { ... } — see OpenClaw Security docs before exposing gateway remotely
+}

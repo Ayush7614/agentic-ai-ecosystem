@@ -61,3 +61,7 @@ python ui.py   # http://127.0.0.1:7860
 ## Full tutorial
 
 See [TUTORIAL.md](./TUTORIAL.md) for the complete code walkthrough.
+
+## OpenClaw + Gemma integration
+
+Expose this API to Telegram/WhatsApp via OpenClaw and `gemma4:e2b`: [openclaw-gemma-rag](../openclaw-gemma-rag/).
