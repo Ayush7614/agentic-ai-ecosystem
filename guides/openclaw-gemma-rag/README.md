@@ -6,7 +6,25 @@ Part of the [Agentic AI Ecosystem](https://github.com/Ayush7614/agentic-ai-ecosy
 
 ## Architecture
 
-![OpenClaw + Gemma workflow — animated](./assets/openclaw-gemma-rag-workflow.gif)
+```mermaid
+flowchart LR
+    A[Channels] -->|user message| B[OpenClaw Gateway]
+    B -->|gemma4:e2b plans| C[agentic-rag skill]
+    C -->|rag_query.sh POST /predict| D[LitServe API]
+    D --> E[Researcher Agent]
+    E --> F[Vector DB Tool]
+    E --> G[Firecrawl Search]
+    E --> H[Writer Agent]
+    H --> I[JSON Response]
+    F --> J[(Qdrant)]
+    G --> K[Firecrawl API]
+    B --> L[(Ollama gemma4:e2b)]
+    E --> L
+    H --> L
+    I --> C
+    C --> B
+    B -->|reply| A
+```
 
 1. User messages **OpenClaw** on Telegram, WhatsApp, or CLI  
 2. **gemma4:e2b** handles chat and may invoke the **agentic-rag** skill  
@@ -20,6 +38,10 @@ Part of the [Agentic AI Ecosystem](https://github.com/Ayush7614/agentic-ai-ecosy
 | **gemma4:e2b** | Fast local chat + tool planning (~7GB) |
 | **agentic-rag skill** | Calls your LitServe `/predict` endpoint |
 | **qwen-agentic-rag** | Two-agent RAG API (same `gemma4:e2b` via `.env`) |
+
+## Animated workflow
+
+![OpenClaw + Gemma workflow — animated](./assets/openclaw-gemma-rag-workflow.gif)
 
 ## Prerequisites
 

@@ -11,6 +11,36 @@ Build a **personal AI assistant** that answers on Telegram/WhatsApp/CLI using **
 
 This integration uses **one Ollama model everywhere**: `gemma4:e2b` for OpenClaw chat and for the CrewAI RAG agents.
 
+## Architecture
+
+```mermaid
+flowchart LR
+    A[Channels] -->|user message| B[OpenClaw Gateway]
+    B -->|gemma4:e2b plans| C[agentic-rag skill]
+    C -->|rag_query.sh POST /predict| D[LitServe API]
+    D --> E[Researcher Agent]
+    E --> F[Vector DB Tool]
+    E --> G[Firecrawl Search]
+    E --> H[Writer Agent]
+    H --> I[JSON Response]
+    F --> J[(Qdrant)]
+    G --> K[Firecrawl API]
+    B --> L[(Ollama gemma4:e2b)]
+    E --> L
+    H --> L
+    I --> C
+    C --> B
+    B -->|reply| A
+```
+
+**Flow:**
+
+1. User messages OpenClaw on Telegram, WhatsApp, or CLI  
+2. **gemma4:e2b** decides whether to call the **agentic-rag** skill  
+3. Skill runs `rag_query.sh` → LitServe `POST /predict`  
+4. CrewAI **Researcher** picks Qdrant or Firecrawl; **Writer** drafts the answer  
+5. JSON returns through the skill → OpenClaw → the same channel  
+
 ---
 
 ## Prerequisites
