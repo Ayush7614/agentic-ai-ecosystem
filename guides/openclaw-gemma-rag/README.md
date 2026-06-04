@@ -6,33 +6,13 @@ Part of the [Agentic AI Ecosystem](https://github.com/Ayush7614/agentic-ai-ecosy
 
 ## Architecture
 
-```mermaid
-flowchart TB
-    subgraph channels [Channels]
-        TG[Telegram / WhatsApp / CLI]
-    end
-    subgraph openclaw [OpenClaw Gateway]
-        GW[Gateway + gemma4:e2b]
-        SK[agentic-rag skill]
-    end
-    subgraph ollama [Ollama]
-        G[gemma4:e2b]
-        Q[gemma4:e2b]
-    end
-    subgraph rag [guides/qwen-agentic-rag]
-        API[LitServe :8001]
-        CR[CrewAI Researcher + Writer]
-        QD[(Qdrant)]
-    end
+![OpenClaw + Gemma workflow — animated](./assets/openclaw-gemma-rag-workflow.gif)
 
-    TG --> GW
-    GW --> G
-    GW --> SK
-    SK -->|rag_query.sh| API
-    API --> CR
-    CR --> Q
-    CR --> QD
-```
+1. User messages **OpenClaw** on Telegram, WhatsApp, or CLI  
+2. **gemma4:e2b** handles chat and may invoke the **agentic-rag** skill  
+3. Skill runs `rag_query.sh` → **LitServe** `POST /predict` on port **8001**  
+4. **CrewAI** Researcher + Writer use **Qdrant** (and optional Firecrawl)  
+5. Answer returns through OpenClaw to the channel  
 
 | Layer | Role |
 |-------|------|
@@ -101,6 +81,8 @@ openclaw agent --message "What is cross-validation? Use the knowledge base if he
 | `use-node22.sh` / `.nvmrc` | Switch to Node 22+ for OpenClaw CLI |
 | `env.rag.example` | Gemma `.env` for the RAG crew |
 | `test-local.sh` | Smoke test: Ollama, RAG API, skill scripts |
+| `assets/openclaw-gemma-rag-workflow.gif` | Animated architecture diagram |
+| `assets/render_workflow_gif.py` | Regenerate GIF from HTML source |
 | `config/openclaw.snippet.json5` | Model + skill env sample config |
 | `TUTORIAL.md` | Full setup (channels, security, troubleshooting) |
 
