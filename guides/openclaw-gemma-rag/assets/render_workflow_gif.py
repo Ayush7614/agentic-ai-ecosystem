@@ -13,10 +13,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 HTML = ROOT / "openclaw-gemma-rag-workflow.html"
 DEFAULT_OUT = ROOT / "openclaw-gemma-rag-workflow.gif"
-WIDTH = 2200
-HEIGHT = 1414
 FPS = 12
 DURATION_S = 3.0
+DEVICE_SCALE = 2
 
 
 def _python() -> str:
@@ -43,12 +42,17 @@ def capture_frames(frames_dir: Path) -> int:
 
     with sync_playwright() as p:
         browser = p.chromium.launch()
-        page = browser.new_page(viewport={"width": WIDTH, "height": HEIGHT})
+        page = browser.new_page(
+            viewport={"width": 1200, "height": 900},
+            device_scale_factor=DEVICE_SCALE,
+        )
         page.goto(url, wait_until="networkidle")
+        capture = page.locator("#capture")
+        capture.wait_for(state="visible")
         page.wait_for_timeout(300)
 
         for i in range(frame_count):
-            page.screenshot(path=str(frames_dir / f"frame_{i:04d}.png"), type="png")
+            capture.screenshot(path=str(frames_dir / f"frame_{i:04d}.png"), type="png")
             page.wait_for_timeout(int(1000 / FPS))
 
         browser.close()
@@ -67,7 +71,7 @@ def build_gif(frames_dir: Path, out: Path, frame_count: int) -> None:
             "-i",
             str(frames_dir / "frame_%04d.png"),
             "-vf",
-            f"fps={FPS},scale={WIDTH}:{HEIGHT}:flags=lanczos,palettegen",
+            f"fps={FPS},palettegen",
             str(palette),
         ],
         stdout=subprocess.DEVNULL,
@@ -84,7 +88,7 @@ def build_gif(frames_dir: Path, out: Path, frame_count: int) -> None:
             "-i",
             str(palette),
             "-lavfi",
-            f"fps={FPS},scale={WIDTH}:{HEIGHT}:flags=lanczos[x];[x][1:v]paletteuse",
+            f"fps={FPS}[x];[x][1:v]paletteuse",
             "-loop",
             "0",
             str(out),
@@ -113,7 +117,13 @@ def main() -> None:
         n = capture_frames(frames_dir)
         build_gif(frames_dir, out, n)
 
-    print(f"Wrote {out} ({n} frames @ {FPS} fps)")
+    subprocess.run(
+        ["sips", "-g", "pixelWidth", "-g", "pixelHeight", str(out)],
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    print(f"Wrote {out} ({n} frames @ {FPS} fps, cropped to #capture)")
 
 
 if __name__ == "__main__":
