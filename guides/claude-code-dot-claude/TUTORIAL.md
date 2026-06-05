@@ -55,6 +55,28 @@ flowchart LR
 | Agents | On demand | User delegates or Claude spawns |
 | Hooks | Yes — around tool calls | `settings.json` → `hooks` |
 
+## Session workflow
+
+1. Developer runs `claude` in a configured repo  
+2. Memory + rules + permissions load automatically  
+3. Skills and agents handle specialized work on demand  
+4. Team shares the same `.claude/` tree via git  
+
+## Workflow diagram
+
+![Claude Code project workflow — animated](./assets/claude-code-workflow.gif)
+
+## Anatomy diagram
+
+![Anatomy of the .claude/ folder — animated](./assets/claude-folder-anatomy.gif)
+
+Regenerate assets after editing HTML:
+
+```bash
+cd guides/claude-code-dot-claude/assets
+python3 render_diagrams.py all
+```
+
 ---
 
 ## Prerequisites
