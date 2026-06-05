@@ -45,9 +45,21 @@ flowchart TB
 
 Official reference: [Explore the `.claude` directory](https://code.claude.com/docs/en/claude-directory).
 
+## Session workflow
+
+1. Developer starts **`claude`** in the project  
+2. **CLAUDE.md**, **rules/**, and **settings.json** load into the session  
+3. Permissions gate which tools can run  
+4. Claude invokes a **skill** (`/project:code-review`) or **agent** (isolated context)  
+5. Answer returns in the terminal  
+
+## Workflow diagram
+
+![Claude Code project workflow — animated](./assets/claude-code-workflow.gif)
+
 ## Anatomy diagram
 
-![Anatomy of the .claude/ folder](./assets/claude-folder-anatomy.png)
+![Anatomy of the .claude/ folder — animated](./assets/claude-folder-anatomy.gif)
 
 ## Quick start
 
@@ -74,7 +86,9 @@ Inside Claude Code:
 | `TUTORIAL.md` | Full step-by-step walkthrough |
 | `template/` | Copy-paste `.claude/` layout with working examples |
 | `install-template.sh` | Install template into any project directory |
-| `assets/claude-folder-anatomy.png` | Visual map of the folder |
+| `assets/claude-folder-anatomy.{html,gif,png}` | Hand-drawn anatomy diagram source + renders |
+| `assets/claude-code-workflow.{html,gif,png}` | Qwen-style session workflow source + renders |
+| `assets/render_diagrams.py` | Regenerate PNG/GIF from HTML |
 
 ## Full tutorial
 

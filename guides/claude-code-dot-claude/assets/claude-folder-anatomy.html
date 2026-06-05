@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Anatomy of the .claude/ folder</title>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Patrick+Hand&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #e8e4dc;
+      margin: 0;
+      padding: 20px;
+      font-family: "Patrick Hand", "Comic Sans MS", cursive;
+    }
+    #capture {
+      width: 1080px;
+      max-width: 100%;
+      background: #f5f0e6;
+      border-radius: 20px;
+      padding: 36px 40px 48px;
+      box-shadow: 0 12px 40px rgba(60, 40, 20, 0.15);
+      position: relative;
+      border: 3px solid #d4c4a8;
+    }
+    h1 {
+      font-family: "Caveat", cursive;
+      font-size: 42px;
+      font-weight: 700;
+      color: #2d2416;
+      margin-bottom: 28px;
+      line-height: 1.1;
+    }
+    .tree { font-size: 17px; color: #2d2416; line-height: 1.55; }
+    .tree .line { display: flex; align-items: flex-start; gap: 8px; margin: 2px 0; }
+    .indent-0 { padding-left: 0; }
+    .indent-1 { padding-left: 24px; }
+    .indent-2 { padding-left: 48px; }
+    .indent-3 { padding-left: 72px; }
+    .indent-4 { padding-left: 96px; }
+    .folder { color: #1e5a8a; font-weight: 700; }
+    .file { color: #2d2416; }
+    .local {
+      background: #fde8d0;
+      border-radius: 6px;
+      padding: 1px 8px;
+      display: inline-block;
+    }
+    .committed { color: #1a6b3c; font-size: 14px; }
+    .gitignored { color: #9a3412; font-size: 14px; }
+    .pill {
+      display: inline-block;
+      border-radius: 8px;
+      padding: 2px 10px;
+      font-size: 14px;
+      margin-left: 6px;
+      border: 2px solid;
+    }
+    .pill-blue { background: #dbeafe; border-color: #3b82f6; color: #1e40af; }
+    .pill-green { background: #d1fae5; border-color: #10b981; color: #065f46; }
+    .pill-purple { background: #ede9fe; border-color: #8b5cf6; color: #5b21b6; }
+    .pill-orange { background: #ffedd5; border-color: #f97316; color: #9a3412; }
+    .pill-pink { background: #fce7f3; border-color: #ec4899; color: #9d174d; }
+    .arrow { color: #6b5344; font-size: 15px; }
+    .icon { width: 22px; text-align: center; flex-shrink: 0; }
+    .callout {
+      position: absolute;
+      top: 28px;
+      right: 32px;
+      width: 200px;
+      text-align: center;
+    }
+    .callout svg { width: 72px; height: 72px; }
+    .callout-bubble {
+      background: #fff;
+      border: 2px solid #2d2416;
+      border-radius: 16px;
+      padding: 10px 14px;
+      font-family: "Caveat", cursive;
+      font-size: 20px;
+      font-weight: 700;
+      color: #2d2416;
+      margin-top: 8px;
+      position: relative;
+    }
+    .callout-bubble::after {
+      content: "";
+      position: absolute;
+      bottom: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 8px solid transparent;
+      border-top-color: #2d2416;
+    }
+    .footer {
+      margin-top: 32px;
+      font-family: "Caveat", cursive;
+      font-size: 26px;
+      font-weight: 700;
+      color: #4a3728;
+      text-align: center;
+      border-top: 2px dashed #c4b59a;
+      padding-top: 20px;
+    }
+    .github-badge {
+      position: absolute;
+      left: 28px;
+      bottom: 18px;
+      font-size: 12px;
+      color: #6b5344;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .github-badge span {
+      background: #fff;
+      border-radius: 8px;
+      padding: 4px 10px;
+      border: 2px solid #d4c4a8;
+      font-weight: 700;
+      color: #334155;
+    }
+    @keyframes highlight-pulse {
+      0%, 100% { opacity: 0.85; }
+      50% { opacity: 1; box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.25); }
+    }
+    .pulse { animation: highlight-pulse 2s ease-in-out infinite; border-radius: 8px; }
+  </style>
+</head>
+<body>
+  <div id="capture">
+    <h1>Anatomy of the <code style="font-size:0.92em">.claude/</code> folder</h1>
+
+    <div class="callout">
+      <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="40" cy="28" r="16" fill="#fcd9b6" stroke="#2d2416" stroke-width="2"/>
+        <path d="M20 72 Q40 52 60 72" fill="#fcd9b6" stroke="#2d2416" stroke-width="2"/>
+        <path d="M52 18 L58 8 L54 20 Z" fill="#2d2416"/>
+      </svg>
+      <div class="callout-bubble">commit <code>.claude/</code> to git</div>
+    </div>
+
+    <div class="tree">
+      <div class="line indent-0"><span class="icon">📁</span><span class="folder">your-project/</span></div>
+
+      <div class="line indent-1">
+        <span class="icon">📄</span>
+        <span class="file"><strong>CLAUDE.md</strong></span>
+        <span class="committed">↗ team instructions, committed</span>
+      </div>
+      <div class="line indent-1">
+        <span class="icon">📄</span>
+        <span class="file local"><strong>CLAUDE.local.md</strong></span>
+        <span class="gitignored">✗ personal overrides, gitignored</span>
+      </div>
+
+      <div class="line indent-1 pulse"><span class="icon">📁</span><span class="folder">.claude/</span> <span class="pill pill-blue">the control center</span></div>
+
+      <div class="line indent-2">
+        <span class="icon">⚙️</span>
+        <span class="file"><strong>settings.json</strong></span>
+        <span class="committed">permissions + config, committed</span>
+        <span class="pill pill-green">🛡 permissions</span>
+      </div>
+      <div class="line indent-2">
+        <span class="icon">⚙️</span>
+        <span class="file local"><strong>settings.local.json</strong></span>
+        <span class="gitignored">personal permissions, gitignored</span>
+      </div>
+
+      <div class="line indent-2">
+        <span class="icon">⌨️</span>
+        <span class="folder">commands/</span>
+        <span class="pill pill-orange">custom slash commands</span>
+      </div>
+      <div class="line indent-3"><span class="icon">📝</span><span class="file">review.md</span> <span class="arrow">→ /project:review</span></div>
+      <div class="line indent-3"><span class="icon">📝</span><span class="file">fix-issue.md</span> <span class="arrow">→ /project:fix-issue</span></div>
+      <div class="line indent-3"><span class="icon">📝</span><span class="file">deploy.md</span> <span class="arrow">→ /project:deploy</span></div>
+
+      <div class="line indent-2">
+        <span class="icon">📋</span>
+        <span class="folder">rules/</span>
+        <span class="pill pill-blue">modular instruction files</span>
+      </div>
+      <div class="line indent-3"><span class="icon">📄</span><span class="file">code-style.md</span></div>
+      <div class="line indent-3"><span class="icon">📄</span><span class="file">testing.md</span></div>
+      <div class="line indent-3"><span class="icon">📄</span><span class="file">api-conventions.md</span></div>
+
+      <div class="line indent-2">
+        <span class="icon">✨</span>
+        <span class="folder">skills/</span>
+        <span class="pill pill-purple">auto-invoked workflows</span>
+        <span class="pill pill-pink">⚡ auto</span>
+      </div>
+      <div class="line indent-3"><span class="icon">📁</span><span class="file">code-review/</span> <span class="arrow">→ SKILL.md</span></div>
+      <div class="line indent-3"><span class="icon">📁</span><span class="file">deploy/</span> <span class="arrow">→ SKILL.md</span></div>
+
+      <div class="line indent-2">
+        <span class="icon">🧠</span>
+        <span class="folder">agents/</span>
+        <span class="pill pill-purple">subagent personas</span>
+        <span class="pill pill-blue">💬 isolated</span>
+      </div>
+      <div class="line indent-3"><span class="icon">📄</span><span class="file">code-reviewer.md</span></div>
+      <div class="line indent-3"><span class="icon">📄</span><span class="file">security-auditor.md</span></div>
+    </div>
+
+    <div class="footer">Everything Claude needs to know about your project lives right here.</div>
+    <div class="github-badge"><span>claude-code-dot-claude</span> github.com/Ayush7614</div>
+  </div>
+</body>
+</html>
