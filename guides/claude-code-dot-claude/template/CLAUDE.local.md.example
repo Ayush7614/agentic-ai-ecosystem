@@ -1,0 +1,5 @@
+# Personal overrides (copy to CLAUDE.local.md — gitignored)
+
+- Prefer concise answers; skip long preamble.
+- When running tests, use `pytest -q` not verbose mode.
+- My local Ollama endpoint: http://127.0.0.1:11434

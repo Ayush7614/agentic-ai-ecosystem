@@ -8,6 +8,7 @@ The public site is built with [MkDocs Material](https://squidfunk.github.io/mkdo
 |-------|----------|----------|
 | Qwen Agentic RAG | `/guides/qwen-agentic-rag/` | `/guides/qwen-agentic-rag/tutorial/` |
 | OpenClaw + Gemma + RAG | `/guides/openclaw-gemma-rag/` | `/guides/openclaw-gemma-rag/tutorial/` |
+| Claude Code `.claude/` | `/guides/claude-code-dot-claude/` | `/guides/claude-code-dot-claude/tutorial/` |
 
 ## Add a new guide to the site
 
