@@ -41,8 +41,10 @@ flowchart LR
 
 1. **Install Hermes** — one-line installer ([Part 1](https://ayush7614.github.io/agentic-ai-ecosystem/guides/awesome-hermes-agent/tutorial/#part-1--install-hermes-agent))
 2. **Choose provider** — `hermes setup --portal` or `hermes model` ([Part 2](https://ayush7614.github.io/agentic-ai-ecosystem/guides/awesome-hermes-agent/tutorial/#part-2--choose-a-provider))
-3. **Add starter skills** — `./install-starter-pack.sh` ([Part 4](https://ayush7614.github.io/agentic-ai-ecosystem/guides/awesome-hermes-agent/tutorial/#part-4--install-community-skills))
-4. **Optional GUI** — hermes-workspace or mission-control ([Part 5](https://ayush7614.github.io/agentic-ai-ecosystem/guides/awesome-hermes-agent/tutorial/#part-5--add-a-gui-optional))
+3. **Skills & plugins** — `./install-ecosystem.sh skills plugins` ([Part 4](https://ayush7614.github.io/agentic-ai-ecosystem/guides/awesome-hermes-agent/tutorial/#part-4--skills--plugins))
+4. **Tools & utilities** — GUIs, SkillClaw, camofox ([Part 5](https://ayush7614.github.io/agentic-ai-ecosystem/guides/awesome-hermes-agent/tutorial/#part-5--tools--utilities))
+5. **Integrations & bridges** — MCP, memory, M365 ([Part 6](https://ayush7614.github.io/agentic-ai-ecosystem/guides/awesome-hermes-agent/tutorial/#part-6--integrations--bridges))
+6. **Multi-agent & swarms** — oh-my-hermes, ACP, mission-control ([Part 7](https://ayush7614.github.io/agentic-ai-ecosystem/guides/awesome-hermes-agent/tutorial/#part-7--multi-agent--swarms))
 
 ## Quick start
 
@@ -62,8 +64,13 @@ chmod +x verify-install.sh install-starter-pack.sh
 # 4. First chat
 hermes --tui
 
-# 5. Starter skills (optional)
-./install-starter-pack.sh
+# 5. Ecosystem layers (pick one or all)
+./install-ecosystem.sh skills
+./install-ecosystem.sh plugins
+./install-ecosystem.sh tools
+./install-ecosystem.sh integrations
+./install-ecosystem.sh multiagent
+# ./install-ecosystem.sh all
 ```
 
 Official docs: [hermes-agent.nousresearch.com/docs](https://hermes-agent.nousresearch.com/docs/)
@@ -75,7 +82,8 @@ Official docs: [hermes-agent.nousresearch.com/docs](https://hermes-agent.nousres
 | TUTORIAL.md | Full install → skills → GUI → gateway → level-up |
 | ECOSYSTEM.md | Curated catalog ([online](https://ayush7614.github.io/agentic-ai-ecosystem/guides/awesome-hermes-agent/ecosystem/)) |
 | `verify-install.sh` | Health check after install |
-| `install-starter-pack.sh` | Clone wondelai + litprog skills |
+| `install-starter-pack.sh` | Lightweight skills only (wondelai + litprog) |
+| `install-ecosystem.sh` | Layered installer: skills, plugins, tools, integrations, multiagent |
 | `.env.example` | Optional API key reference |
 
 ## Full tutorial
