@@ -11,6 +11,7 @@ Maintained by [Ayush Kumar](https://github.com/Ayush7614) · [NeuralVerse](https
 | [Qwen Agentic RAG](guides/qwen-agentic-rag/index.md) | Private two-agent RAG API with Qwen (Ollama), CrewAI, Qdrant, Firecrawl, LitServe, and Gradio |
 | [OpenClaw + Gemma + RAG](guides/openclaw-gemma-rag/index.md) | Messaging assistant on `gemma4:e2b` with a local RAG skill calling the LitServe API |
 | [Claude Code `.claude/`](guides/claude-code-dot-claude/index.md) | Team-aware Claude Code layout — `CLAUDE.md`, permissions, rules, skills, and subagents |
+| [Awesome Hermes Agent](guides/awesome-hermes-agent/index.md) | Install Hermes Agent and map the skills, plugins, GUIs, and integrations ecosystem |
 
 Each guide is a self-contained project under `guides/<name>/` in the repo. The site pages mirror those READMEs and tutorials so you can read online without cloning.
 
