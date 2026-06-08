@@ -68,6 +68,10 @@ nav:
     - Claude Code .claude/:
       - Overview: guides/claude-code-dot-claude/index.md
       - Full tutorial: guides/claude-code-dot-claude/tutorial.md
+    - Awesome Hermes Agent:
+      - Overview: guides/awesome-hermes-agent/index.md
+      - Full tutorial: guides/awesome-hermes-agent/tutorial.md
+      - Ecosystem catalog: guides/awesome-hermes-agent/ecosystem.md
   - Publishing: publishing.md
 
 extra:
