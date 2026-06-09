@@ -40,6 +40,23 @@ flowchart TB
     GW --> CLI
 ```
 
+## Session workflow
+
+1. Install Hermes and choose a provider  
+2. Stack ecosystem layers: skills → tools → integrations → multi-agent  
+3. Curator refines the skill library on a 7-day cycle  
+
+## Workflow diagram
+
+![Hermes ecosystem workflow — animated](./assets/hermes-ecosystem-workflow.gif)
+
+Regenerate:
+
+```bash
+cd guides/awesome-hermes-agent/assets
+python3 render_diagrams.py workflow
+```
+
 ---
 
 ## Prerequisites

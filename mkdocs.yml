@@ -72,6 +72,10 @@ nav:
       - Overview: guides/awesome-hermes-agent/index.md
       - Full tutorial: guides/awesome-hermes-agent/tutorial.md
       - Ecosystem catalog: guides/awesome-hermes-agent/ecosystem.md
+    - Hermes vs OpenClaw:
+      - Overview: guides/hermes-vs-openclaw/index.md
+      - Full tutorial: guides/hermes-vs-openclaw/tutorial.md
+      - Feature matrix: guides/hermes-vs-openclaw/comparison.md
   - Publishing: publishing.md
 
 extra:

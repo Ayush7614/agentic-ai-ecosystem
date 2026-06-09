@@ -10,6 +10,7 @@ The public site is built with [MkDocs Material](https://squidfunk.github.io/mkdo
 | OpenClaw + Gemma + RAG | `/guides/openclaw-gemma-rag/` | `/guides/openclaw-gemma-rag/tutorial/` |
 | Claude Code `.claude/` | `/guides/claude-code-dot-claude/` | `/guides/claude-code-dot-claude/tutorial/` |
 | Awesome Hermes Agent | `/guides/awesome-hermes-agent/` | `/guides/awesome-hermes-agent/tutorial/` |
+| Hermes vs OpenClaw | `/guides/hermes-vs-openclaw/` | `/guides/hermes-vs-openclaw/tutorial/` |
 
 ## Add a new guide to the site
 
