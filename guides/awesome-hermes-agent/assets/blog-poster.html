@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Awesome Hermes Agent Blog Poster</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      margin: 0;
+      background: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    #capture {
+      width: 1200px;
+      height: 600px;
+      overflow: hidden;
+      position: relative;
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 42%, #312e81 72%, #b45309 100%);
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      color: #fff;
+    }
+    .glow {
+      position: absolute;
+      width: 520px;
+      height: 520px;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.42;
+    }
+    .glow-a { top: -100px; left: -60px; background: #38bdf8; }
+    .glow-b { bottom: -140px; right: -40px; background: #f97316; }
+    .content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      padding: 52px 64px;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 36px;
+      align-items: center;
+    }
+    h1 {
+      font-size: 50px;
+      line-height: 1.06;
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      margin-bottom: 18px;
+    }
+    h1 .accent { color: #38bdf8; }
+    h1 .warm { color: #fdba74; }
+    .subtitle {
+      font-size: 21px;
+      line-height: 1.45;
+      color: rgba(255,255,255,0.84);
+      max-width: 500px;
+      margin-bottom: 28px;
+    }
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .tag {
+      font-size: 13px;
+      font-weight: 700;
+      padding: 8px 14px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.14);
+    }
+    .panel {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 24px;
+      padding: 28px 30px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.25);
+    }
+    .panel-title {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #fdba74;
+      font-weight: 800;
+      margin-bottom: 18px;
+    }
+    .layers {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .layer {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .layer-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #38bdf8, #6366f1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+    .layer span.dim {
+      color: rgba(255,255,255,0.45);
+      font-weight: 500;
+      font-size: 13px;
+      margin-left: auto;
+    }
+  </style>
+</head>
+<body>
+  <div id="capture">
+    <div class="glow glow-a"></div>
+    <div class="glow glow-b"></div>
+
+    <div class="content">
+      <div>
+        <h1>
+          <span class="accent">Awesome</span> Hermes<br/>
+          <span class="warm">Agent</span> Guide
+        </h1>
+        <p class="subtitle">
+          Self-improving AI — install, skills, plugins, tools, integrations &amp; multi-agent swarms.
+        </p>
+        <div class="tags">
+          <span class="tag">skills/</span>
+          <span class="tag">plugins/</span>
+          <span class="tag">MCP</span>
+          <span class="tag">Curator</span>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">Ecosystem layers</div>
+        <div class="layers">
+          <div class="layer"><div class="layer-num">4</div> Skills &amp; Plugins <span class="dim">procedural memory</span></div>
+          <div class="layer"><div class="layer-num">5</div> Tools &amp; Utilities <span class="dim">GUIs + ops</span></div>
+          <div class="layer"><div class="layer-num">6</div> Integrations &amp; Bridges <span class="dim">MCP + memory</span></div>
+          <div class="layer"><div class="layer-num">7</div> Multi-Agent &amp; Swarms <span class="dim">orchestration</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -29,6 +29,16 @@ flowchart LR
 | **Plugins / MCP** | Extend tools, memory, search, payments |
 | **Ecosystem** | Community skills, GUIs, deployment, multi-agent |
 
+## Session workflow
+
+1. Install **Hermes** → configure **LLM provider**  
+2. Layer **skills & plugins** → **tools & utilities** → **integrations**  
+3. Add **multi-agent** orchestration; **Curator** improves skills every 7 days  
+
+## Workflow diagram
+
+![Hermes ecosystem workflow — animated](./assets/hermes-ecosystem-workflow.gif)
+
 **Maturity tags** (used throughout the [ecosystem catalog](https://ayush7614.github.io/agentic-ai-ecosystem/guides/awesome-hermes-agent/ecosystem/)):
 
 | Tag | Meaning |
@@ -85,6 +95,10 @@ Official docs: [hermes-agent.nousresearch.com/docs](https://hermes-agent.nousres
 | `install-starter-pack.sh` | Lightweight skills only (wondelai + litprog) |
 | `install-ecosystem.sh` | Layered installer: skills, plugins, tools, integrations, multiagent |
 | `.env.example` | Optional API key reference |
+| `assets/hermes-ecosystem-workflow.{html,gif,png}` | Animated ecosystem diagram |
+| `assets/render_diagrams.py` | Regenerate workflow GIF/PNG |
+| `assets/blog-poster-1200x600.png` | 1200×600 blog header image |
+| `assets/render_blog_poster.py` | Regenerate poster from HTML |
 
 ## Full tutorial
 
@@ -94,6 +108,7 @@ Official docs: [hermes-agent.nousresearch.com/docs](https://hermes-agent.nousres
 
 | Guide | Overlap |
 |-------|---------|
+| [Hermes vs OpenClaw](../hermes-vs-openclaw/) | Full comparison — architecture, skills, `hermes claw migrate`, when to pick which |
 | [OpenClaw + Gemma + RAG](../openclaw-gemma-rag/) | Messaging assistant pattern; Hermes has native gateway + OpenClaw migration |
 | [Claude Code `.claude/`](../claude-code-dot-claude/) | Skills standard (agentskills.io) works across Hermes, Claude, Cursor |
 

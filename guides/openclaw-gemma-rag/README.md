@@ -118,6 +118,14 @@ See [TUTORIAL.md](./TUTORIAL.md).
 - Ollama loads it once; both layers share the same tag
 - Close other apps during crew runs; first RAG answer can take several minutes
 
+## Related guides
+
+| Guide | Overlap |
+|-------|---------|
+| [Hermes vs OpenClaw](../hermes-vs-openclaw/) | Compare OpenClaw with Hermes; migration via `hermes claw migrate` |
+| [Awesome Hermes Agent](../awesome-hermes-agent/) | Hermes install + ecosystem |
+| [Qwen Agentic RAG](../qwen-agentic-rag/) | RAG API this skill calls |
+
 ## Docs
 
 - [OpenClaw Ollama provider](https://docs.openclaw.ai/providers/ollama)
