@@ -25,44 +25,44 @@ body{display:flex;align-items:center;justify-content:center;background:#f8fafc}
 <div class="body" id="terminal-body"></div></div></div>
 <script>
 const STEPS={
-  "01-setup":{user:"builder",path:"~/agents-demo",lines:[
+  "01-setup":{user:"ayushkumar",path:"~/agents-demo",lines:[
     {type:"cmd",text:"python -m venv .venv && source .venv/bin/activate"},
     {type:"cmd",text:"pip install langgraph crewai openai-agents pydantic-ai"},
     {type:"success",text:"✓ Agent frameworks installed"},
   ]},
-  "02-react-agent":{user:"builder",path:"~/agents-demo",lines:[
+  "02-react-agent":{user:"ayushkumar",path:"~/agents-demo",lines:[
     {type:"cmd",text:"python examples/minimal_react_agent.py"},
     {type:"info",text:"Think → search_web → Observe → Act → done"},
     {type:"out",text:'Goal: "Best week for surfing in Greece next year"'},
     {type:"success",text:"✓ ReAct loop completed in 4 turns"},
   ]},
-  "03-langgraph":{user:"builder",path:"~/agents-demo",lines:[
+  "03-langgraph":{user:"ayushkumar",path:"~/agents-demo",lines:[
     {type:"cmd",text:"python examples/langgraph_research_agent.py"},
     {type:"info",text:"StateGraph: plan → research → synthesize"},
     {type:"success",text:"✓ LangGraph agent finished · saved report.md"},
   ]},
-  "04-crewai":{user:"builder",path:"~/agents-demo",lines:[
+  "04-crewai":{user:"ayushkumar",path:"~/agents-demo",lines:[
     {type:"cmd",text:"python examples/crewai_content_crew.py"},
     {type:"info",text:"Researcher → Writer → Editor (sequential crew)"},
     {type:"success",text:"✓ Crew output: blog_draft.md"},
   ]},
-  "05-openai-sdk":{user:"builder",path:"~/agents-demo",lines:[
+  "05-openai-sdk":{user:"ayushkumar",path:"~/agents-demo",lines:[
     {type:"cmd",text:"export OPENAI_API_KEY=sk-..."},
     {type:"cmd",text:"python examples/openai_agents_sdk.py"},
     {type:"success",text:"✓ Agent handoff: triage → specialist"},
   ]},
-  "06-pydantic-ai":{user:"builder",path:"~/agents-demo",lines:[
+  "06-pydantic-ai":{user:"ayushkumar",path:"~/agents-demo",lines:[
     {type:"cmd",text:"python examples/pydantic_ai_typed_agent.py"},
     {type:"info",text:"Structured output: WeatherReport schema"},
     {type:"success",text:"✓ Validated Pydantic model returned"},
   ]},
-  "07-run-test":{user:"builder",path:"~/agents-demo",lines:[
+  "07-run-test":{user:"ayushkumar",path:"~/agents-demo",lines:[
     {type:"cmd",text:"pytest examples/tests/ -q"},
     {type:"out",text:".....                                                                    [5 passed]"},
     {type:"success",text:"✓ All agent examples smoke-tested"},
   ]},
 };
-function prompt(u,p){return `<span class="prompt-user">${u}</span><span class="prompt-path"> (${p})</span><span class="prompt-arrow">⇒</span>`;}
+function prompt(u,p){return `<span class="prompt-user">(base) ${u}@Ayushs-Mac-mini</span><span class="prompt-path"> ${p}</span><span class="prompt-arrow">%</span>`;}
 function renderStep(id,progress){
   const s=STEPS[id];if(!s)return;
   const vis=Math.ceil(progress*s.lines.length);let html="";

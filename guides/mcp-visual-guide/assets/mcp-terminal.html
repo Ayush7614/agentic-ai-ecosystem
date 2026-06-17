@@ -25,36 +25,36 @@ body{display:flex;align-items:center;justify-content:center;background:radial-gr
 <div class="body" id="terminal-body"></div></div></div>
 <script>
 const STEPS={
-  "01-install-sdk":{user:"techlatest",path:"~/mcp-demo",lines:[
+  "01-install-sdk":{user:"ayushkumar",path:"~/mcp-demo",lines:[
     {type:"cmd",text:"python -m venv .venv && source .venv/bin/activate"},
     {type:"cmd",text:'pip install "mcp[cli]>=1.2"'},
     {type:"success",text:"Installed mcp SDK + CLI"},
   ]},
-  "02-scaffold-server":{user:"techlatest",path:"~/mcp-demo",lines:[
+  "02-scaffold-server":{user:"ayushkumar",path:"~/mcp-demo",lines:[
     {type:"cmd",text:"cp ../examples/minimal_weather_server.py ."},
     {type:"cmd",text:"python minimal_weather_server.py &"},
     {type:"info",text:"stdio server waiting on stdin (FastMCP weather-demo)"},
     {type:"success",text:"Tool: get_forecast(location, day?, unit=celsius)"},
   ]},
-  "03-cursor-config":{user:"techlatest",path:"~/mcp-demo",lines:[
+  "03-cursor-config":{user:"ayushkumar",path:"~/mcp-demo",lines:[
     {type:"cmd",text:"cat ../examples/cursor_mcp.json.example"},
     {type:"out",text:'  "weather-demo": { command: "python", args: [...] }'},
     {type:"info",text:"Cursor → Settings → MCP → paste JSON"},
     {type:"success",text:"Restart Cursor · server spawns on connect"},
   ]},
-  "04-list-tools":{user:"techlatest",path:"~/mcp-demo",lines:[
+  "04-list-tools":{user:"ayushkumar",path:"~/mcp-demo",lines:[
     {type:"cmd",text:"npx @modelcontextprotocol/inspector python minimal_weather_server.py"},
     {type:"info",text:"Connected · protocol 2024-11-05"},
     {type:"success",text:"tools/list → get_forecast"},
     {type:"out",text:"  parameters: location (req), day, unit"},
   ]},
-  "05-test-tool":{user:"techlatest",path:"~/mcp-demo",lines:[
+  "05-test-tool":{user:"ayushkumar",path:"~/mcp-demo",lines:[
     {type:"cmd",text:'tools/call get_forecast {"location":"Berlin","unit":"celsius"}'},
     {type:"out",text:'{"location":"Berlin","forecast":"Sunny, 22°C..."}'},
     {type:"success",text:"✓ Tool OK · ready for host LLM"},
   ]},
 };
-function prompt(u,p){return `<span class="prompt-user">${u}</span><span class="prompt-path"> (${p})</span><span class="prompt-arrow">⇒</span>`;}
+function prompt(u,p){return `<span class="prompt-user">(base) ${u}@Ayushs-Mac-mini</span><span class="prompt-path"> ${p}</span><span class="prompt-arrow">%</span>`;}
 function renderStep(id,progress){
   const s=STEPS[id];if(!s)return;
   const vis=Math.ceil(progress*s.lines.length);let html="";

@@ -20,33 +20,33 @@ body{display:flex;align-items:center;justify-content:center;background:#0a0a0f}
 <div id="capture"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="lbl">harness-session — zsh</span></div><div class="body" id="b"></div></div>
 <script>
 const S={
-  "01-drop-templates":{u:"techlatest",p:"~/my-app",lines:[
+  "01-drop-templates":{u:"ayushkumar",p:"~/my-app",lines:[
     {t:"c",x:"cp examples/{AGENTS.md,init.sh,feature_list.json} ."},
     {t:"ok",x:"4 harness files installed"},
     {t:"c",x:"chmod +x init.sh"},
     {t:"info",x:"Repo now has operating manual + scope + bootstrap"},
   ]},
-  "02-init-session":{u:"techlatest",p:"~/my-app",lines:[
+  "02-init-session":{u:"ayushkumar",p:"~/my-app",lines:[
     {t:"c",x:"./init.sh"},
     {t:"dim",x:"==> install · health check · harness state"},
     {t:"ok",x:"OK — environment ready"},
     {t:"c",x:"cat claude-progress.md | head -5"},
     {t:"info",x:"Last session: F03 indexer stub — pick up here"},
   ]},
-  "03-verify-gate":{u:"techlatest",p:"~/my-app",lines:[
+  "03-verify-gate":{u:"ayushkumar",p:"~/my-app",lines:[
     {t:"c",x:"npm test && npm run lint && npm run typecheck"},
     {t:"warn",x:"FAIL lint: unused import in indexer.ts"},
     {t:"c",x:"# agent fixes · re-runs gate"},
     {t:"ok",x:"All green — evidence recorded in feature_list.json"},
   ]},
-  "04-handoff":{u:"techlatest",p:"~/my-app",lines:[
+  "04-handoff":{u:"ayushkumar",p:"~/my-app",lines:[
     {t:"c",x:"git add claude-progress.md feature_list.json src/"},
     {t:"c",x:'git commit -m "F03: indexer passes verify gate"'},
     {t:"ok",x:"Clean handoff — next session reads progress.md"},
     {t:"dim",x:"# harness governed: no done without proof"},
   ]},
 };
-function pr(u,p){return `<span class="pu">${u}</span><span class="pp"> (${p})</span><span class="pa">⇒</span>`;}
+function pr(u,p){return `<span class="pu">(base) ${u}@Ayushs-Mac-mini</span><span class="pp"> ${p}</span><span class="pa">%</span>`;}
 function render(id,prog){
   const s=S[id];if(!s)return;
   const vis=Math.ceil(prog*s.lines.length);

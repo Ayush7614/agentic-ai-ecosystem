@@ -33,7 +33,7 @@
   </div></div>
   <script>
     const STEPS = {
-      "01-install-setup": { user: "techlatest", path: "~", lines: [
+      "01-install-setup": { user: "ayushkumar", path: "~", lines: [
         { type: "cmd", text: "curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash" },
         { type: "success", text: "Hermes installed → ~/.hermes/" },
         { type: "cmd", text: "hermes setup" },
@@ -41,62 +41,62 @@
         { type: "cmd", text: "hermes" },
         { type: "success", text: "Session started · SOUL.md slot #1 loaded" },
       ]},
-      "02-gateway-telegram": { user: "techlatest", path: "~", lines: [
+      "02-gateway-telegram": { user: "ayushkumar", path: "~", lines: [
         { type: "cmd", text: "hermes gateway setup" },
         { type: "info", text: "Bot token from @BotFather · user ID from @userinfobot" },
         { type: "success", text: "Gateway running · Telegram connected" },
         { type: "dim", text: "# Message your bot from phone → same agent as CLI" },
       ]},
-      "03-profiles-create": { user: "techlatest", path: "~", lines: [
+      "03-profiles-create": { user: "ayushkumar", path: "~", lines: [
         { type: "cmd", text: "hermes profile create designer --clone" },
         { type: "cmd", text: "hermes profile create programmer --clone" },
         { type: "cmd", text: "hermes profile create researcher --clone" },
         { type: "cmd", text: "hermes profile list" },
         { type: "success", text: "designer · programmer · researcher (isolated)" },
       ]},
-      "04-claude-code": { user: "techlatest", path: "~", lines: [
+      "04-claude-code": { user: "ayushkumar", path: "~", lines: [
         { type: "cmd", text: "which claude" },
         { type: "success", text: "/usr/local/bin/claude" },
         { type: "cmd", text: "programmer chat" },
         { type: "info", text: "Paste activation prompt → installs claude-code skill" },
         { type: "success", text: "Coding tasks route through Claude Code (Max sub)" },
       ]},
-      "05-cron-list": { user: "techlatest", path: "~", lines: [
+      "05-cron-list": { user: "ayushkumar", path: "~", lines: [
         { type: "cmd", text: "hermes -p researcher cron list" },
         { type: "out", text: "ID    SCHEDULE              NEXT RUN" },
         { type: "out", text: "digest  weekdays 8am IST     Mon 08:00" },
         { type: "success", text: "Deliver → Telegram · gateway tick 60s" },
       ]},
-      "06-install-web": { user: "techlatest", path: "~", lines: [
+      "06-install-web": { user: "ayushkumar", path: "~", lines: [
         { type: "cmd", text: "pip install 'hermes-agent[web]'" },
         { type: "success", text: "Dashboard extra installed" },
         { type: "cmd", text: "hermes dashboard --help" },
         { type: "dim", text: "# Profile Builder lives in local web UI" },
       ]},
-      "07-dashboard": { user: "techlatest", path: "~", lines: [
+      "07-dashboard": { user: "ayushkumar", path: "~", lines: [
         { type: "cmd", text: "hermes dashboard" },
         { type: "success", text: "→ http://127.0.0.1:9119 · loopback only" },
         { type: "info", text: "Profile Builder → identity · model · skills · MCP" },
       ]},
-      "08-researcher-profile": { user: "techlatest", path: "~", lines: [
+      "08-researcher-profile": { user: "ayushkumar", path: "~", lines: [
         { type: "cmd", text: 'hermes profile create researcher \\' },
         { type: "cmd", text: '  --description "Reads docs, writes findings."' },
         { type: "cmd", text: "researcher setup" },
         { type: "cmd", text: "researcher config set model anthropic/claude-sonnet-4" },
         { type: "success", text: "~/.hermes/profiles/researcher/ ready" },
       ]},
-      "09-mcp-skills": { user: "techlatest", path: "~", lines: [
+      "09-mcp-skills": { user: "ayushkumar", path: "~", lines: [
         { type: "cmd", text: "researcher skills install openai/skills/k8s" },
         { type: "info", text: "MCP: filesystem via config.yaml mcp_servers map" },
         { type: "success", text: "Skills + MCP → next session or gateway restart" },
       ]},
-      "10-researcher-chat": { user: "techlatest", path: "~", lines: [
+      "10-researcher-chat": { user: "ayushkumar", path: "~", lines: [
         { type: "cmd", text: "researcher chat" },
         { type: "success", text: "Isolated memory · skills · MCP from profile" },
         { type: "dim", text: "# GUI path writes same files as CLI above" },
       ]},
     };
-    function prompt(u,p){return `<span class="prompt-user">${u}</span><span class="prompt-path"> (${p})</span><span class="prompt-arrow">⇒</span>`;}
+    function prompt(u,p){return `<span class="prompt-user">(base) ${u}@Ayushs-Mac-mini</span><span class="prompt-path"> ${p}</span><span class="prompt-arrow">%</span>`;}
     function renderStep(id, progress) {
       const step = STEPS[id]; if (!step) return;
       const total = step.lines.length;
