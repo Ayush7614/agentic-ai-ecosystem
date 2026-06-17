@@ -1,3 +1,11 @@
+---
+template: home.html
+title: Agentic AI Ecosystem
+hide:
+  - navigation
+  - toc
+---
+
 # Agentic AI Ecosystem
 
 Hands-on guides for building **local, private agentic AI** systems — RAG, multi-agent crews, MCP tooling, and production-style APIs.
