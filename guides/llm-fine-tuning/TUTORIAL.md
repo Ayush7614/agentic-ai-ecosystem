@@ -405,26 +405,6 @@ Retrain when: base model leapfrogs you, data drift shifts intent, or safety inci
 
 ---
 
-## Image placement (blog / Medium)
-
-- **Hero →** `mega-finetune-everything.gif`  
-- Intro → `diagram-landscape.gif`  
-- Part 1 → `diagram-decision-ladder.gif`  
-- Part 3 → `diagram-five-families.gif`, `diagram-peft-menu.gif`  
-- Part 4 → `diagram-lora-math.gif`  
-- Part 5 → `diagram-quantization-ladder.gif`, `diagram-qlora-stack.gif`  
-- Part 8 → `diagram-rlhf-pipeline.gif`  
-- Part 9 → `diagram-dpo-preference.gif`  
-- Part 10 → `diagram-grpo-loop.gif`  
-- Part 11 → `step-01-peft-install.gif`  
-- Part 12 → `step-02-lora-train.gif`, `step-04-merge-lora.gif`  
-- Part 13 → `step-03-qlora-train.gif`  
-- Part 9 (DPO) → `step-05-dpo-train.gif`  
-
-**Blog header:** `assets/blog-poster-1200x600.png`
-
----
-
 ## Regenerate visuals
 
 ```bash

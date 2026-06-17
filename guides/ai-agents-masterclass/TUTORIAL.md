@@ -902,33 +902,6 @@ Agents are a **tool**, not a mandate.
 
 ---
 
-## Image placement (blog / Medium)
-
-- **Hero →** `mega-agents-everything.gif`  
-- Intro → `diagram-agent-definition.gif`  
-- Part 1 → `diagram-agent-vs-assistant.gif`  
-- Part 2–3 → `diagram-agent-anatomy.gif`  
-- Part 4 → `diagram-memory-tiers.gif`  
-- Part 5 → `diagram-react-loop.gif`  
-- Part 6 → `diagram-rewoo-flow.gif`  
-- Part 7 → `diagram-agent-types-ladder.gif`  
-- Part 8 → `diagram-goal-planning.gif`, `diagram-tool-reasoning.gif`, `diagram-learning-loop.gif`, `diagram-lifecycle.gif`  
-- Part 10 → `diagram-single-multi.gif`  
-- Part 11 → `diagram-surface-background.gif`  
-- Part 12 → `diagram-use-cases-six.gif`  
-- Part 14 → `diagram-governance.gif`  
-- Part 16 → `diagram-protocols.gif`  
-- Part 17 → `diagram-frameworks-map.gif`  
-- Part 18–24 → `step-01-setup.gif` through `step-07-run-test.gif`  
-- Part 25 → `diagram-cloud-deploy.gif`  
-
-**Blog header:** `assets/blog-poster-1200x600.png`
-
-**Suggested title:** **AI Agents Masterclass: From ReAct Loops to Production on Cloud Run**  
-**Subtitle:** Definitions, anatomy, 15+ frameworks, MCP/A2A protocols, governance, and five runnable Python examples with visual walkthroughs.
-
----
-
 ## Regenerate visuals
 
 ```bash

@@ -446,27 +446,6 @@ chmod +x guides/hermes-agent-masterclass/scripts/verify-masterclass.sh
 
 ---
 
-## Image placement (Medium / blog)
-
-- Intro → `demo-three-agents.gif`  
-- Part 1 → `diagram-react-loop.gif`, `diagram-learning-loop.gif`  
-- Part 6 → `diagram-memory-tiers.gif`  
-- Part 7 → `diagram-skill-levels.gif`, `diagram-curator-phases.gif`  
-- Part 8 → `diagram-gepa-pipeline.gif`  
-- Part 4 → `step-02-gateway-telegram.gif`  
-- Part 9 → `diagram-hermes-home.gif`  
-- Part 11 → `step-06-install-web.gif`, `step-07-dashboard.gif`, `diagram-profile-builder.gif`, `diagram-profile-anatomy.gif`  
-- Part 12 → `step-08-researcher-profile.gif`, `step-09-mcp-skills.gif`, `step-10-researcher-chat.gif`  
-- Part 13 → `step-03-profiles-create.gif`  
-- Part 14 → `table-three-souls.gif`  
-- Part 15 → `step-04-claude-code.gif`  
-- Part 17 → `diagram-cron-flow.gif`, `step-05-cron-list.gif`  
-- Part 3 → `step-01-install-setup.gif`  
-
-**Blog header:** `assets/blog-poster-1200x600.png`
-
----
-
 ## Regenerate visuals
 
 ```bash

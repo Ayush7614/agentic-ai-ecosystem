@@ -274,26 +274,6 @@ VS Code extension installs are the zero-config variant — the extension registe
 
 ---
 
-## Image placement (blog / Medium)
-
-- **Hero →** `mega-mcp-everything.gif`  
-- Intro → `diagram-usbc-hub.gif`  
-- Part 1–2 → `diagram-host-stack.gif`  
-- Part 3 → `diagram-server-primitives.gif`  
-- Part 4 → `diagram-transport.gif`  
-- Part 5 → `diagram-handshake.gif`  
-- Part 6–7 → `diagram-api-rigid.gif`, `diagram-api-break.gif`  
-- Part 8 → `diagram-mcp-dynamic.gif`  
-- Part 10–12 → `step-01` … `step-05` terminal GIFs  
-- Part 13 → `diagram-text-vs-ui.gif`, `diagram-visuals-flow.gif`  
-
-**Blog header:** `assets/blog-poster-1200x600.png`
-
-**Suggested title:** **Model Context Protocol: USB-C for AI Tools (and Why APIs Break Agents)**  
-**Subtitle:** Host/client/server architecture, capability exchange, and the shift from markdown dumps to interactive App MCP.
-
----
-
 ## Regenerate visuals
 
 ```bash

@@ -278,29 +278,6 @@ Most agentic systems are loops under the hood. Quality differences usually come 
 
 ---
 
-## Image placement (blog / Medium)
-
-- **Hero →** `mega-loop-everything.gif`  
-- Intro → `diagram-manual-vs-loop.gif`  
-- Part 1 → `diagram-single-loop.gif`  
-- Part 2 → `diagram-react-cycle.gif`  
-- Part 3 → `diagram-eval-gate.gif`  
-- Part 4 → `diagram-fleet-tree.gif`  
-- Part 5 → `diagram-open-closed.gif`  
-- Part 6 → `diagram-five-parts.gif`  
-- Part 7 → `diagram-patterns-menu.gif`  
-- Part 8 → `diagram-frameworks-flow.gif`  
-- Part 14 → `diagram-failure-modes.gif`  
-- Part 10 → `step-02-test-gate.gif`  
-- Part 11 → `step-04-max-iterations.gif`  
-- Part 12 → `step-05-multi-agent.gif`  
-- Part 13 → `step-01-loop-scaffold.gif`  
-- Part 3 (alt) → `step-03-eval-yaml.gif`  
-
-**Blog header:** `assets/blog-poster-1200x600.png`
-
----
-
 ## Regenerate visuals
 
 All diagram and terminal GIFs render at **1200×600 px** (Medium/blog hero size).

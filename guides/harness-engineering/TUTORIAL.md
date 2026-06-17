@@ -246,21 +246,6 @@ Same pattern works for any real repo: measured **weak vs strong harness** diff, 
 
 ---
 
-## Image placement (blog)
-
-- Hero → `mega-harness-everything.gif`  
-- Previews → `preview-course-home.gif`, `preview-lecture.gif`, `preview-resource-library.gif`  
-- Part 1 → `diagram-harness-pattern.gif`  
-- Part 2 → `diagram-five-subsystems.gif`  
-- Part 3 → `diagram-agents-map.gif`  
-- Part 5 → `diagram-session-lifecycle.gif`  
-- Part 7 → `diagram-planner-eval.gif`  
-- Part 11–12 → terminal steps  
-
-**Blog header:** `assets/blog-poster-1200x600.png`
-
----
-
 ## Regenerate visuals (all 1200×600)
 
 ```bash
