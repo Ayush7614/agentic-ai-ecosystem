@@ -3,358 +3,322 @@
 {% block tabs %}
 {{ super() }}
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=JetBrains+Mono:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet" />
 
 <style>
-  /* Remove the empty content shell so the splash is full-bleed */
+  /* ---- strip Material chrome on the home splash, recolor to blueprint navy ---- */
   .md-main__inner { margin-top: 0; }
   .md-content { display: none; }
   @media screen and (min-width: 60em) { .md-sidebar--secondary { display: none; } }
   @media screen and (min-width: 76.25em) { .md-sidebar--primary { display: none; } }
+  .md-header { background-color: #080b13 !important; box-shadow: none !important; border-bottom: 1px solid rgba(124,140,255,.14); }
+  .md-tabs { background-color: #080b13 !important; border-bottom: 1px solid rgba(124,140,255,.14); }
 
   :root {
-    --aae-bg: #08080b;
-    --aae-bg2: #0e0e13;
-    --aae-panel: #121218;
-    --aae-line: rgba(255,255,255,.08);
-    --aae-line2: rgba(255,255,255,.16);
-    --aae-text: #f5f6f8;
-    --aae-muted: #9aa0ab;
-    --aae-dim: #6b7280;
-    --aae-amber: #ffb800;
-    --aae-amber2: #ffcf4d;
+    --bp-bg: #080b13;
+    --bp-bg2: #0b0f1c;
+    --bp-panel: #0d1222;
+    --bp-line: rgba(124,140,255,.16);
+    --bp-line2: rgba(255,255,255,.07);
+    --bp-blue: #7c8cff;
+    --bp-blue2: #9aa6ff;
+    --bp-dim: #56607e;
+    --bp-muted: #99a1bd;
+    --bp-text: #e9ebf5;
   }
 
-  .aae {
+  .bp {
     position: relative;
-    background: var(--aae-bg);
-    color: var(--aae-text);
-    font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    -webkit-font-smoothing: antialiased;
+    margin-top: -2.4rem;
+    background-color: var(--bp-bg);
+    background-image:
+      radial-gradient(rgba(124,140,255,.07) 1px, transparent 1px);
+    background-size: 24px 24px;
+    color: var(--bp-text);
+    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
     overflow: hidden;
-    margin-top: -2.4rem; /* tuck under the tabs bar */
   }
-  .aae * { box-sizing: border-box; }
-  .aae a { text-decoration: none; color: inherit; }
-  .aae .mono { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace; }
-  .aae .wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 2; }
+  .bp * { box-sizing: border-box; }
+  .bp a { color: inherit; text-decoration: none; }
+  .bp .wrap { max-width: 1160px; margin: 0 auto; padding: 0 28px; position: relative; z-index: 2; }
+  .bp .serif { font-family: "Newsreader", Georgia, "Times New Roman", serif; }
+  .bp .mono { font-family: "JetBrains Mono", ui-monospace, monospace; }
 
-  #aae-stars { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
-  .aae-glow {
-    position: absolute; z-index: 0; pointer-events: none;
-    width: 820px; height: 820px; left: 50%; top: -260px; transform: translateX(-50%);
-    background: radial-gradient(circle at center, rgba(255,184,0,.16), rgba(255,184,0,0) 60%);
-    filter: blur(30px);
+  /* faint blueprint guides */
+  .bp::before {
+    content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      linear-gradient(90deg, transparent 0, transparent calc(50% - .5px), rgba(124,140,255,.06) 50%, transparent calc(50% + .5px)),
+      radial-gradient(900px 480px at 50% -120px, rgba(124,140,255,.10), transparent 70%);
   }
 
-  /* hero */
-  .aae-hero { text-align: center; padding: 96px 0 60px; }
-  .aae-badge {
+  /* ---------- hero ---------- */
+  .bp-hero { padding: 70px 0 64px; border-bottom: 1px solid var(--bp-line2); }
+  .bp-meta { display: flex; justify-content: space-between; align-items: center; font-size: 11px; letter-spacing: .22em; color: var(--bp-dim); text-transform: uppercase; }
+  .bp-meta .blink { color: var(--bp-blue); animation: bpb 1.1s steps(2) infinite; }
+  @keyframes bpb { 50% { opacity: 0; } }
+
+  .bp-title {
+    font-family: "Silkscreen", "JetBrains Mono", monospace; font-weight: 700;
+    color: var(--bp-blue);
+    font-size: clamp(38px, 8.4vw, 104px); line-height: 1.04; letter-spacing: .01em;
+    margin: 40px 0 0; text-shadow: 0 0 28px rgba(124,140,255,.35);
+  }
+  .bp-lead { font-size: clamp(17px, 2.1vw, 22px); line-height: 1.55; color: #cfd3e6; max-width: 720px; margin: 30px 0 0; }
+  .bp-by { margin: 16px 0 0; font-size: 12.5px; letter-spacing: .04em; color: var(--bp-dim); font-style: italic; }
+
+  .bp-btns { margin-top: 34px; display: flex; gap: 14px; flex-wrap: wrap; }
+  .bp-btn {
     display: inline-flex; align-items: center; gap: 10px;
-    border: 1px solid var(--aae-line2); border-radius: 999px;
-    padding: 8px 18px; font-size: 11.5px; letter-spacing: .18em; font-weight: 600;
-    color: var(--aae-muted); text-transform: uppercase;
+    border: 1px solid var(--bp-line); padding: 12px 18px; border-radius: 4px;
+    font-size: 12.5px; letter-spacing: .1em; text-transform: uppercase; font-weight: 600;
+    color: var(--bp-text); transition: all .15s;
   }
-  .aae-badge .pip { width: 6px; height: 6px; border-radius: 50%; background: var(--aae-amber); box-shadow: 0 0 12px var(--aae-amber); }
-  .aae-hero h1 {
-    font-weight: 900; letter-spacing: -.03em; line-height: .92;
-    font-size: clamp(44px, 9vw, 116px); margin: 26px 0 0; color: var(--aae-text);
-  }
-  .aae-hero h1 .amber { background: linear-gradient(120deg, var(--aae-amber), var(--aae-amber2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  .aae-sub { max-width: 660px; margin: 24px auto 0; color: var(--aae-muted); font-size: 17px; line-height: 1.65; }
+  .bp-btn .n { color: var(--bp-blue); }
+  .bp-btn:hover { border-color: var(--bp-blue); background: rgba(124,140,255,.08); transform: translateY(-1px); }
+  .bp-btn.solid { background: var(--bp-blue); color: #0a0d16; border-color: var(--bp-blue); }
+  .bp-btn.solid:hover { background: var(--bp-blue2); box-shadow: 0 8px 30px rgba(124,140,255,.3); }
 
-  .aae-copy {
-    margin: 34px auto 0; max-width: 540px;
-    display: flex; align-items: center; gap: 14px;
-    border: 1px solid var(--aae-amber); border-radius: 12px;
-    background: rgba(255,184,0,.05); padding: 14px 18px;
-    box-shadow: 0 0 0 4px rgba(255,184,0,.06);
-  }
-  .aae-copy .pr { color: var(--aae-amber); font-weight: 700; }
-  .aae-copy code { flex: 1; text-align: left; color: var(--aae-text); font-size: 13.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .aae-copy button { background: none; border: none; color: var(--aae-dim); font-size: 11px; letter-spacing: .12em; cursor: pointer; font-weight: 700; transition: color .15s; }
-  .aae-copy button:hover { color: var(--aae-amber); }
+  /* ---------- how this works ---------- */
+  .bp-sec { padding: 70px 0; border-bottom: 1px solid var(--bp-line2); }
+  .bp-eyebrow { font-size: 11px; letter-spacing: .28em; color: var(--bp-blue); text-transform: uppercase; font-weight: 600; }
+  .bp-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; margin-top: 30px; }
+  .bp-cols p { font-family: "Newsreader", Georgia, serif; font-size: 18px; line-height: 1.62; color: #c7cbde; margin: 0 0 16px; }
+  .bp-cols p .drop { float: left; font-family: "Silkscreen", monospace; font-size: 46px; line-height: .8; color: var(--bp-blue); padding: 6px 12px 0 0; }
 
-  .aae-btns { margin-top: 26px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-  .aae-btn {
-    display: inline-flex; align-items: center; gap: 9px;
-    padding: 13px 26px; border-radius: 11px; font-weight: 700; font-size: 14px; letter-spacing: .02em;
-    border: 1px solid var(--aae-line2); transition: transform .12s, background .15s, box-shadow .2s;
-  }
-  .aae-btn:hover { transform: translateY(-2px); }
-  .aae-btn.solid { background: var(--aae-amber); color: #1a1300; border-color: var(--aae-amber); }
-  .aae-btn.solid:hover { box-shadow: 0 10px 30px rgba(255,184,0,.3); }
-  .aae-btn.ghost:hover { background: rgba(255,255,255,.05); }
+  /* ---------- catalog ---------- */
+  .bp-sechead { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  .bp-sechead h2 { font-family: "Newsreader", Georgia, serif; font-weight: 600; font-size: clamp(26px, 4vw, 40px); margin: 8px 0 0; letter-spacing: -.01em; }
+  .bp-sechead .hint { font-size: 12px; color: var(--bp-dim); letter-spacing: .08em; }
 
-  .aae-stats { margin-top: 48px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-  .aae-stat { border: 1px solid var(--aae-line); border-radius: 12px; background: var(--aae-panel); padding: 14px 22px; min-width: 130px; }
-  .aae-stat b { display: block; font-size: 26px; font-weight: 800; color: var(--aae-amber); line-height: 1; }
-  .aae-stat span { display: block; margin-top: 6px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--aae-dim); }
-
-  /* sections */
-  .aae-sec { padding: 72px 0; border-top: 1px solid var(--aae-line); }
-  .aae-eyebrow { color: var(--aae-amber); font-size: 12px; letter-spacing: .22em; font-weight: 700; text-transform: uppercase; text-align: center; }
-  .aae-h2 { text-align: center; font-size: clamp(28px, 5vw, 44px); font-weight: 850; letter-spacing: -.02em; margin: 12px 0 0; }
-  .aae-lead { text-align: center; color: var(--aae-muted); font-size: 16px; line-height: 1.6; margin: 14px auto 0; max-width: 620px; }
-
-  .aae-grid { margin-top: 46px; display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 18px; }
-  .aae-card {
+  .bp-grid { margin-top: 38px; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 0; border: 1px solid var(--bp-line2); border-radius: 6px; overflow: hidden; }
+  .bp-card {
     position: relative; display: flex; flex-direction: column; gap: 12px;
-    border: 1px solid var(--aae-line); border-radius: 16px;
-    background: linear-gradient(180deg, var(--aae-panel), var(--aae-bg2));
-    padding: 22px; min-height: 168px;
-    transition: transform .15s, border-color .15s, box-shadow .2s;
+    padding: 26px 24px 22px; min-height: 196px;
+    border-right: 1px solid var(--bp-line2); border-bottom: 1px solid var(--bp-line2);
+    background: var(--bp-bg); transition: background .15s, transform .15s;
   }
-  .aae-card:hover { transform: translateY(-4px); border-color: var(--aae-line2); box-shadow: 0 16px 40px rgba(0,0,0,.45); }
-  .aae-card .ico {
-    width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center; font-size: 22px;
-    background: rgba(255,184,0,.1); border: 1px solid rgba(255,184,0,.2);
-  }
-  .aae-card h3 { margin: 0; font-size: 17px; font-weight: 700; color: var(--aae-text); letter-spacing: -.01em; }
-  .aae-card p { margin: 0; font-size: 13.5px; line-height: 1.55; color: var(--aae-muted); }
-  .aae-card .go { margin-top: auto; color: var(--aae-amber); font-size: 13px; font-weight: 700; }
-  .aae-tag {
-    position: absolute; top: 18px; right: 18px;
-    font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase; font-weight: 700;
-    color: #1a1300; background: var(--aae-amber); padding: 4px 9px; border-radius: 999px;
-  }
+  .bp-card:hover { background: var(--bp-panel); }
+  .bp-card .row { display: flex; justify-content: space-between; align-items: center; font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; color: var(--bp-dim); }
+  .bp-card .row .kind { color: var(--bp-blue); }
+  .bp-card h3 { font-size: 17px; font-weight: 600; letter-spacing: -.01em; margin: 0; color: var(--bp-text); }
+  .bp-card p { font-family: "Newsreader", Georgia, serif; font-size: 14.5px; line-height: 1.5; color: var(--bp-muted); margin: 0; }
+  .bp-card .open { margin-top: auto; font-size: 11.5px; letter-spacing: .14em; color: var(--bp-blue); text-transform: uppercase; font-weight: 600; }
+  .bp-card.feat { background: linear-gradient(180deg, rgba(124,140,255,.08), transparent 70%); }
+  .bp-card.feat::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--bp-blue); }
+  .bp-card:hover .open { color: var(--bp-blue2); }
 
-  /* run block */
-  .aae-run { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: center; }
-  .aae-run .term {
-    background: #0a0a0e; border: 1px solid var(--aae-line); border-radius: 14px; overflow: hidden;
-  }
-  .aae-run .term .bar { display: flex; align-items: center; gap: 7px; padding: 12px 16px; border-bottom: 1px solid var(--aae-line); }
-  .aae-run .term .bar i { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
-  .aae-run .term .bar i:nth-child(1) { background: #ff5f56; }
-  .aae-run .term .bar i:nth-child(2) { background: #ffbd2e; }
-  .aae-run .term .bar i:nth-child(3) { background: #27c93f; }
-  .aae-run .term pre { margin: 0; padding: 20px; font-size: 13px; line-height: 1.8; color: #d6d8de; overflow-x: auto; }
-  .aae-run .term .c { color: var(--aae-amber); }
-  .aae-run .term .g { color: var(--aae-dim); }
-  .aae-run h2 { font-size: clamp(26px, 4vw, 38px); font-weight: 850; letter-spacing: -.02em; margin: 12px 0 0; }
-  .aae-run p { color: var(--aae-muted); font-size: 15px; line-height: 1.65; margin-top: 14px; }
+  /* ---------- colophon ---------- */
+  .bp-clone { display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; align-items: center; }
+  .bp-clone h2 { font-family: "Newsreader", Georgia, serif; font-weight: 600; font-size: clamp(26px, 4vw, 40px); margin: 8px 0 0; }
+  .bp-clone p { font-family: "Newsreader", Georgia, serif; font-size: 17px; line-height: 1.6; color: #c7cbde; margin: 16px 0 0; }
+  .bp-term { background: #06080f; border: 1px solid var(--bp-line); border-radius: 6px; overflow: hidden; }
+  .bp-term .tbar { display: flex; align-items: center; gap: 10px; padding: 11px 16px; border-bottom: 1px solid var(--bp-line2); font-size: 11px; letter-spacing: .14em; color: var(--bp-dim); text-transform: uppercase; }
+  .bp-term .tbar .d { width: 10px; height: 10px; border-radius: 50%; background: rgba(124,140,255,.4); display: inline-block; }
+  .bp-term pre { margin: 0; padding: 20px; font-size: 13px; line-height: 1.85; color: #d6d9e8; overflow-x: auto; }
+  .bp-term .c { color: var(--bp-blue); }
+  .bp-term .g { color: var(--bp-dim); }
+  .bp-term .cpwrap { display: flex; align-items: center; gap: 10px; }
+  .bp-term button { margin-left: auto; background: none; border: 1px solid var(--bp-line); color: var(--bp-dim); border-radius: 4px; padding: 4px 9px; font-size: 10px; letter-spacing: .12em; cursor: pointer; font-family: inherit; }
+  .bp-term button:hover { color: var(--bp-blue); border-color: var(--bp-blue); }
 
-  /* footer cta */
-  .aae-cta { text-align: center; padding: 90px 0 110px; border-top: 1px solid var(--aae-line); }
-  .aae-cta h2 { font-size: clamp(30px, 6vw, 56px); font-weight: 900; letter-spacing: -.03em; margin: 0; }
-  .aae-cta p { color: var(--aae-muted); font-size: 16px; margin: 18px auto 28px; max-width: 520px; }
-  .aae-maintain { margin-top: 30px; color: var(--aae-dim); font-size: 13px; }
-  .aae-maintain a { color: var(--aae-amber); font-weight: 600; }
+  /* ---------- footer ---------- */
+  .bp-foot { padding: 48px 0 70px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-size: 12px; letter-spacing: .1em; color: var(--bp-dim); text-transform: uppercase; }
+  .bp-foot a { color: var(--bp-muted); }
+  .bp-foot a:hover { color: var(--bp-blue); }
 
-  @media (max-width: 720px) {
-    .aae-run { grid-template-columns: 1fr; }
-    .aae-hero { padding: 64px 0 40px; }
+  @media (max-width: 760px) {
+    .bp-cols, .bp-clone { grid-template-columns: 1fr; }
   }
 </style>
 
-<div class="aae">
-  <canvas id="aae-stars"></canvas>
-  <div class="aae-glow"></div>
-
-  <header class="aae-hero wrap">
-    <span class="aae-badge"><span class="pip"></span> Local-first · Private · Open source</span>
-    <h1>Agentic <span class="amber">AI</span><br>Ecosystem</h1>
-    <p class="aae-sub">Hands-on, visual guides for building <strong>local, private agentic AI</strong> — RAG pipelines, multi-agent crews, MCP tooling, and production-style APIs. Read online, clone, and ship.</p>
-
-    <div class="aae-copy">
-      <span class="pr mono">$</span>
-      <code class="mono" id="aae-clone">git clone https://github.com/Ayush7614/agentic-ai-ecosystem.git</code>
-      <button onclick="aaeCopy()" id="aae-copybtn">COPY</button>
-    </div>
-
-    <div class="aae-btns">
-      <a class="aae-btn solid" href="#aae-guides">Browse the guides →</a>
-      <a class="aae-btn ghost" href="{{ config.repo_url }}" target="_blank" rel="noopener">★ Star on GitHub</a>
-    </div>
-
-    <div class="aae-stats">
-      <div class="aae-stat"><b>16</b><span>Guides</span></div>
-      <div class="aae-stat"><b>100%</b><span>Local-first</span></div>
-      <div class="aae-stat"><b>RAG·MCP·A2A</b><span>Covered</span></div>
-      <div class="aae-stat"><b>15+</b><span>Frameworks</span></div>
-    </div>
-  </header>
-
-  <section class="aae-sec" id="aae-guides">
+<div class="bp">
+  <section class="bp-hero">
     <div class="wrap">
-      <p class="aae-eyebrow">The collection</p>
-      <h2 class="aae-h2">Every guide, one ecosystem</h2>
-      <p class="aae-lead">Each guide is a self-contained project under <code class="mono">guides/&lt;name&gt;/</code>. The site mirrors every README and tutorial so you can read online without cloning.</p>
-
-      <div class="aae-grid">
-        <a class="aae-card" href="guides/ai-agents-masterclass/">
-          <span class="aae-tag">Featured</span>
-          <div class="ico">🎓</div>
-          <h3>AI Agents Masterclass</h3>
-          <p>Agent anatomy, ReAct/ReWOO, 15+ frameworks, use cases, MCP/A2A, and five runnable code examples.</p>
-          <span class="go">Open guide →</span>
-        </a>
-        <a class="aae-card" href="guides/hermes-agent-masterclass/">
-          <span class="aae-tag">Featured</span>
-          <div class="ico">🧠</div>
-          <h3>Hermes Agent Masterclass</h3>
-          <p>Complete Hermes guide — learning loop, Profile Builder, memory, Curator, GEPA, and three agents.</p>
-          <span class="go">Open guide →</span>
-        </a>
-        <a class="aae-card" href="guides/qwen-agentic-rag/">
-          <div class="ico">🔍</div>
-          <h3>Qwen Agentic RAG</h3>
-          <p>Private two-agent RAG API with Qwen (Ollama), CrewAI, Qdrant, Firecrawl, LitServe, and Gradio.</p>
-          <span class="go">Open guide →</span>
-        </a>
-        <a class="aae-card" href="guides/openclaw-gemma-rag/">
-          <div class="ico">💬</div>
-          <h3>OpenClaw + Gemma + RAG</h3>
-          <p>Messaging assistant on <code class="mono">gemma4:e2b</code> with a local RAG skill calling the LitServe API.</p>
-          <span class="go">Open guide →</span>
-        </a>
-        <a class="aae-card" href="guides/claude-code-dot-claude/">
-          <div class="ico">📁</div>
-          <h3>Claude Code .claude/</h3>
-          <p>Team-aware Claude Code layout — CLAUDE.md, permissions, rules, skills, and subagents.</p>
-          <span class="go">Open guide →</span>
-        </a>
-        <a class="aae-card" href="guides/openclaw/">
-          <div class="ico">🦅</div>
-          <h3>OpenClaw</h3>
-          <p>Install and extend the self-hosted personal AI assistant — gateway, channels, skills, cron.</p>
-          <span class="go">Open guide →</span>
-        </a>
-        <a class="aae-card" href="guides/awesome-hermes-agent/">
-          <div class="ico">⚡</div>
-          <h3>Awesome Hermes Agent</h3>
-          <p>Install Hermes Agent and map the skills, plugins, GUIs, and integrations ecosystem.</p>
-          <span class="go">Open guide →</span>
-        </a>
-        <a class="aae-card" href="guides/hermes-vs-openclaw/">
-          <div class="ico">⚖️</div>
-          <h3>Hermes vs OpenClaw</h3>
-          <p>Compare Hermes Agent and OpenClaw — gateways, skills, migration, and a decision guide.</p>
-          <span class="go">Open guide →</span>
-        </a>
-        <a class="aae-card" href="guides/mcp-visual-guide/">
-          <div class="ico">🔌</div>
-          <h3>MCP Visual Guide</h3>
-          <p>Model Context Protocol — host/client/server, capability exchange, API vs MCP, App MCP.</p>
-          <span class="go">Open guide →</span>
-        </a>
-        <a class="aae-card" href="guides/ml-model-6-steps/">
-          <div class="ico">📊</div>
-          <h3>ML Model in 6 Steps</h3>
-          <p>Visual ML pipeline — problem framing through deploy and monitor, with animated GIFs.</p>
-          <span class="go">Open guide →</span>
-        </a>
-        <a class="aae-card" href="guides/solo-engineer-stack/">
-          <div class="ico">🛠️</div>
-          <h3>Solo Engineer Stack</h3>
-          <p>Build PulseFeedback with 10 equal tools — PM to support in one closed loop.</p>
-          <span class="go">Open guide →</span>
-        </a>
-        <a class="aae-card" href="guides/loop-engineering/">
-          <div class="ico">🔁</div>
-          <h3>Loop Engineering</h3>
-          <p>Act, observe, repeat — eval gates, open vs closed loops, fleet patterns, ReAct.</p>
-          <span class="go">Open guide →</span>
-        </a>
-        <a class="aae-card" href="guides/harness-engineering/">
-          <div class="ico">🏗️</div>
-          <h3>Harness Engineering</h3>
-          <p>Agent = Model + Harness — five subsystems, session lifecycle, verification gates.</p>
-          <span class="go">Open guide →</span>
-        </a>
-        <a class="aae-card" href="guides/llm-fine-tuning/">
-          <div class="ico">🎛️</div>
-          <h3>LLM Fine-Tuning</h3>
-          <p>LoRA, QLoRA, RLHF, DPO, GRPO — when to fine-tune, PEFT math, HuggingFace walkthroughs.</p>
-          <span class="go">Open guide →</span>
-        </a>
-        <a class="aae-card" href="guides/hermes-profile-builder/">
-          <div class="ico">👤</div>
-          <h3>Hermes Profile Builder</h3>
-          <p>Quick index — the full Profile Builder walkthrough lives in Masterclass Parts 11–12.</p>
-          <span class="go">Open guide →</span>
-        </a>
-        <a class="aae-card" href="guides/anthropic-cybersecurity-skills/">
-          <div class="ico">🛡️</div>
-          <h3>Anthropic Cybersecurity Skills</h3>
-          <p>754 MITRE-mapped security skills for AI agents — install, frameworks, SOC walkthroughs.</p>
-          <span class="go">Open guide →</span>
-        </a>
+      <div class="bp-meta">
+        <span>FIG_000 · ecosystem v1.0 · 2026 <span class="blink">_</span></span>
+        <span>OPEN SOURCE · MIT</span>
+      </div>
+      <h1 class="bp-title">AGENTIC AI<br>ECOSYSTEM</h1>
+      <p class="bp-lead serif">16 hands-on guides. RAG pipelines, multi-agent crews, MCP tooling, and production-style APIs — every system built <strong>local-first and private</strong> before a single cloud key gets pasted.</p>
+      <p class="bp-by">Maintained by Ayush Kumar and contributors. Run on your own machine.</p>
+      <div class="bp-btns">
+        <a class="bp-btn solid" href="#catalog">▚ Browse the catalog</a>
+        <a class="bp-btn" href="{{ config.repo_url }}" target="_blank" rel="noopener">★ Star on GitHub</a>
+        <a class="bp-btn" href="https://github.com/Ayush7614" target="_blank" rel="noopener">Follow @Ayush7614</a>
       </div>
     </div>
   </section>
 
-  <section class="aae-sec">
-    <div class="wrap aae-run">
-      <div class="term">
-        <div class="bar"><i></i><i></i><i></i></div>
-        <pre><span class="g"># clone and pick any guide</span>
-git clone https://github.com/Ayush7614/agentic-ai-ecosystem.git
-<span class="c">cd</span> agentic-ai-ecosystem/guides/&lt;guide-name&gt;
-
-<span class="g"># spin up an isolated env</span>
-python -m venv .venv && <span class="c">source</span> .venv/bin/activate
-pip install -r requirements.txt
-cp .env.example .env
-
-<span class="g"># follow the README or the tutorial page</span></pre>
-      </div>
-      <div>
-        <p class="aae-eyebrow" style="text-align:left">Run locally</p>
-        <h2>Clone once. Run any guide.</h2>
-        <p>Every guide ships with its own <code class="mono">requirements.txt</code> and <code class="mono">.env.example</code>. Create a virtual environment, install, and follow the step-by-step tutorial — online here or in the repo.</p>
-        <div class="aae-btns" style="justify-content:flex-start;margin-top:24px">
-          <a class="aae-btn solid" href="publishing.md">How publishing works →</a>
+  <section class="bp-sec">
+    <div class="wrap">
+      <p class="bp-eyebrow">How this works</p>
+      <div class="bp-cols">
+        <div>
+          <p><span class="drop serif">M</span>ost agent material teaches in scattered pieces. A RAG demo here, a fine-tuning post there, a flashy multi-agent screenshot somewhere else. The pieces rarely line up — you ship a chatbot but can't trace its retrieval, or you wire a tool to an agent and can't say what the harness around it is actually doing.</p>
+          <p>This repo is the spine. Sixteen self-contained guides, each a real project under <span class="mono" style="color:var(--bp-blue)">guides/&lt;name&gt;/</span>, from a two-agent RAG API to a self-hosted assistant to a full agents masterclass.</p>
+        </div>
+        <div>
+          <p>Every guide runs the same loop: read the problem, draw the architecture, write the code, run it locally, keep the artifact. No five-minute videos, no copy-paste cloud deploys, no hand-holding.</p>
+          <p>Free, open source, and built to run on your own laptop. Clone the repo, pick a guide, and go from idea to a running local agent in an afternoon — the site mirrors every README and tutorial so you can read first and clone later.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="aae-cta">
+  <section class="bp-sec" id="catalog">
     <div class="wrap">
-      <p class="aae-eyebrow">Start building</p>
-      <h2>Build agents that<br><span style="color:var(--aae-amber)">actually ship.</span></h2>
-      <p>Pick a guide, clone the repo, and go from idea to a running local agent in an afternoon.</p>
-      <div class="aae-btns">
-        <a class="aae-btn solid" href="#aae-guides">Explore guides →</a>
-        <a class="aae-btn ghost" href="{{ config.repo_url }}" target="_blank" rel="noopener">View source</a>
+      <div class="bp-sechead">
+        <div>
+          <p class="bp-eyebrow">Catalog</p>
+          <h2>16 guides · one ecosystem</h2>
+        </div>
+        <span class="hint">// tap a card to open its overview + tutorial</span>
       </div>
-      <p class="aae-maintain">Maintained by <a href="https://github.com/Ayush7614" target="_blank" rel="noopener">Ayush Kumar</a> · <a href="https://neural-verse-peach.vercel.app/" target="_blank" rel="noopener">NeuralVerse</a> · <a href="https://ayushbuilds-dev.vercel.app/" target="_blank" rel="noopener">Portfolio</a> · MIT licensed</p>
+
+      <div class="bp-grid">
+        <a class="bp-card feat" href="guides/ai-agents-masterclass/">
+          <div class="row"><span>FIG_001</span><span class="kind">Masterclass</span></div>
+          <h3>AI Agents Masterclass</h3>
+          <p>Agent anatomy, ReAct/ReWOO, 15+ frameworks, use cases, MCP/A2A, and five runnable code examples.</p>
+          <span class="open">→ Open</span>
+        </a>
+        <a class="bp-card feat" href="guides/hermes-agent-masterclass/">
+          <div class="row"><span>FIG_002</span><span class="kind">Masterclass</span></div>
+          <h3>Hermes Agent Masterclass</h3>
+          <p>Complete Hermes guide — learning loop, Profile Builder, memory, Curator, GEPA, and three agents.</p>
+          <span class="open">→ Open</span>
+        </a>
+        <a class="bp-card" href="guides/qwen-agentic-rag/">
+          <div class="row"><span>FIG_003</span><span class="kind">RAG</span></div>
+          <h3>Qwen Agentic RAG</h3>
+          <p>Private two-agent RAG API with Qwen (Ollama), CrewAI, Qdrant, Firecrawl, LitServe, and Gradio.</p>
+          <span class="open">→ Open</span>
+        </a>
+        <a class="bp-card" href="guides/openclaw-gemma-rag/">
+          <div class="row"><span>FIG_004</span><span class="kind">RAG</span></div>
+          <h3>OpenClaw + Gemma + RAG</h3>
+          <p>Messaging assistant on gemma4:e2b with a local RAG skill calling the LitServe API.</p>
+          <span class="open">→ Open</span>
+        </a>
+        <a class="bp-card" href="guides/claude-code-dot-claude/">
+          <div class="row"><span>FIG_005</span><span class="kind">Tooling</span></div>
+          <h3>Claude Code .claude/</h3>
+          <p>Team-aware Claude Code layout — CLAUDE.md, permissions, rules, skills, and subagents.</p>
+          <span class="open">→ Open</span>
+        </a>
+        <a class="bp-card" href="guides/openclaw/">
+          <div class="row"><span>FIG_006</span><span class="kind">Assistant</span></div>
+          <h3>OpenClaw</h3>
+          <p>Install and extend the self-hosted personal AI assistant — gateway, channels, skills, cron.</p>
+          <span class="open">→ Open</span>
+        </a>
+        <a class="bp-card" href="guides/awesome-hermes-agent/">
+          <div class="row"><span>FIG_007</span><span class="kind">Ecosystem</span></div>
+          <h3>Awesome Hermes Agent</h3>
+          <p>Install Hermes Agent and map the skills, plugins, GUIs, and integrations ecosystem.</p>
+          <span class="open">→ Open</span>
+        </a>
+        <a class="bp-card" href="guides/hermes-vs-openclaw/">
+          <div class="row"><span>FIG_008</span><span class="kind">Compare</span></div>
+          <h3>Hermes vs OpenClaw</h3>
+          <p>Compare Hermes Agent and OpenClaw — gateways, skills, migration, and a decision guide.</p>
+          <span class="open">→ Open</span>
+        </a>
+        <a class="bp-card" href="guides/mcp-visual-guide/">
+          <div class="row"><span>FIG_009</span><span class="kind">Protocol</span></div>
+          <h3>MCP Visual Guide</h3>
+          <p>Model Context Protocol — host/client/server, capability exchange, API vs MCP, App MCP.</p>
+          <span class="open">→ Open</span>
+        </a>
+        <a class="bp-card" href="guides/ml-model-6-steps/">
+          <div class="row"><span>FIG_010</span><span class="kind">ML</span></div>
+          <h3>ML Model in 6 Steps</h3>
+          <p>Visual ML pipeline — problem framing through deploy and monitor, with animated GIFs.</p>
+          <span class="open">→ Open</span>
+        </a>
+        <a class="bp-card" href="guides/solo-engineer-stack/">
+          <div class="row"><span>FIG_011</span><span class="kind">Stack</span></div>
+          <h3>Solo Engineer Stack</h3>
+          <p>Build PulseFeedback with 10 equal tools — PM to support in one closed loop.</p>
+          <span class="open">→ Open</span>
+        </a>
+        <a class="bp-card" href="guides/loop-engineering/">
+          <div class="row"><span>FIG_012</span><span class="kind">Pattern</span></div>
+          <h3>Loop Engineering</h3>
+          <p>Act, observe, repeat — eval gates, open vs closed loops, fleet patterns, ReAct.</p>
+          <span class="open">→ Open</span>
+        </a>
+        <a class="bp-card" href="guides/harness-engineering/">
+          <div class="row"><span>FIG_013</span><span class="kind">Pattern</span></div>
+          <h3>Harness Engineering</h3>
+          <p>Agent = Model + Harness — five subsystems, session lifecycle, verification gates.</p>
+          <span class="open">→ Open</span>
+        </a>
+        <a class="bp-card" href="guides/llm-fine-tuning/">
+          <div class="row"><span>FIG_014</span><span class="kind">Training</span></div>
+          <h3>LLM Fine-Tuning</h3>
+          <p>LoRA, QLoRA, RLHF, DPO, GRPO — when to fine-tune, PEFT math, HuggingFace walkthroughs.</p>
+          <span class="open">→ Open</span>
+        </a>
+        <a class="bp-card" href="guides/hermes-profile-builder/">
+          <div class="row"><span>FIG_015</span><span class="kind">Index</span></div>
+          <h3>Hermes Profile Builder</h3>
+          <p>Quick index — the full Profile Builder walkthrough lives in Masterclass Parts 11–12.</p>
+          <span class="open">→ Open</span>
+        </a>
+        <a class="bp-card" href="guides/anthropic-cybersecurity-skills/">
+          <div class="row"><span>FIG_016</span><span class="kind">Security</span></div>
+          <h3>Anthropic Cybersecurity Skills</h3>
+          <p>754 MITRE-mapped security skills for AI agents — install, frameworks, SOC walkthroughs.</p>
+          <span class="open">→ Open</span>
+        </a>
+      </div>
     </div>
   </section>
+
+  <section class="bp-sec">
+    <div class="wrap bp-clone">
+      <div>
+        <p class="bp-eyebrow">Colophon</p>
+        <h2>Clone it. Run any guide.</h2>
+        <p>The entire ecosystem is on GitHub. Clone it, fork it, learn at your own pace — no paywall, no signup. Every guide ships its own <span class="mono" style="color:var(--bp-blue)">requirements.txt</span> and <span class="mono" style="color:var(--bp-blue)">.env.example</span>.</p>
+        <div class="bp-btns" style="margin-top:24px">
+          <a class="bp-btn solid" href="publishing.md">How publishing works →</a>
+        </div>
+      </div>
+      <div class="bp-term">
+        <div class="tbar"><span class="d"></span> clone · venv · install</div>
+        <pre><span class="g"># grab the repo and pick any guide</span>
+<div class="cpwrap"><span id="bp-clone">git clone https://github.com/Ayush7614/agentic-ai-ecosystem.git</span><button onclick="bpCopy()" id="bp-copy">COPY</button></div><span class="c">cd</span> agentic-ai-ecosystem/guides/&lt;guide-name&gt;
+
+<span class="g"># isolated environment</span>
+python -m venv .venv && <span class="c">source</span> .venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env</pre>
+      </div>
+    </div>
+  </section>
+
+  <footer class="wrap bp-foot">
+    <span>© 2026 · open source · free forever</span>
+    <span>
+      <a href="{{ config.repo_url }}" target="_blank" rel="noopener">GitHub</a> ·
+      <a href="#catalog">Catalog</a> ·
+      <a href="publishing.md">Publishing</a> ·
+      <a href="https://neural-verse-peach.vercel.app/" target="_blank" rel="noopener">NeuralVerse</a>
+    </span>
+  </footer>
 </div>
 
 <script>
-  function aaeCopy() {
-    var t = document.getElementById('aae-clone').innerText;
+  function bpCopy() {
+    var t = document.getElementById('bp-clone').innerText;
     navigator.clipboard.writeText(t).then(function () {
-      var b = document.getElementById('aae-copybtn');
-      b.innerText = 'COPIED'; setTimeout(function () { b.innerText = 'COPY'; }, 1600);
+      var b = document.getElementById('bp-copy');
+      b.innerText = 'COPIED'; setTimeout(function () { b.innerText = 'COPY'; }, 1500);
     });
   }
-  (function () {
-    var c = document.getElementById('aae-stars');
-    if (!c) return;
-    var ctx = c.getContext('2d'), stars = [], w, h;
-    function size() { w = c.width = c.offsetWidth; h = c.height = c.offsetHeight; }
-    function init() {
-      size(); stars = [];
-      var n = Math.min(160, Math.floor((w * h) / 9000));
-      for (var i = 0; i < n; i++) stars.push({ x: Math.random() * w, y: Math.random() * h, r: Math.random() * 1.4 + .2, a: Math.random(), s: Math.random() * .02 + .004 });
-    }
-    function draw() {
-      ctx.clearRect(0, 0, w, h);
-      for (var i = 0; i < stars.length; i++) {
-        var st = stars[i]; st.a += st.s; var o = .35 + Math.abs(Math.sin(st.a)) * .5;
-        ctx.beginPath(); ctx.arc(st.x, st.y, st.r, 0, 6.283);
-        ctx.fillStyle = 'rgba(255,255,255,' + o + ')'; ctx.fill();
-      }
-      requestAnimationFrame(draw);
-    }
-    var ro = new ResizeObserver(init); ro.observe(c);
-    init(); draw();
-  })();
 </script>
 {% endblock %}
 
