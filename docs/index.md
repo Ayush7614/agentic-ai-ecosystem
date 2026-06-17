@@ -16,6 +16,8 @@ Maintained by [Ayush Kumar](https://github.com/Ayush7614) · [NeuralVerse](https
 
 | [MCP Visual Guide](guides/mcp-visual-guide/index.md) | Model Context Protocol — host/client/server, capability exchange, API vs MCP, App MCP |
 
+| [OpenClaw](guides/openclaw/index.md) | Install and extend the personal AI assistant from openclaw.ai — gateway, channels, skills |
+
 Each guide is a self-contained project under `guides/<name>/` in the repo. The site pages mirror those READMEs and tutorials so you can read online without cloning.
 
 ## Run locally (any guide)
