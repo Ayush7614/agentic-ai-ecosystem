@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;800;900&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{margin:0;display:flex;align-items:center;justify-content:center;min-height:100vh;background:#111}
+#capture{width:1200px;height:600px;position:relative;overflow:hidden;
+  background:linear-gradient(135deg,#0c1222 0%,#1e1b4b 35%,#431407 70%,#0c4a6e 100%);font-family:Inter,sans-serif;color:#fff}
+.g1,.g2{position:absolute;border-radius:50%;filter:blur(90px);opacity:.35}
+.g1{width:500px;height:500px;background:#38bdf8;top:-120px;left:-80px}
+.g2{width:450px;height:450px;background:#fb923c;bottom:-100px;right:-60px}
+.inner{position:relative;z-index:2;height:100%;padding:48px 56px;display:grid;grid-template-columns:1.1fr .9fr;gap:36px;align-items:center}
+.ey{font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#7dd3fc}
+h1{font-size:48px;font-weight:900;line-height:1.05;letter-spacing:-2px;margin:10px 0 14px}
+h1 .o{color:#fb923c}h1 .b{color:#38bdf8}
+.sub{font-size:18px;line-height:1.5;color:rgba(255,255,255,.85);max-width:520px;margin-bottom:22px}
+.tags{display:flex;flex-wrap:wrap;gap:10px}
+.tag{font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:600;padding:8px 14px;border-radius:10px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12)}
+.panel{background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:24px 26px}
+.pt{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#6ee7b7;margin-bottom:14px}
+.row{display:flex;align-items:center;gap:12px;padding:10px 12px;margin-bottom:8px;border-radius:12px;background:rgba(255,255,255,.05);font-size:13px;font-weight:600}
+.n{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#38bdf8,#6366f1);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800}
+.ft{position:absolute;bottom:24px;left:56px;font-size:12px;color:rgba(255,255,255,.45)}.ft b{color:#38bdf8}
+</style>
+</head>
+<body>
+<div id="capture"><div class="g1"></div><div class="g2"></div>
+<div class="inner">
+<div><div class="ey">Agentic AI Ecosystem</div>
+<h1><span class="o">Harness</span><br/><span class="b">Engineering</span></h1>
+<p class="sub">Model + environment = reliable agent. Five subsystems, session lifecycle, verification gates.</p>
+<div class="tags"><span class="tag">AGENTS.md</span><span class="tag">feature_list.json</span><span class="tag">init.sh</span><span class="tag">verify gate</span></div></div>
+<div class="panel"><div class="pt">Five subsystems</div>
+<div class="row"><div class="n">1</div>Instructions — map not encyclopedia</div>
+<div class="row"><div class="n">2</div>State — progress on disk</div>
+<div class="row"><div class="n">3</div>Verification — tests = done</div>
+<div class="row"><div class="n">4</div>Scope — one feature</div>
+<div class="row"><div class="n">5</div>Lifecycle — init · handoff</div></div>
+</div>
+<div class="ft"><b>Agent = Model + Harness</b></div></div>
+</body>
+</html>

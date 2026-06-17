@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>OpenClaw — Terminal</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 30%,#1a2e1a,#0f172a 55%,#020617);font-family:"JetBrains Mono",Menlo,monospace}
+    #capture{width:920px;padding:28px}
+    .terminal{border-radius:12px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.55);background:#1e1e24;border:1px solid rgba(255,140,80,.12)}
+    .titlebar{height:44px;background:linear-gradient(180deg,#2d2d35,#25252c);display:flex;align-items:center;padding:0 16px;gap:8px;border-bottom:1px solid rgba(0,0,0,.35)}
+    .dot{width:13px;height:13px;border-radius:50%}.dot.red{background:#ff5f57}.dot.yellow{background:#febc2e}.dot.green{background:#28c840}
+    .titlebar-label{flex:1;text-align:center;font-size:12px;color:#8a8a90;margin-right:52px}
+    .body{min-height:340px;padding:28px 32px 36px;background:#18181c;font-size:14px;line-height:1.72;color:#d4d4d8}
+    .line{white-space:pre-wrap;word-break:break-all}
+    .prompt-user{color:#ff9f6b;font-weight:500}.prompt-path{color:#5eb3ff}.prompt-arrow{color:#e06cff;margin:0 6px 0 2px}
+    .cmd{color:#f0f0f4}.dim{color:#8b8b95}.success{color:#6fdc8c}.info{color:#5eb3ff}
+  </style>
+</head>
+<body>
+  <div id="capture"><div class="terminal">
+    <div class="titlebar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      <span class="titlebar-label">Terminal — OpenClaw 🦞</span></div>
+    <div class="body" id="terminal-body"></div>
+  </div></div>
+  <script>
+    const STEPS = {
+      "01-install": { user: "techlatest", path: "~", lines: [
+        { type: "cmd", text: "curl -fsSL https://openclaw.ai/install.sh | bash" },
+        { type: "success", text: "OpenClaw installed · Node 24 ready" },
+        { type: "dim", text: "# or: npm install -g openclaw@latest" },
+      ]},
+      "02-onboard": { user: "techlatest", path: "~", lines: [
+        { type: "cmd", text: "openclaw onboard --install-daemon" },
+        { type: "info", text: "Gateway · provider · workspace · Telegram · daemon" },
+        { type: "cmd", text: "openclaw doctor" },
+        { type: "success", text: "All checks passed" },
+      ]},
+      "03-dashboard": { user: "techlatest", path: "~", lines: [
+        { type: "cmd", text: "openclaw dashboard" },
+        { type: "success", text: "Control UI → http://127.0.0.1:18789/" },
+        { type: "info", text: "Chat · sessions · config · channel status" },
+      ]},
+      "04-agent": { user: "techlatest", path: "~", lines: [
+        { type: "cmd", text: 'openclaw agent --message "Summarize today\'s calendar" --thinking low' },
+        { type: "info", text: "Agent uses tools · memory · skills as needed" },
+        { type: "success", text: "Reply streamed to terminal" },
+      ]},
+      "05-channels": { user: "techlatest", path: "~", lines: [
+        { type: "cmd", text: "openclaw gateway restart" },
+        { type: "info", text: "Telegram bot connected · WhatsApp allowlist active" },
+        { type: "dim", text: "# edit ~/.openclaw/openclaw.json → channels.*" },
+        { type: "success", text: "Message from phone → Gateway → agent" },
+      ]},
+      "06-skills": { user: "techlatest", path: "~", lines: [
+        { type: "cmd", text: "openclaw skills search whoop" },
+        { type: "cmd", text: "openclaw skills install <slug>" },
+        { type: "success", text: "SKILL.md → ~/.openclaw/workspace/skills/" },
+        { type: "dim", text: "# browse https://clawhub.ai" },
+      ]},
+    };
+    function prompt(u,p){return `<span class="prompt-user">${u}</span><span class="prompt-path"> (${p})</span><span class="prompt-arrow">⇒</span>`;}
+    function renderStep(id, progress) {
+      const step = STEPS[id]; if (!step) return;
+      const total = step.lines.length;
+      const n = progress === undefined ? total : Math.min(total, Math.ceil(progress * total));
+      let html = "";
+      for (let i = 0; i < n; i++) {
+        const l = step.lines[i];
+        if (l.type === "cmd") html += `<div class="line">${prompt(step.user, step.path)}<span class="cmd">${l.text}</span></div>`;
+        else html += `<div class="line ${l.type}">${l.text}</div>`;
+      }
+      document.getElementById("terminal-body").innerHTML = html;
+    }
+    const p = new URLSearchParams(location.search);
+    renderStep(p.get("step") || "01-install", p.get("frame") !== null ? parseFloat(p.get("frame")) : undefined);
+    window.__READY = true;
+  </script>
+</body>
+</html>

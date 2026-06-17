@@ -1,0 +1,8 @@
+# HTTP MCP fragment — merge into profile config.yaml
+# Set DOCS_API_KEY in ~/.hermes/profiles/<name>/.env
+
+mcp_servers:
+  docs:
+    url: "https://mcp.example.com/mcp"
+    headers:
+      Authorization: "Bearer ${DOCS_API_KEY}"

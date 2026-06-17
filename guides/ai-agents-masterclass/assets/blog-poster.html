@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;800;900&family=Caveat:wght@700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{margin:0;display:flex;align-items:center;justify-content:center;min-height:100vh;background:#f8fafc}
+#capture{
+  width:1200px;height:600px;position:relative;overflow:hidden;
+  background:radial-gradient(ellipse 85% 70% at 50% 45%,#f0f9ff 0%,#fff 50%,#f8fafc 100%);
+  font-family:Inter,sans-serif;color:#1e293b;
+}
+.grid{position:absolute;inset:0;background-image:linear-gradient(rgba(59,130,246,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,.04) 1px,transparent 1px);background-size:40px 40px}
+.glow{position:absolute;border-radius:50%;filter:blur(100px);opacity:.35}
+.g1{width:500px;height:500px;background:#93c5fd;top:-140px;left:50%;transform:translateX(-50%)}
+.g2{width:360px;height:360px;background:#6ee7b7;bottom:-120px;right:8%;opacity:.2}
+.content{position:relative;z-index:3;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:48px 96px}
+.brand{font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:600;letter-spacing:.22em;color:#3b82f6;text-transform:uppercase;margin-bottom:20px}
+h1{font-size:56px;font-weight:900;line-height:1.06;letter-spacing:-2.5px;max-width:920px;margin-bottom:18px}
+h1 .grad{display:block;margin-top:4px;background:linear-gradient(90deg,#3b82f6,#10b981,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sub{font-size:19px;line-height:1.55;color:#64748b;max-width:680px;margin-bottom:30px}
+.tags{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.tag{font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:600;padding:9px 18px;border-radius:999px;color:#1e40af;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.25)}
+.pills{margin-top:34px;display:flex;align-items:center;gap:14px;padding:14px 22px;border-radius:16px;background:rgba(255,255,255,.8);border:1px solid rgba(59,130,246,.15);box-shadow:0 4px 20px rgba(0,0,0,.06)}
+.pill{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:#475569}
+.pill span{font-size:16px}
+.sep{width:1px;height:20px;background:rgba(148,163,184,.3)}
+.footer{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);font-size:11px;font-weight:600;color:#94a3b8}
+.footer b{color:#10b981}
+</style>
+</head>
+<body>
+<div id="capture">
+  <div class="grid"></div>
+  <div class="glow g1"></div>
+  <div class="glow g2"></div>
+  <div class="content">
+    <div class="brand">Agentic AI Ecosystem · Visual Masterclass</div>
+    <h1>AI Agents Masterclass<br/><span class="grad">From Strategy to Scale</span></h1>
+    <p class="sub">Reasoning · ReAct · frameworks · use cases · code · MCP · A2A · governance</p>
+    <div class="tags">
+      <span class="tag">LangGraph</span>
+      <span class="tag">CrewAI</span>
+      <span class="tag">OpenAI SDK</span>
+      <span class="tag">Pydantic AI</span>
+    </div>
+    <div class="pills">
+      <div class="pill"><span>🧠</span> Reason</div>
+      <div class="sep"></div>
+      <div class="pill"><span>⚡</span> Act</div>
+      <div class="sep"></div>
+      <div class="pill"><span>🔧</span> Tools</div>
+      <div class="sep"></div>
+      <div class="pill"><span>🚀</span> Deploy</div>
+    </div>
+  </div>
+  <div class="footer"><b>Visual masterclass</b> · Agentic AI Ecosystem</div>
+</div>
+</body>
+</html>

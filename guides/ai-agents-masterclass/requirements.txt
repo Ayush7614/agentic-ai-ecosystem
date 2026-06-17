@@ -1,0 +1,7 @@
+# Optional — install only what you need for each framework section
+langgraph>=0.2
+langchain-core>=0.3
+crewai>=0.80
+openai-agents>=0.0.6
+pydantic-ai>=0.0.14
+pytest>=8.0

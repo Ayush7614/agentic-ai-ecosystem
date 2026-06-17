@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1200px;height:600px;overflow:hidden;font-family:"JetBrains Mono",Menlo,monospace}
+body{display:flex;align-items:center;justify-content:center;background:#f8fafc}
+#capture{width:1200px;height:600px;padding:40px 48px;display:flex;align-items:center;justify-content:center}
+.terminal{width:100%;height:100%;border-radius:16px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.12);background:#1e1e24;border:1px solid #e2e8f0;display:flex;flex-direction:column}
+.titlebar{height:52px;background:linear-gradient(180deg,#2d2d35,#25252c);display:flex;align-items:center;padding:0 20px;gap:10px;border-bottom:1px solid rgba(0,0,0,.35)}
+.dot{width:15px;height:15px;border-radius:50%}.dot.red{background:#ff5f57}.dot.yellow{background:#febc2e}.dot.green{background:#28c840}
+.titlebar-label{flex:1;text-align:center;font-size:14px;color:#8a8a90;margin-right:60px}
+.body{flex:1;padding:32px 40px;background:#18181c;font-size:16px;line-height:1.75;color:#d4d4d8;overflow:hidden}
+.line{white-space:pre-wrap;word-break:break-all}
+.prompt-user{color:#818cf8;font-weight:500}.prompt-path{color:#34d399}.prompt-arrow{color:#a78bfa;margin:0 6px 0 2px}
+.cmd{color:#f0f0f4}.success{color:#6fdc8c}.info{color:#38bdf8}.warn{color:#fbbf24}
+</style>
+</head>
+<body>
+<div id="capture"><div class="terminal">
+<div class="titlebar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+<span class="titlebar-label">Terminal — AI Agents Masterclass</span></div>
+<div class="body" id="terminal-body"></div></div></div>
+<script>
+const STEPS={
+  "01-setup":{user:"builder",path:"~/agents-demo",lines:[
+    {type:"cmd",text:"python -m venv .venv && source .venv/bin/activate"},
+    {type:"cmd",text:"pip install langgraph crewai openai-agents pydantic-ai"},
+    {type:"success",text:"✓ Agent frameworks installed"},
+  ]},
+  "02-react-agent":{user:"builder",path:"~/agents-demo",lines:[
+    {type:"cmd",text:"python examples/minimal_react_agent.py"},
+    {type:"info",text:"Think → search_web → Observe → Act → done"},
+    {type:"out",text:'Goal: "Best week for surfing in Greece next year"'},
+    {type:"success",text:"✓ ReAct loop completed in 4 turns"},
+  ]},
+  "03-langgraph":{user:"builder",path:"~/agents-demo",lines:[
+    {type:"cmd",text:"python examples/langgraph_research_agent.py"},
+    {type:"info",text:"StateGraph: plan → research → synthesize"},
+    {type:"success",text:"✓ LangGraph agent finished · saved report.md"},
+  ]},
+  "04-crewai":{user:"builder",path:"~/agents-demo",lines:[
+    {type:"cmd",text:"python examples/crewai_content_crew.py"},
+    {type:"info",text:"Researcher → Writer → Editor (sequential crew)"},
+    {type:"success",text:"✓ Crew output: blog_draft.md"},
+  ]},
+  "05-openai-sdk":{user:"builder",path:"~/agents-demo",lines:[
+    {type:"cmd",text:"export OPENAI_API_KEY=sk-..."},
+    {type:"cmd",text:"python examples/openai_agents_sdk.py"},
+    {type:"success",text:"✓ Agent handoff: triage → specialist"},
+  ]},
+  "06-pydantic-ai":{user:"builder",path:"~/agents-demo",lines:[
+    {type:"cmd",text:"python examples/pydantic_ai_typed_agent.py"},
+    {type:"info",text:"Structured output: WeatherReport schema"},
+    {type:"success",text:"✓ Validated Pydantic model returned"},
+  ]},
+  "07-run-test":{user:"builder",path:"~/agents-demo",lines:[
+    {type:"cmd",text:"pytest examples/tests/ -q"},
+    {type:"out",text:".....                                                                    [5 passed]"},
+    {type:"success",text:"✓ All agent examples smoke-tested"},
+  ]},
+};
+function prompt(u,p){return `<span class="prompt-user">${u}</span><span class="prompt-path"> (${p})</span><span class="prompt-arrow">⇒</span>`;}
+function renderStep(id,progress){
+  const s=STEPS[id];if(!s)return;
+  const vis=Math.ceil(progress*s.lines.length);let html="";
+  for(let i=0;i<vis;i++){
+    const L=s.lines[i];
+    if(L.type==="cmd")html+=`<div class="line">${prompt(s.user,s.path)}<span class="cmd">${L.text}</span></div>`;
+    else if(L.type==="success")html+=`<div class="line success">${L.text}</div>`;
+    else if(L.type==="info")html+=`<div class="line info">${L.text}</div>`;
+    else if(L.type==="warn")html+=`<div class="line warn">${L.text}</div>`;
+    else html+=`<div class="line">${L.text}</div>`;
+  }
+  document.getElementById("terminal-body").innerHTML=html;
+}
+const p=new URLSearchParams(location.search);
+renderStep(p.get("step")||"01-setup",parseFloat(p.get("frame")||"1"));
+window.__READY=true;
+</script>
+</body>
+</html>

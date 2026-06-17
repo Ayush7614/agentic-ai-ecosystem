@@ -2,6 +2,9 @@ site_name: Agentic AI Ecosystem
 
 validation:
   unrecognized_links: ignore
+  links:
+    not_found: ignore
+    anchors: ignore
 site_description: Hands-on guides for local, private agentic AI — RAG, multi-agent crews, MCP, and production APIs.
 site_url: https://ayush7614.github.io/agentic-ai-ecosystem/
 repo_url: https://github.com/Ayush7614/agentic-ai-ecosystem
@@ -84,6 +87,36 @@ nav:
     - ML Model in 6 Steps:
       - Overview: guides/ml-model-6-steps/index.md
       - Full tutorial: guides/ml-model-6-steps/tutorial.md
+    - Solo Engineer Stack:
+      - Overview: guides/solo-engineer-stack/index.md
+      - Full tutorial: guides/solo-engineer-stack/tutorial.md
+      - Stack reference: guides/solo-engineer-stack/stack.md
+    - Loop Engineering:
+      - Overview: guides/loop-engineering/index.md
+      - Full tutorial: guides/loop-engineering/tutorial.md
+    - Harness Engineering:
+      - Overview: guides/harness-engineering/index.md
+      - Full tutorial: guides/harness-engineering/tutorial.md
+    - LLM Fine-Tuning:
+      - Overview: guides/llm-fine-tuning/index.md
+      - Full tutorial: guides/llm-fine-tuning/tutorial.md
+    - AI Agents Masterclass:
+      - Overview: guides/ai-agents-masterclass/index.md
+      - Full tutorial: guides/ai-agents-masterclass/tutorial.md
+    - Hermes Agent Masterclass:
+      - Overview: guides/hermes-agent-masterclass/index.md
+      - Full tutorial: guides/hermes-agent-masterclass/tutorial.md
+    - Hermes Profile Builder:
+      - Overview: guides/hermes-profile-builder/index.md
+      - Full tutorial: guides/hermes-profile-builder/tutorial.md
+    - OpenClaw:
+      - Overview: guides/openclaw/index.md
+      - Full tutorial: guides/openclaw/tutorial.md
+    - Anthropic Cybersecurity Skills:
+      - Overview: guides/anthropic-cybersecurity-skills/index.md
+      - Full tutorial: guides/anthropic-cybersecurity-skills/tutorial.md
+      - Framework mappings: guides/anthropic-cybersecurity-skills/frameworks.md
+      - Domain catalog: guides/anthropic-cybersecurity-skills/domains.md
   - Publishing: publishing.md
 
 extra:

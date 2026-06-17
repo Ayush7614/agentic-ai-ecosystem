@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1200px;height:600px;overflow:hidden;font-family:Inter,sans-serif}
+#capture{width:1200px;height:600px;padding:40px 48px;display:flex;flex-direction:column;justify-content:center;
+  background:linear-gradient(165deg,#0a0f1a,#0f172a 50%,#1a1008);border:1px solid rgba(251,146,60,.2)}
+.eyebrow{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#fb923c;margin-bottom:10px}
+h1{font-size:34px;font-weight:800;color:#f8fafc;margin-bottom:28px} h1 span{color:#38bdf8}
+.row{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;width:100%}
+.node{opacity:.12;transform:translateY(10px);min-width:130px;padding:20px 16px;border-radius:14px;background:rgba(15,23,42,.9);border:1px solid rgba(51,65,85,.8);text-align:center}
+.node.on{opacity:1;transform:none}.node.hot{border-color:#38bdf8;box-shadow:0 0 28px rgba(56,189,248,.2)}
+.node h2{font-size:13px;font-weight:700;color:#f1f5f9}
+.node p{font-size:10px;color:#64748b;margin-top:6px}
+.arrow{font-size:22px;color:#334155;opacity:.15}.arrow.on{opacity:1;color:#fb923c}
+.stack{display:flex;flex-direction:column;gap:12px;width:100%;max-width:680px;margin:0 auto}
+.tier{opacity:.12;transform:translateX(-12px);padding:14px 18px;border-radius:12px;border:1px solid rgba(51,65,85,.7);background:rgba(15,23,42,.75);font-size:14px;color:#cbd5e1}
+.tier.on{opacity:1;transform:none}.tier.hot{border-color:#38bdf8}
+.tier strong{color:#fb923c;display:block;font-size:12px;margin-bottom:4px}
+.split{display:flex;gap:28px;width:100%;justify-content:center}
+.panel{flex:1;max-width:420px;padding:22px;border-radius:16px;border:1px solid rgba(51,65,85,.6);background:rgba(15,23,42,.7);opacity:.15}
+.panel.on{opacity:1}.panel h3{font-size:14px;font-weight:800;margin-bottom:10px}
+.panel.bad h3{color:#f87171}.panel.good h3{color:#6ee7b7}
+.panel li{font-size:12px;color:#94a3b8;margin:6px 0 6px 16px}
+</style>
+</head>
+<body>
+<div id="capture"><div class="eyebrow" id="eyebrow"></div><h1 id="title"></h1><div id="content"></div></div>
+<script>
+const D={
+  "harness-pattern":{e:"The pattern",t:'Task <span>→ harness → verify</span>',nodes:["You give task","Agent reads harness","Implements ONE feature","Runs verification","Stops when green"]},
+  "five-subsystems":{e:"Anatomy",t:'Five <span>subsystems</span>',type:"stack",tiers:[["Instructions","AGENTS.md · docs/ map · progressive disclosure"],["State","feature_list.json · claude-progress.md · git"],["Verification","tests · lint · typecheck · smoke"],["Scope","one feature · definition of done"],["Lifecycle","init.sh start · clean handoff end"]]},
+  "agents-map":{e:"Context",t:'Map not <span>encyclopedia</span>',type:"split",panels:[{cls:"bad",h:"❌ 1000-line AGENTS.md",items:["Crowds out task context","Rots instantly","Everything is important"]},{cls:"good",h:"✓ ~100 line map",items:["Points to docs/ truth","Agent reads on demand","CI validates links"]}]},
+  "session-lifecycle":{e:"Lifecycle",t:'16-step <span>session</span>',nodes:["Read harness","init.sh","Pick 1 feature","Implement","Verify loop","Update state","Commit handoff"]},
+  "planner-eval":{e:"Long runs",t:'Planner · Generator · <span>Evaluator</span>',nodes:["Plan contract","Generate code","Separate evaluator","No self-grade bias","Merge when all green"]},
+};
+function flow(nodes,p){const tot=nodes.length*2-1,vis=Math.ceil(p*tot);let h='<div class="row">',i=0;
+nodes.forEach((n,j)=>{h+=`<div class="node${i<vis?' on':''}${i===vis-1?' hot':''}"><h2>${n}</h2></div>`;i++;if(j<nodes.length-1){h+=`<span class="arrow${i<vis?' on':''}">→</span>`;i++;}});
+return h+'</div>';}
+function render(id,p){
+  const d=D[id];if(!d)return;
+  document.getElementById("eyebrow").textContent=d.e;
+  document.getElementById("title").innerHTML=d.t;
+  const el=document.getElementById("content");
+  if(d.type==="stack"){const v=Math.ceil(p*d.tiers.length);el.innerHTML='<div class="stack">'+d.tiers.map((t,i)=>`<div class="tier${i<v?' on':''}${i===v-1?' hot':''}"><strong>${t[0]}</strong>${t[1]}</div>`).join("")+'</div>';}
+  else if(d.type==="split"){el.innerHTML='<div class="split">'+d.panels.map((pl,i)=>`<div class="panel ${pl.cls}${p>.3+i*.35?' on':''}"><h3>${pl.h}</h3><ul>${pl.items.map(x=>`<li>${x}</li>`).join("")}</ul></div>`).join("")+'</div>';}
+  else el.innerHTML=flow(d.nodes,p);
+}
+const q=new URLSearchParams(location.search);
+render(q.get("diagram")||"harness-pattern",parseFloat(q.get("frame")||"1"));
+window.__READY=true;
+</script>
+</body>
+</html>
