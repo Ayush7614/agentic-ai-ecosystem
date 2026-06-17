@@ -32,6 +32,8 @@ flowchart TB
     global --> Claude
 ```
 
+<!-- arch-table -->
+
 | Piece | Path | Commit? | Role |
 |-------|------|---------|------|
 | **Team memory** | `CLAUDE.md` | ✓ | Loaded every session — stack, workflow, conventions |
