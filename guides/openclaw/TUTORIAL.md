@@ -401,25 +401,6 @@ chmod +x guides/openclaw/scripts/verify-openclaw.sh
 
 ---
 
-## Image placement (Medium / blog)
-
-Match visuals to section breaks:
-
-- After intro → `diagram-gateway-flow.gif`  
-- Part 1 architecture → `diagram-gateway-arch.gif`  
-- Install → `step-01-install.gif`  
-- Onboard → `step-02-onboard.gif`  
-- Dashboard → `step-03-dashboard.gif`  
-- CLI agent → `step-04-agent.gif`  
-- Workspace → `diagram-workspace.gif`  
-- Capabilities → `diagram-capabilities.gif`  
-- Channels → `step-05-channels.gif` then `diagram-channels.gif`  
-- Skills → `step-06-skills.gif` + `diagram-skill-levels.gif`  
-- Cron → `diagram-cron-heartbeat.gif`  
-- Multi-agent → `diagram-multi-agent.gif`  
-
----
-
 ## Official links
 
 - [openclaw.ai](https://openclaw.ai/) — product home  
