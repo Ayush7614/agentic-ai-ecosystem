@@ -26,6 +26,8 @@ flowchart LR
     B -->|reply| A
 ```
 
+<!-- arch-steps -->
+
 1. User messages **OpenClaw** on Telegram, WhatsApp, or CLI  
 2. **gemma4:e2b** handles chat and may invoke the **agentic-rag** skill  
 3. Skill runs `rag_query.sh` → **LitServe** `POST /predict` on port **8001**  
