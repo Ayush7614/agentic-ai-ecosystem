@@ -33,13 +33,13 @@
   </div></div>
   <script>
     const STEPS = {
-      "01-loop-scaffold": { user:"techlatest", path:"~/loop-agent", lines:[
+      "01-loop-scaffold": { user:"ayushkumar", path:"~/loop-agent", lines:[
         { type:"cmd", text:"mkdir loop-agent && cd loop-agent" },
         { type:"cmd", text:"cp ../examples/minimal_closed_loop.py ." },
         { type:"cmd", text:"cp ../examples/eval-gate.yaml ." },
         { type:"success", text:"Scaffold: loop script + eval gate config" },
       ]},
-      "02-test-gate": { user:"techlatest", path:"~/loop-agent", lines:[
+      "02-test-gate": { user:"ayushkumar", path:"~/loop-agent", lines:[
         { type:"cmd", text:"python minimal_closed_loop.py" },
         { type:"out", text:"# iter 1: initial implementation" },
         { type:"warn", text:"  eval: FAILED: test_addition expected 4 got 3" },
@@ -47,21 +47,21 @@
         { type:"success", text:"  eval: OK: 12 passed" },
         { type:"success", text:"✓ All unit tests pass (stopped at iteration 2)" },
       ]},
-      "03-eval-yaml": { user:"techlatest", path:"~/loop-agent", lines:[
+      "03-eval-yaml": { user:"ayushkumar", path:"~/loop-agent", lines:[
         { type:"cmd", text:"cat eval-gate.yaml" },
         { type:"out", text:"goal: All pytest pass; ruff clean" },
         { type:"info", text:"success: pytest_exit_code == 0" },
         { type:"info", text:"failure: max_iterations: 10 · no_progress_streak: 3" },
         { type:"success", text:"escalation: human_review on failure" },
       ]},
-      "04-max-iterations": { user:"techlatest", path:"~/loop-agent", lines:[
+      "04-max-iterations": { user:"ayushkumar", path:"~/loop-agent", lines:[
         { type:"out", text:"iter 8 · eval FAIL (same TypeError)" },
         { type:"out", text:"iter 9 · eval FAIL (same TypeError)" },
         { type:"out", text:"iter 10 · eval FAIL (same TypeError)" },
         { type:"warn", text:"no_progress_streak=3 → halt loop" },
         { type:"success", text:"✗ Escalate to human — include iteration_log" },
       ]},
-      "05-multi-agent": { user:"techlatest", path:"~/loop-agent", lines:[
+      "05-multi-agent": { user:"ayushkumar", path:"~/loop-agent", lines:[
         { type:"cmd", text:"orchestrator run --goal 'Ship auth module'" },
         { type:"info", text:"→ planner: 3 subtasks" },
         { type:"info", text:"→ coder loop until pytest green" },
@@ -69,7 +69,7 @@
         { type:"success", text:"global eval PASS · fleet idle" },
       ]},
     };
-    function prompt(u,p){return `<span class="prompt-user">${u}</span><span class="prompt-path"> (${p})</span><span class="prompt-arrow">⇒</span>`;}
+    function prompt(u,p){return `<span class="prompt-user">(base) ${u}@Ayushs-Mac-mini</span><span class="prompt-path"> ${p}</span><span class="prompt-arrow">%</span>`;}
     function renderStep(id, progress) {
       const s = STEPS[id]; if (!s) return;
       const vis = Math.ceil(progress * s.lines.length);

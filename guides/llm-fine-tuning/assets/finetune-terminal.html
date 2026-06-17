@@ -32,38 +32,38 @@
   </div></div>
   <script>
     const STEPS = {
-      "01-peft-install": { user:"techlatest", path:"~/llm-ft", lines:[
+      "01-peft-install": { user:"ayushkumar", path:"~/llm-ft", lines:[
         { type:"cmd", text:'pip install "transformers>=4.44" peft accelerate datasets bitsandbytes trl' },
         { type:"success", text:"Installed PEFT + TRL stack" },
         { type:"cmd", text:"python -c \"import peft, trl; print('ready')\"" },
         { type:"success", text:"ready" },
       ]},
-      "02-lora-train": { user:"techlatest", path:"~/llm-ft", lines:[
+      "02-lora-train": { user:"ayushkumar", path:"~/llm-ft", lines:[
         { type:"cmd", text:"python examples/lora_train.py" },
         { type:"info", text:"trainable params: 1,179,648 (0.94%)" },
         { type:"out", text:"Epoch 1/1 · loss 1.42 → 0.89" },
         { type:"success", text:"Saved adapter → ./lora-out/adapter" },
       ]},
-      "03-qlora-train": { user:"techlatest", path:"~/llm-ft", lines:[
+      "03-qlora-train": { user:"ayushkumar", path:"~/llm-ft", lines:[
         { type:"cmd", text:"./examples/qlora_train.sh" },
         { type:"info", text:"4-bit NF4 base · bf16 LoRA adapters" },
         { type:"warn", text:"VRAM ~14GB · grad_accum 16" },
         { type:"success", text:"QLoRA checkpoint → ./qlora-out" },
       ]},
-      "04-merge-lora": { user:"techlatest", path:"~/llm-ft", lines:[
+      "04-merge-lora": { user:"ayushkumar", path:"~/llm-ft", lines:[
         { type:"cmd", text:"python -c \"from peft import PeftModel; ... merge_and_unload()\"" },
         { type:"info", text:"W' = W + (alpha/r) · B×A baked in" },
         { type:"success", text:"Merged model → ./merged-model" },
         { type:"dim", text:"# Same inference speed as base checkpoint" },
       ]},
-      "05-dpo-train": { user:"techlatest", path:"~/llm-ft", lines:[
+      "05-dpo-train": { user:"ayushkumar", path:"~/llm-ft", lines:[
         { type:"cmd", text:"python examples/dpo_train.py" },
         { type:"info", text:"Preference pairs · beta=0.1 · ref model frozen" },
         { type:"out", text:"reward margin ↑ chosen vs rejected" },
         { type:"success", text:"DPO adapter → ./dpo-out" },
       ]},
     };
-    function prompt(u,p){return `<span class="prompt-user">${u}</span><span class="prompt-path"> (${p})</span><span class="prompt-arrow">⇒</span>`;}
+    function prompt(u,p){return `<span class="prompt-user">(base) ${u}@Ayushs-Mac-mini</span><span class="prompt-path"> ${p}</span><span class="prompt-arrow">%</span>`;}
     function renderStep(id, progress) {
       const s = STEPS[id]; if (!s) return;
       const vis = Math.ceil(progress * s.lines.length);

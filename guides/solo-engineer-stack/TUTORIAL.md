@@ -981,7 +981,7 @@ python3 render_table_gifs.py all
 
 Source: `tutorial-tables.html` · Static PNGs: same name with `.png`
 
-Terminal prompt user: **techlatest** (matches ecosystem blog style).
+Terminal prompt: **`(base) ayushkumar@Ayushs-Mac-mini ~ %`** (local macOS zsh style).
 
 ---
 

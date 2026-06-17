@@ -26,41 +26,41 @@
   </div></div>
   <script>
     const STEPS = {
-      "01-install": { user: "techlatest", path: "~", lines: [
+      "01-install": { user: "ayushkumar", path: "~", lines: [
         { type: "cmd", text: "curl -fsSL https://openclaw.ai/install.sh | bash" },
         { type: "success", text: "OpenClaw installed · Node 24 ready" },
         { type: "dim", text: "# or: npm install -g openclaw@latest" },
       ]},
-      "02-onboard": { user: "techlatest", path: "~", lines: [
+      "02-onboard": { user: "ayushkumar", path: "~", lines: [
         { type: "cmd", text: "openclaw onboard --install-daemon" },
         { type: "info", text: "Gateway · provider · workspace · Telegram · daemon" },
         { type: "cmd", text: "openclaw doctor" },
         { type: "success", text: "All checks passed" },
       ]},
-      "03-dashboard": { user: "techlatest", path: "~", lines: [
+      "03-dashboard": { user: "ayushkumar", path: "~", lines: [
         { type: "cmd", text: "openclaw dashboard" },
         { type: "success", text: "Control UI → http://127.0.0.1:18789/" },
         { type: "info", text: "Chat · sessions · config · channel status" },
       ]},
-      "04-agent": { user: "techlatest", path: "~", lines: [
+      "04-agent": { user: "ayushkumar", path: "~", lines: [
         { type: "cmd", text: 'openclaw agent --message "Summarize today\'s calendar" --thinking low' },
         { type: "info", text: "Agent uses tools · memory · skills as needed" },
         { type: "success", text: "Reply streamed to terminal" },
       ]},
-      "05-channels": { user: "techlatest", path: "~", lines: [
+      "05-channels": { user: "ayushkumar", path: "~", lines: [
         { type: "cmd", text: "openclaw gateway restart" },
         { type: "info", text: "Telegram bot connected · WhatsApp allowlist active" },
         { type: "dim", text: "# edit ~/.openclaw/openclaw.json → channels.*" },
         { type: "success", text: "Message from phone → Gateway → agent" },
       ]},
-      "06-skills": { user: "techlatest", path: "~", lines: [
+      "06-skills": { user: "ayushkumar", path: "~", lines: [
         { type: "cmd", text: "openclaw skills search whoop" },
         { type: "cmd", text: "openclaw skills install <slug>" },
         { type: "success", text: "SKILL.md → ~/.openclaw/workspace/skills/" },
         { type: "dim", text: "# browse https://clawhub.ai" },
       ]},
     };
-    function prompt(u,p){return `<span class="prompt-user">${u}</span><span class="prompt-path"> (${p})</span><span class="prompt-arrow">⇒</span>`;}
+    function prompt(u,p){return `<span class="prompt-user">(base) ${u}@Ayushs-Mac-mini</span><span class="prompt-path"> ${p}</span><span class="prompt-arrow">%</span>`;}
     function renderStep(id, progress) {
       const step = STEPS[id]; if (!step) return;
       const total = step.lines.length;
