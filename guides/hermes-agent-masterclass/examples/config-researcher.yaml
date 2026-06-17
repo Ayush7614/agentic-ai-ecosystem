@@ -1,0 +1,16 @@
+# ~/.hermes/profiles/researcher/config.yaml
+
+model:
+  default: anthropic/claude-sonnet-4
+  provider: openrouter
+
+agent:
+  disabled_toolsets: ["browser"]
+
+mcp_servers:
+  filesystem:
+    command: npx
+    args:
+      - "-y"
+      - "@modelcontextprotocol/server-filesystem"
+      - "/home/user/projects"

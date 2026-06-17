@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Hermes Masterclass — Tables</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:#0f1419;display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:Inter,system-ui,sans-serif}
+    #capture{width:var(--w,1040px);background:linear-gradient(165deg,#0b1020,#1a2444 48%,#0b1020);border-radius:20px;padding:28px 32px;border:1px solid rgba(129,140,248,.18);box-shadow:0 24px 80px rgba(0,0,0,.55)}
+    .eyebrow{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#818cf8;margin-bottom:6px}
+    h1{font-size:22px;font-weight:800;color:#f8fafc} h1 span{color:#6ee7b7}
+    .sub{margin-top:6px;font-size:12px;color:#94a3b8}
+    table{width:100%;border-collapse:collapse;font-size:12px;margin-top:14px}
+    th{text-align:left;padding:8px 10px;color:#64748b;font-size:10px;text-transform:uppercase;border-bottom:2px solid #334155}
+    tr{opacity:.12;transform:translateY(4px)} tr.visible{opacity:1;transform:none}
+    tr.active{background:rgba(110,231,183,.08)} tr.active td:first-child{box-shadow:inset 3px 0 0 #6ee7b7}
+    td{padding:8px 10px;color:#cbd5e1;border-bottom:1px solid rgba(51,65,85,.55);vertical-align:top}
+    td strong{color:#f1f5f9} td.mono{font-family:"JetBrains Mono",monospace;font-size:11px;color:#a5b4fc}
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+    .card{opacity:.12;transform:translateY(6px);background:rgba(15,23,42,.75);border:1px solid rgba(51,65,85,.7);border-radius:12px;padding:14px}
+    .card.visible{opacity:1;transform:none}.card.active{border-color:#6ee7b7}
+    .card h3{font-size:13px;color:#6ee7b7;margin-bottom:6px}.card p{font-size:11px;color:#94a3b8;line-height:1.45}
+  </style>
+</head>
+<body>
+  <div id="capture"><div class="eyebrow" id="eyebrow"></div><h1 id="title"></h1><p class="sub" id="sub"></p><div id="content"></div></div>
+  <script>
+    const T = {
+      "demo-three-agents": { w:"980px", eyebrow:"End state", title:'Three <span>isolated agents</span>', sub:"Designer · Programmer · Researcher — each with SOUL, memory, skills, Telegram",
+        cards:[["Designer","Hand-drawn ML/AI illustrations · my-design-style skill"],["Programmer","Staff engineer · Claude Code execution"],["Researcher","Daily AI/ML digest · weekday cron → Telegram"]]},
+      "hermes-vs-openclaw": { w:"1000px", eyebrow:"Architecture", title:'Hermes <span>vs</span> OpenClaw', sub:"Kilo framing: gateway around learning agent vs agent around gateway",
+        rows:[["Center of gravity","Learning loop + skills + memory","Messaging gateway + channels"],["Skills","~/.hermes/skills + self-authoring","~/.openclaw/workspace/skills"],["Self-improve","Curator + GEPA pipeline","Community skills; no built-in Curator"],["Migration","hermes claw migrate","—"]], cols:["","Hermes","OpenClaw"]},
+      "curator-phases": { w:"920px", eyebrow:"Curator", title:'Skill <span>garbage collection</span>', sub:"7 days + 2h idle → background fork",
+        rows:[["Auto","30d unused → stale"],["Auto","90d unused → archived"],["LLM","Up to 8 passes: keep / patch / consolidate / archive"],["Safety","Hub + bundled skills untouched · tar.gz snapshot first"]], cols:["Phase","Action"]},
+      "skills-hub": { w:"900px", eyebrow:"Skills Hub", title:'687 skills · <span>18 categories</span>', sub:"Official Hermes catalog (counts at time of writing)",
+        rows:[["Built-in","87 ship with agent"],["Optional","79 enable on demand"],["Anthropic","16 (pdf, pptx, frontend-design, …)"],["LobeHub","505 community contributions"]], cols:["Source","Count"]},
+      "three-souls": { w:"1060px", eyebrow:"SOUL.md", title:'Three <span>personalities</span>', sub:"Slot #1 in system prompt — per profile",
+        cards:[["Designer","Whiteboard sketches · opinionated composition · no polish theater"],["Programmer","Terse staff engineer · smallest change · tests before done"],["Researcher","Daily digest · four streams · cite every URL"]]},
+    };
+    function render(id, prog) {
+      const t = T[id]; if (!t) return;
+      document.getElementById("capture").style.setProperty("--w", t.w);
+      document.getElementById("eyebrow").textContent = t.eyebrow;
+      document.getElementById("title").innerHTML = t.title;
+      document.getElementById("sub").textContent = t.sub;
+      const el = document.getElementById("content");
+      if (t.cards) {
+        const vis = Math.ceil(prog * t.cards.length);
+        el.innerHTML = '<div class="cards">' + t.cards.map((c,i)=>
+          `<div class="card${i<vis?" visible":""}${i===vis-1?" active":""}"><h3>${c[0]}</h3><p>${c[1]}</p></div>`).join("") + '</div>';
+        return;
+      }
+      const vis = Math.ceil(prog * t.rows.length);
+      el.innerHTML = "<table><thead><tr>" + t.cols.map(c=>`<th>${c}</th>`).join("") + "</tr></thead><tbody>" +
+        t.rows.map((r,i)=>`<tr class="${i<vis?"visible":""}${i===vis-1?" active":""}">` +
+          r.map((c,j)=>`<td class="${j?"":""}">${j===0?`<strong>${c}</strong>`:c}</td>`).join("") + "</tr>").join("") + "</tbody></table>";
+    }
+    const p = new URLSearchParams(location.search);
+    render(p.get("table")||"demo-three-agents", parseFloat(p.get("frame")||"1"));
+    window.__READY = true;
+  </script>
+</body>
+</html>
