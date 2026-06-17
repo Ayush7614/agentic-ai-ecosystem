@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Loop Engineering — Diagrams</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{width:1200px;height:600px;overflow:hidden;font-family:Inter,sans-serif}
+    body{background:#0a0f1a;display:flex;align-items:center;justify-content:center}
+    #capture{width:1200px;height:600px;padding:48px 56px;display:flex;flex-direction:column;justify-content:center;
+      background:linear-gradient(165deg,#0a0f1a,#1a0a2e 45%,#0a2030 80%,#0a0f1a);border-radius:0;border:1px solid rgba(244,114,182,.22)}
+    .eyebrow{font-size:14px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#f472b6;margin-bottom:12px}
+    h1{font-size:38px;font-weight:800;color:#f8fafc;margin-bottom:36px} h1 span{color:#38bdf8}
+    #content{flex:1;display:flex;align-items:center;justify-content:center}
+    .row{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;width:100%}
+    .node{opacity:.15;transform:translateY(8px);min-width:148px;padding:22px 18px;border-radius:14px;background:rgba(15,23,42,.85);border:1px solid rgba(51,65,85,.8);text-align:center}
+    .node.visible{opacity:1;transform:none}.node.active{border-color:#f472b6;box-shadow:0 0 24px rgba(244,114,182,.15)}
+    .node h2{font-size:15px;color:#f1f5f9;line-height:1.35;font-weight:600}
+    .arrow{color:#475569;font-size:26px;opacity:.2}.arrow.visible{opacity:1;color:#38bdf8}
+    .stack{display:flex;flex-direction:column;gap:14px;max-width:720px;width:100%;margin:0 auto}
+    .tier{opacity:.15;transform:translateX(-8px);padding:16px 20px;border-radius:12px;border:1px solid rgba(51,65,85,.7);background:rgba(15,23,42,.75);font-size:16px;color:#cbd5e1}
+    .tier.visible{opacity:1;transform:none}.tier.active{border-color:#38bdf8}
+    .tier strong{color:#f472b6;display:block;margin-bottom:6px;font-size:14px}
+    .cols{display:flex;gap:32px;justify-content:center;flex-wrap:wrap;width:100%}
+    .col{flex:1;min-width:280px;max-width:480px;opacity:.15;transform:translateY(8px);padding:24px;border-radius:16px;border:1px solid rgba(51,65,85,.6);background:rgba(15,23,42,.6)}
+    .col.visible{opacity:1;transform:none}.col.active{border-color:#f472b6}
+    .col h3{font-size:16px;color:#f472b6;margin-bottom:10px}
+    .col p{font-size:14px;color:#94a3b8;line-height:1.55}
+    .ring{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
+    .pill{opacity:.15;transform:scale(.95);padding:12px 20px;border-radius:999px;background:rgba(244,114,182,.1);border:1px solid rgba(244,114,182,.28);font-size:14px;color:#fbcfe8;font-weight:600}
+    .pill.visible{opacity:1;transform:scale(1)}.pill.active{border-color:#38bdf8;color:#bae6fd}
+    .tree{display:flex;flex-direction:column;align-items:center;gap:14px}
+    .tree .n{opacity:.15;padding:14px 24px;border-radius:10px;border:1px solid #334155;font-size:14px;color:#e2e8f0;font-weight:600}
+    .tree .n.visible{opacity:1}.tree .n.root{border-color:#f472b6;color:#f472b6;font-size:16px}
+    .tree .row2{display:flex;gap:18px;flex-wrap:wrap;justify-content:center}
+  </style>
+</head>
+<body>
+  <div id="capture"><div class="eyebrow" id="eyebrow"></div><h1 id="title"></h1><div id="content"></div></div>
+  <script>
+    const D = {
+      "manual-vs-loop": { eyebrow:"Workflow shift", title:'Manual chat <span>→ agent loop</span>',
+        nodes:["You prompt","Review","You prompt","Review","Automated eval loop"] },
+      "single-loop": { eyebrow:"Single agent", title:'Internal <span>revision cycle</span>',
+        nodes:["Research","Produce","Check goal","Fix weak","Repeat"] },
+      "react-cycle": { eyebrow:"ReAct", title:'Reason + <span>Act</span>',
+        nodes:["Reason","Act (tool)","Observe","Reason again"] },
+      "eval-gate": { eyebrow:"Engineering", title:'Eval <span>gate</span>',
+        nodes:["Output","Run criteria","Pass → exit","Fail → retry","Max iter → escalate"] },
+      "fleet-tree": { eyebrow:"Fleet", title:'Orchestrator <span>tree</span>', type:"tree" },
+      "open-closed": { eyebrow:"Production", title:'Open vs <span>closed</span>', type:"compare",
+        cols:[["Open loop","Wide space · explore · high token cost · slop risk"],["Closed loop","Defined path · gates · predictable budget · auditable"]] },
+      "five-parts": { eyebrow:"Anatomy", title:'Five <span>parts</span>', type:"stack",
+        tiers:[["Goal","Testable termination — not vibes"],["Tools","Code · shell · tests · search"],["Context","Summarize · prune · log attempts"],["Termination","Success · max iter · escalate"],["Errors","Adapt strategy — don't spin"]] },
+      "patterns-menu": { eyebrow:"Patterns", title:'Loop <span>patterns</span>', type:"pills",
+        pills:["Retry","Plan-execute-verify","Explore-narrow","Human-in-the-loop"] },
+      "frameworks-flow": { eyebrow:"Infra", title:'Framework <span>loops</span>',
+        nodes:["LangGraph checkpoint","Swarm handoff","MCP tools","Hermes ReAct","OpenClaw gateway"] },
+      "failure-modes": { eyebrow:"Hygiene", title:'How loops <span>fail</span>', type:"compare",
+        cols:[["Open fails wrong","Keeps going · burns tokens · looks done"],["Closed fails wrong","Stops at gate · trace · fix eval"]] },
+    };
+    function flow(nodes, prog) {
+      const total = nodes.length * 2 - 1, vis = Math.ceil(prog * total);
+      let html = '<div class="row">', idx = 0;
+      nodes.forEach((n,i) => {
+        html += `<div class="node${idx<vis?" visible":""}${idx===vis-1?" active":""}"><h2>${n}</h2></div>`; idx++;
+        if (i < nodes.length-1) { html += `<span class="arrow${idx<vis?" visible":""}">→</span>`; idx++; }
+      });
+      return html + '</div>';
+    }
+    function render(id, prog) {
+      const d = D[id]; if (!d) return;
+      document.getElementById("eyebrow").textContent = d.eyebrow;
+      document.getElementById("title").innerHTML = d.title;
+      const el = document.getElementById("content");
+      if (d.type === "stack") {
+        const vis = Math.ceil(prog * d.tiers.length);
+        el.innerHTML = '<div class="stack">' + d.tiers.map((t,i)=>
+          `<div class="tier${i<vis?" visible":""}${i===vis-1?" active":""}"><strong>${t[0]}</strong>${t[1]}</div>`).join('') + '</div>';
+      } else if (d.type === "pills") {
+        const vis = Math.ceil(prog * d.pills.length);
+        el.innerHTML = '<div class="ring">' + d.pills.map((p,i)=>
+          `<span class="pill${i<vis?" visible":""}${i===vis-1?" active":""}">${p}</span>`).join('') + '</div>';
+      } else if (d.type === "compare") {
+        const vis = Math.ceil(prog * 2);
+        el.innerHTML = '<div class="cols">' + d.cols.map((c,i)=>
+          `<div class="col${i<vis?" visible":""}${i===vis-1?" active":""}"><h3>${c[0]}</h3><p>${c[1]}</p></div>`).join('') + '</div>';
+      } else if (d.type === "tree") {
+        const s = prog;
+        el.innerHTML = `<div class="tree">
+          <div class="n root${s>.15?" visible":""}">Orchestrator</div>
+          <div class="row2">
+            <div class="n${s>.4?" visible":""}">Researcher loop</div>
+            <div class="n${s>.55?" visible":""}">Coder loop</div>
+            <div class="n${s>.7?" visible":""}">Reviewer loop</div>
+          </div>
+          <div class="row2">
+            <div class="n${s>.85?" visible":""}">Subagent tasks</div>
+          </div>
+        </div>`;
+      } else el.innerHTML = flow(d.nodes, prog);
+    }
+    const p = new URLSearchParams(location.search);
+    render(p.get("diagram")||"manual-vs-loop", parseFloat(p.get("frame")||"1"));
+    window.__READY = true;
+  </script>
+</body>
+</html>

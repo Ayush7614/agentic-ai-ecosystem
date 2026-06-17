@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PulseFeedback — Solo Engineer Stack Demo</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <span class="logo">◉</span>
+      <div>
+        <h1>PulseFeedback</h1>
+        <p>Live demo · 10-tool Solo Engineer Stack</p>
+      </div>
+    </div>
+    <nav>
+      <button class="tab active" data-tab="submit">Submit</button>
+      <button class="tab" data-tab="dashboard">Dashboard</button>
+      <button class="tab" data-tab="analytics">Analytics</button>
+      <button class="tab" data-tab="support">Support</button>
+      <button class="tab" data-tab="stack">10 Tools</button>
+    </nav>
+  </header>
+
+  <main>
+    <section id="submit" class="panel active">
+      <h2>Submit feedback</h2>
+      <p class="hint">End-user widget — maps to OpenHands/Aider/Cline built API.</p>
+      <form id="feedback-form">
+        <label>Title<input name="title" required placeholder="Dark mode please" /></label>
+        <label>Details<textarea name="body" required rows="4" placeholder="Would love a dark theme for the dashboard."></textarea></label>
+        <label>Email (optional)<input name="email" type="email" placeholder="you@example.com" /></label>
+        <button type="submit">Send feedback</button>
+      </form>
+      <pre id="submit-result" class="result"></pre>
+    </section>
+
+    <section id="dashboard" class="panel">
+      <h2>Triage dashboard</h2>
+      <p class="hint">Founder view — change status: new → triaged → done.</p>
+      <div id="feedback-list" class="cards"></div>
+    </section>
+
+    <section id="analytics" class="panel">
+      <h2>PostHog-style events</h2>
+      <p class="hint">Live event stream from <code>/api/events</code> — wire to PostHog in production.</p>
+      <button id="refresh-events">Refresh</button>
+      <table id="events-table">
+        <thead><tr><th>Time</th><th>Event</th><th>Properties</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <section id="support" class="panel">
+      <h2>Chatwoot + CSAT loop</h2>
+      <p class="hint">Low CSAT (≤2) triggers n8n → Task Master loop. Try score 1 to see artifact created.</p>
+      <form id="csat-form">
+        <label>CSAT score (1–5)
+          <input name="score" type="number" min="1" max="5" value="2" required />
+        </label>
+        <label>Comment<textarea name="comment" rows="3" placeholder="Bot didn't answer my question"></textarea></label>
+        <button type="submit">Submit CSAT (webhook demo)</button>
+      </form>
+      <pre id="csat-result" class="result"></pre>
+    </section>
+
+    <section id="stack" class="panel">
+      <h2>Deca-Loop — 10 tools</h2>
+      <p class="hint">Green = artifact live in this repo. Open links during your demo.</p>
+      <div id="stack-grid" class="stack-grid"></div>
+    </section>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

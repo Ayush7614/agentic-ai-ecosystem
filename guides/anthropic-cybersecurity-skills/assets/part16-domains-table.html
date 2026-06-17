@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Part 16 — 26 Security Domains</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@500;700;800&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #0f1419;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      font-family: Inter, system-ui, sans-serif;
+    }
+    #capture {
+      width: 1040px;
+      background: linear-gradient(165deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+      border-radius: 20px;
+      padding: 28px 32px 32px;
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 18px;
+    }
+    h1 { font-size: 24px; font-weight: 800; color: #f8fafc; letter-spacing: -0.03em; }
+    h1 span { color: #6fdc8c; }
+    .badge {
+      font-size: 11px; font-weight: 600; color: #94a3b8;
+      background: rgba(15,23,42,0.8); border: 1px solid rgba(110,179,255,0.3);
+      border-radius: 10px; padding: 8px 12px;
+    }
+    .badge strong { color: #5eb3ff; }
+    table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+    thead th {
+      text-align: left; padding: 8px 10px;
+      color: #64748b; font-weight: 700; font-size: 10px;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      border-bottom: 2px solid #334155;
+    }
+    tbody tr {
+      opacity: 0.15;
+      transform: translateY(4px);
+      transition: none;
+    }
+    tbody tr.visible { opacity: 1; transform: translateY(0); }
+    tbody tr.active { background: rgba(111, 220, 140, 0.08); }
+    tbody tr.active td:first-child { box-shadow: inset 3px 0 0 #6fdc8c; }
+    td { padding: 5px 10px; color: #cbd5e1; border-bottom: 1px solid rgba(51,65,85,0.6); vertical-align: top; }
+    td.domain { color: #f1f5f9; font-weight: 600; white-space: nowrap; }
+    td.count {
+      font-family: "JetBrains Mono", monospace;
+      color: #6fdc8c; font-weight: 600; text-align: right; width: 52px;
+    }
+    td.cap { color: #94a3b8; font-size: 10.5px; line-height: 1.35; }
+    .footer {
+      margin-top: 12px; font-size: 10px; color: #64748b; text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="capture">
+    <div class="header">
+      <h1>Part 16 · <span>26 Security Domains</span></h1>
+      <div class="badge"><strong>754</strong> skills total</div>
+    </div>
+    <table>
+      <thead>
+        <tr><th>Domain</th><th style="text-align:right">Skills</th><th>Key capabilities</th></tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <div class="footer">Anthropic Cybersecurity Skills · agentskills.io</div>
+  </div>
+  <script>
+    const DATA = [
+      ["Cloud Security", 60, "AWS, Azure, GCP hardening · CSPM · cloud forensics"],
+      ["Threat Hunting", 55, "Hypothesis-driven hunts · LOTL · behavioral analytics"],
+      ["Threat Intelligence", 50, "STIX/TAXII · MISP · actor profiling"],
+      ["Web Application Security", 42, "OWASP Top 10 · SQLi · XSS · SSRF"],
+      ["Network Security", 40, "IDS/IPS · firewall · traffic analysis"],
+      ["Malware Analysis", 39, "Static/dynamic · RE · sandboxing"],
+      ["Digital Forensics", 37, "Disk imaging · memory · timeline"],
+      ["Security Operations", 36, "SIEM · log analysis · triage"],
+      ["Identity & Access Management", 35, "IAM · PAM · zero trust · Okta"],
+      ["SOC Operations", 33, "Playbooks · escalation · tabletop"],
+      ["Container Security", 30, "K8s RBAC · Falco · image scanning"],
+      ["OT/ICS Security", 28, "Modbus · DNP3 · IEC 62443 · SCADA"],
+      ["API Security", 28, "GraphQL · REST · OWASP API Top 10"],
+      ["Vulnerability Management", 25, "Nessus · CVSS · patch prioritization"],
+      ["Incident Response", 25, "Containment · ransomware IR"],
+      ["Red Teaming", 24, "Full-scope · AD · phishing simulation"],
+      ["Penetration Testing", 23, "Network · web · cloud · mobile"],
+      ["Endpoint Security", 17, "EDR · fileless · persistence"],
+      ["DevSecOps", 17, "CI/CD · Terraform audit"],
+      ["Phishing Defense", 16, "BEC · email auth · phishing IR"],
+      ["Cryptography", 14, "TLS · CT logs · key management"],
+      ["Zero Trust Architecture", 13, "BeyondCorp · microsegmentation"],
+      ["Mobile Security", 12, "Android/iOS · MDM forensics"],
+      ["Ransomware Defense", 7, "Precursor detection · recovery"],
+      ["Compliance & Governance", 5, "CIS · SOC 2"],
+      ["Deception Technology", 2, "Honeytokens · canaries"],
+    ];
+
+    const progress = parseFloat(new URLSearchParams(location.search).get("frame") || "1");
+    const total = DATA.length;
+    const visible = Math.min(total, Math.max(0, Math.ceil(progress * total)));
+    const activeIdx = Math.min(total - 1, Math.max(0, visible - 1));
+
+    const tbody = document.getElementById("rows");
+    DATA.forEach(([domain, count, cap], i) => {
+      const tr = document.createElement("tr");
+      if (i < visible) tr.classList.add("visible");
+      if (i === activeIdx && visible > 0) tr.classList.add("active");
+      tr.innerHTML = `<td class="domain">${domain}</td><td class="count">${count}</td><td class="cap">${cap}</td>`;
+      tbody.appendChild(tr);
+    });
+    window.__READY = true;
+  </script>
+</body>
+</html>

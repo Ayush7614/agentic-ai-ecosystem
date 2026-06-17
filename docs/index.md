@@ -17,6 +17,15 @@ Maintained by [Ayush Kumar](https://github.com/Ayush7614) · [NeuralVerse](https
 | [MCP Visual Guide](guides/mcp-visual-guide/index.md) | Model Context Protocol — host/client/server, capability exchange, API vs MCP, App MCP |
 
 | [ML Model in 6 Steps](guides/ml-model-6-steps/index.md) | Visual ML pipeline — problem framing through deploy and monitor with animated GIFs |
+| [Solo Engineer Stack](guides/solo-engineer-stack/index.md) | Build PulseFeedback with 10 equal tools — PM to support in one closed loop |
+| [Loop Engineering](guides/loop-engineering/index.md) | Act, observe, repeat — eval gates, open vs closed loops, fleet patterns, ReAct |
+| [Harness Engineering](guides/harness-engineering/index.md) | Agent = Model + Harness — five subsystems, session lifecycle, verification gates |
+| [LLM Fine-Tuning](guides/llm-fine-tuning/index.md) | LoRA, QLoRA, RLHF, DPO, GRPO — when to fine-tune, PEFT math, HuggingFace walkthroughs |
+| [AI Agents Masterclass](guides/ai-agents-masterclass/index.md) | **Visual masterclass** — agent anatomy, ReAct/ReWOO, 15+ frameworks, use cases, MCP/A2A, five code examples |
+| [Hermes Agent Masterclass](guides/hermes-agent-masterclass/index.md) | **Complete Hermes guide** — learning loop, Profile Builder, memory, Curator, GEPA, three agents |
+| [Hermes Profile Builder](guides/hermes-profile-builder/index.md) | Quick index — full Profile Builder walkthrough in Masterclass Parts 11–12 |
+| [OpenClaw](guides/openclaw/index.md) | Install and extend the personal AI assistant from openclaw.ai — gateway, channels, skills |
+| [Anthropic Cybersecurity Skills](guides/anthropic-cybersecurity-skills/index.md) | 754 MITRE-mapped security skills for AI agents — install, frameworks, SOC walkthroughs |
 Each guide is a self-contained project under `guides/<name>/` in the repo. The site pages mirror those READMEs and tutorials so you can read online without cloning.
 
 ## Run locally (any guide)

@@ -1,0 +1,30 @@
+{
+  "app": "knowledge-base-desktop",
+  "features": [
+    {
+      "id": "F01",
+      "title": "Import local markdown files",
+      "passes": true,
+      "evidence": "tests/import.test.ts — 2026-06-01"
+    },
+    {
+      "id": "F02",
+      "title": "Document library list view",
+      "passes": true,
+      "evidence": "e2e/library.spec.ts"
+    },
+    {
+      "id": "F03",
+      "title": "Index documents for search",
+      "passes": false,
+      "notes": "in progress — indexer stub only"
+    },
+    {
+      "id": "F04",
+      "title": "Grounded Q&A with citations",
+      "passes": false,
+      "notes": "blocked on F03"
+    }
+  ],
+  "next": "F03"
+}

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>OpenClaw Blog Poster 1200x600</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      margin: 0;
+      background: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    #capture {
+      width: 1200px;
+      height: 600px;
+      overflow: hidden;
+      position: relative;
+      background: linear-gradient(135deg, #0a1628 0%, #0f2419 38%, #1a2e1a 62%, #3d1f0a 100%);
+      font-family: Inter, system-ui, sans-serif;
+      color: #fff;
+    }
+    .glow {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.45;
+    }
+    .glow-a { width: 480px; height: 480px; top: -120px; left: -80px; background: #ff9f6b; }
+    .glow-b { width: 420px; height: 420px; bottom: -100px; right: 60px; background: #22c55e; opacity: 0.28; }
+    .lobster {
+      position: absolute;
+      right: 48px;
+      bottom: 36px;
+      font-size: 120px;
+      opacity: 0.12;
+      line-height: 1;
+      user-select: none;
+    }
+    .content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      padding: 48px 56px;
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 32px;
+      align-items: center;
+    }
+    .eyebrow {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #ff9f6b;
+      margin-bottom: 14px;
+    }
+    h1 {
+      font-size: 52px;
+      line-height: 1.04;
+      font-weight: 800;
+      letter-spacing: -2px;
+      margin-bottom: 16px;
+    }
+    h1 .brand { color: #ff9f6b; }
+    h1 .sub { color: #86efac; }
+    .subtitle {
+      font-size: 20px;
+      line-height: 1.45;
+      color: rgba(255,255,255,0.82);
+      max-width: 520px;
+      margin-bottom: 26px;
+    }
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .tag {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 8px 14px;
+      border-radius: 10px;
+      background: rgba(255,159,107,0.12);
+      border: 1px solid rgba(255,159,107,0.35);
+      color: #fed7aa;
+    }
+    .panel {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 22px;
+      padding: 26px 28px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+    }
+    .panel-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #86efac;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 14px;
+      border-radius: 12px;
+      background: rgba(0,0,0,0.22);
+      border: 1px solid rgba(255,255,255,0.08);
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .step-num {
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #ff9f6b, #ea580c);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+    .step code {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 11px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.5);
+      margin-left: auto;
+    }
+    .footer {
+      position: absolute;
+      bottom: 28px;
+      left: 56px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.45);
+      font-weight: 600;
+      z-index: 3;
+    }
+    .footer strong { color: rgba(255,159,107,0.85); }
+  </style>
+</head>
+<body>
+  <div id="capture">
+    <div class="glow glow-a"></div>
+    <div class="glow glow-b"></div>
+    <div class="lobster" aria-hidden="true">🦞</div>
+
+    <div class="content">
+      <div>
+        <div class="eyebrow">Agentic AI Ecosystem · Tutorial</div>
+        <h1>
+          <span class="brand">OpenClaw</span><br/>
+          <span class="sub">Personal AI Assistant</span>
+        </h1>
+        <p class="subtitle">
+          The AI that actually does things — self-hosted gateway, chat apps, skills, and cron on your machine.
+        </p>
+        <div class="tags">
+          <span class="tag">openclaw onboard</span>
+          <span class="tag">:18789</span>
+          <span class="tag">ClawHub</span>
+          <span class="tag">SOUL.md</span>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">Tutorial path</div>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div> Install &amp; onboard <code>install.sh</code></div>
+          <div class="step"><div class="step-num">2</div> Gateway + dashboard <code>:18789</code></div>
+          <div class="step"><div class="step-num">3</div> Telegram · WhatsApp · Discord</div>
+          <div class="step"><div class="step-num">4</div> Skills · memory · cron</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer"><strong>openclaw.ai</strong> · gateway-first · MIT open source</div>
+  </div>
+</body>
+</html>

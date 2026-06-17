@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#fff;--text:#1e293b;--muted:#64748b;--blue:#e8f4fc;--blue-b:#7eb8da;--purple:#eee8f8;--purple-b:#b8a9d4;--green:#e8f8ef;--green-b:#6bc49a;--hl:#c8f0d8;--shadow:0 3px 14px rgba(0,0,0,.07)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1200px;height:600px;overflow:hidden;font-family:Nunito,sans-serif}
+#capture{width:1200px;height:600px;position:relative;overflow:hidden;background:var(--bg)}
+.top{padding:28px 44px 16px;border-bottom:2px dashed rgba(148,163,184,.3)}
+.brand{font-family:Caveat,cursive;font-size:20px;font-weight:700;color:var(--muted)}
+h1{font-family:Caveat,cursive;font-size:40px;font-weight:700;color:var(--text);margin-top:2px}
+h1 em{font-style:normal;color:#2d9f6f}
+.stage{position:absolute;left:44px;right:44px;top:108px;bottom:36px;display:flex;align-items:center;justify-content:center}
+.act-tag{position:absolute;top:28px;right:44px;padding:8px 14px;border-radius:12px;background:var(--purple);border:1.5px solid var(--purple-b);text-align:right}
+.act-tag .n{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase}
+.act-tag .t{font-family:Caveat,cursive;font-size:20px;font-weight:700}
+.bar{position:absolute;bottom:0;left:0;height:4px;background:linear-gradient(90deg,var(--blue-b),#2d9f6f,var(--green-b))}
+.flow{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;max-width:980px}
+.node{min-width:105px;padding:14px 10px;border-radius:14px;text-align:center;border:2px solid var(--blue-b);background:var(--blue);box-shadow:var(--shadow);opacity:.12;transform:translateY(10px)}
+.node.on{opacity:1;transform:none}.node.hot{box-shadow:0 0 0 3px rgba(45,159,111,.2),var(--shadow)}
+.node .t{font-family:Caveat,cursive;font-size:16px;font-weight:700}
+.node .s{font-size:10px;color:var(--muted);margin-top:4px;font-weight:600}
+.arr{font-size:18px;color:#94a3b8;opacity:.12;font-weight:700}.arr.on{opacity:1;color:#2d9f6f}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:720px;width:100%}
+.cell{padding:16px 10px;border-radius:14px;border:2px solid var(--green-b);background:var(--green);box-shadow:var(--shadow);opacity:.12;text-align:center}
+.cell.on{opacity:1}.cell .ic{font-size:26px}.cell .nm{font-family:Caveat,cursive;font-size:17px;font-weight:700;margin-top:6px}
+.split{display:flex;gap:22px;max-width:900px;width:100%}
+.panel{flex:1;padding:20px;border-radius:16px;border:2px solid;box-shadow:var(--shadow);opacity:.15}
+.panel.on{opacity:1}.panel.bad{background:#fef2f2;border-color:#fca5a5}.panel.good{background:var(--green);border-color:var(--green-b)}
+.panel h4{font-family:Caveat,cursive;font-size:20px;font-weight:700;margin-bottom:8px}
+.panel p{font-size:12px;color:var(--muted);line-height:1.5;font-weight:600}
+.finale{text-align:center;max-width:560px}
+.finale .big{font-family:Caveat,cursive;font-size:46px;font-weight:700;margin-bottom:12px}
+.finale .big span{color:#2d9f6f}
+.finale p{font-size:15px;color:var(--muted);line-height:1.65;font-weight:600}
+</style>
+</head>
+<body>
+<div id="capture">
+<div class="top"><div class="brand">Agentic AI Ecosystem · Visual Masterclass</div><h1><em>AI Agents</em> — from theory to code</h1></div>
+<div class="stage" id="stage"></div>
+<div class="act-tag"><div class="n" id="an">ACT I</div><div class="t" id="at">What is an agent?</div></div>
+<div class="bar" id="bar"></div>
+</div>
+<script>
+function flow(nodes,labels,p){
+  const total=nodes.length*2-1,vis=Math.ceil(p*total);let h='<div class="flow">',idx=0;
+  nodes.forEach((n,i)=>{const lbl=labels&&labels[i]?`<div class="s">${labels[i]}</div>`:'';
+    h+=`<div class="node${idx<vis?' on':''}${idx===vis-1?' hot':''}"><div class="t">${n}</div>${lbl}</div>`;idx++;
+    if(i<nodes.length-1){h+=`<span class="arr${idx<vis?' on':''}">→</span>`;idx++;}});
+  return h+'</div>';
+}
+const ACTS=[
+  {n:"ACT I",t:"What is an agent?",r:()=>`<div class="finale"><div class="big"><span>Autonomous</span></div><p>Reason · plan · act · learn — on your behalf</p></div>`},
+  {n:"ACT II",t:"Anatomy",r:p=>flow(["Persona","Memory","Tools","Model"],["role","context","APIs","LLM"],p)},
+  {n:"ACT III",t:"ReAct loop",r:p=>flow(["Think","Act","Observe","Repeat"],["reason","tool","result","update"],p)},
+  {n:"ACT IV",t:"Multi-agent",r:p=>{const c=[["👤","Single","one goal"],["👥","Multi","specialists"],["🎯","Router","dispatch"]];
+    const v=Math.ceil(p*3);return `<div class="grid3">${c.map((x,i)=>`<div class="cell${i<v?' on':''}"><div class="ic">${x[0]}</div><div class="nm">${x[1]}</div><div class="s" style="font-size:10px;color:var(--muted)">${x[2]}</div></div>`).join('')}</div>`;}},
+  {n:"ACT V",t:"Use cases",r:p=>flow(["Customer","Employee","Code","Security"],["CX","ops","dev","SOC"],p)},
+  {n:"ACT VI",t:"Frameworks",r:p=>flow(["LangGraph","CrewAI","OpenAI SDK","Pydantic AI"],["graphs","crews","handoffs","types"],p)},
+  {n:"ACT VII",t:"Protocols",r:p=>`<div class="split">
+    <div class="panel good${p>.4?' on':''}"><h4>MCP</h4><p>Tools · resources · hosts connect to data</p></div>
+    <div class="panel good${p>.7?' on':''}"><h4>A2A</h4><p>Agent-to-agent interoperability at scale</p></div></div>`},
+  {n:"FINALE",t:"Build & deploy",r:()=>`<div class="finale"><div class="big"><span>Ship agents</span></div><p>Code examples · Cloud Run · governance · HITL</p></div>`},
+];
+function render(prog){
+  const n=ACTS.length,idx=Math.min(n-1,Math.floor(prog*n)),local=(prog*n)-idx,a=ACTS[idx];
+  document.getElementById("an").textContent=a.n;
+  document.getElementById("at").textContent=a.t;
+  document.getElementById("bar").style.width=(prog*100)+"%";
+  document.getElementById("stage").innerHTML=a.r(local);
+}
+const p=new URLSearchParams(location.search);
+render(parseFloat(p.get("frame")||"0"));
+window.__READY=true;
+</script>
+</body>
+</html>

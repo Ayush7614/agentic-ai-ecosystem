@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>2022 team → 2026 stack</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&family=Inter:wght@500;700;800&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #0f1419;
+      display: flex; align-items: center; justify-content: center;
+      min-height: 100vh; font-family: Inter, system-ui, sans-serif;
+    }
+    #capture {
+      width: 920px;
+      background: linear-gradient(165deg, #0b1020 0%, #1e293b 50%, #0b1020 100%);
+      border-radius: 20px; padding: 32px 36px;
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+    }
+    h1 { font-size: 22px; font-weight: 800; color: #f8fafc; margin-bottom: 20px; text-align: center; }
+    h1 span { color: #6ee7b7; }
+    .grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px; align-items: start; }
+    .col h2 {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; margin-bottom: 12px; text-align: center;
+    }
+    .col.old h2 { color: #64748b; }
+    .col.new h2 { color: #818cf8; }
+    .arrow {
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px; color: #6ee7b7; padding-top: 36px;
+    }
+    .item {
+      opacity: 0.1; transform: translateX(-8px);
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(51, 65, 85, 0.6);
+      border-radius: 10px; padding: 10px 14px; margin-bottom: 8px;
+      font-size: 13px; color: #e2e8f0;
+    }
+    .col.new .item { transform: translateX(8px); }
+    .item.visible { opacity: 1; transform: translateX(0); }
+    .item.active { border-color: rgba(110, 231, 183, 0.5); background: rgba(16, 185, 129, 0.08); }
+    .col.new .item strong { color: #a5b4fc; }
+    .col.old .item { color: #94a3b8; }
+    .footer { margin-top: 20px; font-size: 10px; color: #64748b; text-align: center; }
+  </style>
+</head>
+<body>
+  <div id="capture">
+    <h1>2022 engineering team → <span>2026 Solo Stack</span></h1>
+    <div class="grid">
+      <div class="col old"><h2>Old hire</h2><div id="old"></div></div>
+      <div class="arrow">→</div>
+      <div class="col new"><h2>Open-source repo</h2><div id="new"></div></div>
+    </div>
+    <div class="footer">You orchestrate systems — not people · PulseFeedback demo</div>
+  </div>
+  <script>
+    const PAIRS = [
+      ["Project Manager", "Task Master"],
+      ["Tech Lead", "CrewAI"],
+      ["Architect", "LangGraph"],
+      ["Junior Developers", "OpenHands"],
+      ["Mid-level Developers", "Aider"],
+      ["IDE Power User", "Cline"],
+      ["Operations", "n8n"],
+      ["DevOps Engineer", "Coolify"],
+      ["QA + Data Team", "PostHog"],
+      ["Customer Support", "Chatwoot"],
+    ];
+
+    const progress = parseFloat(new URLSearchParams(location.search).get("frame") || "1");
+    const total = PAIRS.length;
+    const visible = Math.min(total, Math.max(0, Math.ceil(progress * total)));
+    const activeIdx = Math.min(total - 1, Math.max(0, visible - 1));
+
+    const oldEl = document.getElementById("old");
+    const newEl = document.getElementById("new");
+    PAIRS.forEach(([old, neu], i) => {
+      const o = document.createElement("div");
+      o.className = "item" + (i < visible ? " visible" : "") + (i === activeIdx && visible ? " active" : "");
+      o.textContent = old;
+      oldEl.appendChild(o);
+      const n = document.createElement("div");
+      n.className = "item" + (i < visible ? " visible" : "") + (i === activeIdx && visible ? " active" : "");
+      n.innerHTML = `<strong>${neu}</strong>`;
+      newEl.appendChild(n);
+    });
+    window.__READY = true;
+  </script>
+</body>
+</html>

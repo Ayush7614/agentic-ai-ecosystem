@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>LLM Fine-Tuning — Terminal</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{min-height:100vh;display:flex;align-items:center;justify-content:center;
+      background:radial-gradient(ellipse at 50% 30%,#1e1b4b 0%,#0f172a 55%,#020617 100%);
+      font-family:"JetBrains Mono",Menlo,monospace}
+    #capture{width:920px;padding:28px}
+    .terminal{border-radius:12px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.55);
+      background:#1e1e24;border:1px solid rgba(255,255,255,.06)}
+    .titlebar{height:44px;background:linear-gradient(180deg,#2d2d35,#25252c);
+      display:flex;align-items:center;padding:0 16px;gap:8px;border-bottom:1px solid rgba(0,0,0,.35)}
+    .dot{width:13px;height:13px;border-radius:50%}
+    .dot.red{background:#ff5f57}.dot.yellow{background:#febc2e}.dot.green{background:#28c840}
+    .titlebar-label{flex:1;text-align:center;font-size:12px;color:#8a8a90;margin-right:52px}
+    .body{min-height:340px;padding:28px 32px 36px;background:#18181c;font-size:14px;line-height:1.72;color:#d4d4d8}
+    .line{white-space:pre-wrap;word-break:break-all}
+    .prompt-user{color:#c4b5fd;font-weight:500}.prompt-path{color:#67e8f9}
+    .prompt-arrow{color:#f472b6;margin:0 6px 0 2px}
+    .cmd{color:#f0f0f4}.dim{color:#8b8b95}.success{color:#6fdc8c}.info{color:#67e8f9}.warn{color:#fbbf24}
+  </style>
+</head>
+<body>
+  <div id="capture"><div class="terminal">
+    <div class="titlebar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      <span class="titlebar-label">Terminal — LLM Fine-Tuning</span></div>
+    <div class="body" id="terminal-body"></div>
+  </div></div>
+  <script>
+    const STEPS = {
+      "01-peft-install": { user:"techlatest", path:"~/llm-ft", lines:[
+        { type:"cmd", text:'pip install "transformers>=4.44" peft accelerate datasets bitsandbytes trl' },
+        { type:"success", text:"Installed PEFT + TRL stack" },
+        { type:"cmd", text:"python -c \"import peft, trl; print('ready')\"" },
+        { type:"success", text:"ready" },
+      ]},
+      "02-lora-train": { user:"techlatest", path:"~/llm-ft", lines:[
+        { type:"cmd", text:"python examples/lora_train.py" },
+        { type:"info", text:"trainable params: 1,179,648 (0.94%)" },
+        { type:"out", text:"Epoch 1/1 · loss 1.42 → 0.89" },
+        { type:"success", text:"Saved adapter → ./lora-out/adapter" },
+      ]},
+      "03-qlora-train": { user:"techlatest", path:"~/llm-ft", lines:[
+        { type:"cmd", text:"./examples/qlora_train.sh" },
+        { type:"info", text:"4-bit NF4 base · bf16 LoRA adapters" },
+        { type:"warn", text:"VRAM ~14GB · grad_accum 16" },
+        { type:"success", text:"QLoRA checkpoint → ./qlora-out" },
+      ]},
+      "04-merge-lora": { user:"techlatest", path:"~/llm-ft", lines:[
+        { type:"cmd", text:"python -c \"from peft import PeftModel; ... merge_and_unload()\"" },
+        { type:"info", text:"W' = W + (alpha/r) · B×A baked in" },
+        { type:"success", text:"Merged model → ./merged-model" },
+        { type:"dim", text:"# Same inference speed as base checkpoint" },
+      ]},
+      "05-dpo-train": { user:"techlatest", path:"~/llm-ft", lines:[
+        { type:"cmd", text:"python examples/dpo_train.py" },
+        { type:"info", text:"Preference pairs · beta=0.1 · ref model frozen" },
+        { type:"out", text:"reward margin ↑ chosen vs rejected" },
+        { type:"success", text:"DPO adapter → ./dpo-out" },
+      ]},
+    };
+    function prompt(u,p){return `<span class="prompt-user">${u}</span><span class="prompt-path"> (${p})</span><span class="prompt-arrow">⇒</span>`;}
+    function renderStep(id, progress) {
+      const s = STEPS[id]; if (!s) return;
+      const vis = Math.ceil(progress * s.lines.length);
+      let html = "";
+      for (let i = 0; i < vis; i++) {
+        const L = s.lines[i];
+        if (L.type === "cmd") html += `<div class="line">${prompt(s.user,s.path)}<span class="cmd">${L.text}</span></div>`;
+        else if (L.type === "success") html += `<div class="line success">${L.text}</div>`;
+        else if (L.type === "info") html += `<div class="line info">${L.text}</div>`;
+        else if (L.type === "warn") html += `<div class="line warn">${L.text}</div>`;
+        else if (L.type === "dim") html += `<div class="line dim">${L.text}</div>`;
+        else html += `<div class="line">${L.text}</div>`;
+      }
+      document.getElementById("terminal-body").innerHTML = html;
+    }
+    const p = new URLSearchParams(location.search);
+    renderStep(p.get("step")||"01-peft-install", parseFloat(p.get("frame")||"1"));
+    window.__READY = true;
+  </script>
+</body>
+</html>

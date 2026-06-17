@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Hermes — Mega Overview</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{width:1200px;height:600px;overflow:hidden;font-family:Inter,sans-serif}
+    #capture{width:1200px;height:600px;position:relative;overflow:hidden;
+      background:radial-gradient(ellipse 80% 70% at 50% 40%,#1e1b4b,#0b1020 55%,#020617)}
+    .grid{position:absolute;inset:0;background-image:
+      linear-gradient(rgba(110,231,183,.04) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(110,231,183,.04) 1px,transparent 1px);
+      background-size:48px 48px;animation:drift 20s linear infinite}
+    @keyframes drift{to{background-position:48px 48px}}
+    .orb{position:absolute;border-radius:50%;filter:blur(60px);opacity:.35}
+    .o1{width:400px;height:400px;background:#6366f1;top:-80px;left:-60px}
+    .o2{width:350px;height:350px;background:#6ee7b7;bottom:-100px;right:-40px}
+    .ring{position:absolute;border:2px solid rgba(110,231,183,.15);border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%)}
+    .content{position:relative;z-index:5;height:100%;padding:36px 44px}
+    .brand{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.2em;color:#818cf8;text-transform:uppercase}
+    h1{font-size:42px;font-weight:900;letter-spacing:-2px;margin:6px 0 4px;color:#f8fafc}
+    h1 em{font-style:normal;background:linear-gradient(90deg,#6ee7b7,#38bdf8,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .phase-label{position:absolute;top:36px;right:44px;text-align:right}
+    .phase-label .act{font-size:10px;letter-spacing:.15em;color:#6ee7b7;text-transform:uppercase;font-weight:800}
+    .phase-label .name{font-size:18px;font-weight:800;color:#e2e8f0;margin-top:4px}
+    .stage{position:absolute;left:44px;right:44px;top:110px;bottom:36px;display:flex;align-items:center;justify-content:center}
+    .scene{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transform:scale(.92);transition:none}
+    .scene.on{opacity:1;transform:scale(1)}
+    /* Act 1 install */
+    .pulse-core{width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,#6ee7b7,#059669);
+      box-shadow:0 0 60px rgba(110,231,183,.5);position:relative}
+    .pulse-core::after{content:"";position:absolute;inset:-20px;border:2px solid rgba(110,231,183,.4);border-radius:50%}
+    .cmd{font-family:"JetBrains Mono",monospace;font-size:13px;color:#cbd5e1;margin-top:20px;text-align:center}
+    .cmd span{color:#6ee7b7}
+    /* ReAct orbit */
+    .orbit-wrap{position:relative;width:520px;height:320px}
+    .orbit-center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+      width:100px;height:100px;border-radius:20px;background:linear-gradient(135deg,#312e81,#1e3a5f);
+      border:2px solid #6ee7b7;display:flex;align-items:center;justify-content:center;
+      font-weight:800;font-size:13px;color:#6ee7b7;text-align:center;line-height:1.2;z-index:2}
+    .orbit-node{position:absolute;width:88px;padding:10px;border-radius:12px;background:rgba(15,23,42,.9);
+      border:1px solid rgba(129,140,248,.4);font-size:10px;font-weight:700;color:#e2e8f0;text-align:center}
+    /* Three agents */
+    .tri{display:flex;gap:20px;align-items:stretch}
+    .agent{flex:1;padding:20px 16px;border-radius:16px;text-align:center;border:2px solid transparent;
+      background:rgba(15,23,42,.85);min-width:200px}
+    .agent.d{border-color:#f472b6}.agent.p{border-color:#38bdf8}.agent.r{border-color:#a78bfa}
+    .agent .icon{font-size:28px;margin-bottom:8px}
+    .agent .role{font-size:14px;font-weight:800;color:#f1f5f9}
+    .agent .sub{font-size:10px;color:#94a3b8;margin-top:6px;line-height:1.4}
+    /* Learning loop conveyor */
+    .conveyor{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:center;max-width:900px}
+    .c-node{padding:14px 18px;border-radius:14px;font-size:12px;font-weight:700;color:#f1f5f9;
+      background:rgba(30,27,75,.8);border:1px solid rgba(129,140,248,.35)}
+    .c-node.hot{border-color:#6ee7b7;box-shadow:0 0 24px rgba(110,231,183,.25)}
+    .c-arr{color:#6ee7b7;font-size:20px;font-weight:800}
+    /* Profile + cron split */
+    .split{display:flex;gap:28px;width:100%;max-width:960px}
+    .panel{flex:1;padding:24px;border-radius:18px;background:rgba(15,23,42,.8);border:1px solid rgba(51,65,85,.6)}
+    .panel h3{font-size:13px;color:#818cf8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
+    .panel .line{font-family:"JetBrains Mono",monospace;font-size:12px;color:#94a3b8;margin:8px 0}
+    .panel .line b{color:#6ee7b7}
+    .progress-bar{position:absolute;bottom:0;left:0;height:4px;background:linear-gradient(90deg,#6ee7b7,#818cf8,#f472b6);transition:width .1s}
+    .footer-tag{position:absolute;bottom:14px;left:44px;font-size:10px;color:#64748b;font-weight:600}
+    .footer-tag b{color:#6ee7b7}
+  </style>
+</head>
+<body>
+  <div id="capture">
+    <div class="grid"></div>
+    <div class="orb o1"></div><div class="orb o2"></div>
+    <div class="content">
+      <div class="brand">Nous Research · Hermes Agent · Masterclass</div>
+      <h1><em>Everything</em> in one loop</h1>
+      <div class="phase-label"><div class="act" id="act">ACT I</div><div class="name" id="actName">Install & Gateway</div></div>
+      <div class="stage" id="stage"></div>
+      <div class="footer-tag"><b>hermes-agent</b> · SOUL · profiles · Curator · GEPA · :9119</div>
+    </div>
+    <div class="progress-bar" id="bar"></div>
+  </div>
+  <script>
+    const ACTS = [
+      { act:"ACT I", name:"Install & Gateway", html:`
+        <div style="text-align:center">
+          <div class="pulse-core" id="pc"></div>
+          <div class="cmd"><span>$</span> curl install.sh | bash · hermes setup · gateway → Telegram</div>
+        </div>`},
+      { act:"ACT II", name:"ReAct Runtime", html:`
+        <div class="orbit-wrap">
+          <div class="orbit-center">AIAgent<br/>≤90 turns</div>
+          <div class="orbit-node" style="left:0;top:50%;transform:translateY(-50%)">Build prompt<br/><small>SOUL + memory</small></div>
+          <div class="orbit-node" style="right:0;top:50%;transform:translateY(-50%)">Tool exec<br/><small>shell · MCP</small></div>
+          <div class="orbit-node" style="left:50%;top:0;transform:translateX(-50%)">LLM call</div>
+          <div class="orbit-node" style="left:50%;bottom:0;transform:translateX(-50%)">Compress?</div>
+        </div>`},
+      { act:"ACT III", name:"Three Isolated Agents", html:`
+        <div class="tri">
+          <div class="agent d"><div class="icon">🎨</div><div class="role">Designer</div><div class="sub">my-design-style skill<br/>visual SOUL</div></div>
+          <div class="agent p"><div class="icon">⚡</div><div class="role">Programmer</div><div class="sub">Claude Code delegate<br/>staff engineer</div></div>
+          <div class="agent r"><div class="icon">🔬</div><div class="role">Researcher</div><div class="sub">MCP + cron digest<br/>weekday 8am</div></div>
+        </div>`},
+      { act:"ACT IV", name:"Self-Improving Loop", html:`
+        <div class="conveyor" id="conv">
+          <div class="c-node">Experience</div><div class="c-arr">→</div>
+          <div class="c-node">skill_manage</div><div class="c-arr">→</div>
+          <div class="c-node">SKILL.md</div><div class="c-arr">→</div>
+          <div class="c-node">Curator</div><div class="c-arr">→</div>
+          <div class="c-node">GEPA PR</div>
+        </div>`},
+      { act:"ACT V", name:"Profile Builder + Memory", html:`
+        <div class="split">
+          <div class="panel"><h3>Profile Builder :9119</h3>
+            <div class="line"><b>identity</b> → shell alias</div>
+            <div class="line"><b>model</b> · skills · MCP map</div>
+            <div class="line">GUI = CLI parity</div></div>
+          <div class="panel"><h3>Memory tiers</h3>
+            <div class="line"><b>T1</b> MEMORY.md snapshot</div>
+            <div class="line"><b>T2</b> state.db FTS5</div>
+            <div class="line"><b>T3</b> external plugins</div></div>
+        </div>`},
+      { act:"FINALE", name:"Deploy & Cron", html:`
+        <div style="text-align:center;width:100%">
+          <div style="font-size:56px;margin-bottom:16px">∞</div>
+          <div style="font-size:22px;font-weight:800;color:#6ee7b7;margin-bottom:8px">Learning agent · your machine</div>
+          <div style="font-size:13px;color:#94a3b8">Gateway tick 60s · cron → Telegram · isolated profiles</div>
+        </div>`},
+    ];
+    function render(prog) {
+      const n = ACTS.length;
+      const idx = Math.min(n - 1, Math.floor(prog * n));
+      const local = (prog * n) - idx;
+      const a = ACTS[idx];
+      document.getElementById("act").textContent = a.act;
+      document.getElementById("actName").textContent = a.name;
+      document.getElementById("bar").style.width = (prog * 100) + "%";
+      const stage = document.getElementById("stage");
+      stage.innerHTML = `<div class="scene on">${a.html}</div>`;
+      const ring = document.getElementById("capture");
+      let old = ring.querySelector(".ring-spin");
+      if (!old) { old = document.createElement("div"); old.className = "ring ring-spin"; ring.appendChild(old); }
+      const size = 280 + prog * 120;
+      old.style.width = size + "px"; old.style.height = size + "px";
+      old.style.opacity = 0.08 + local * 0.12;
+      old.style.transform = `translate(-50%,-50%) rotate(${prog * 720}deg)`;
+      const hot = stage.querySelectorAll(".c-node");
+      hot.forEach((el,i)=>{ el.classList.toggle("hot", i === Math.floor(local * hot.length)); });
+    }
+    const p = parseFloat(new URLSearchParams(location.search).get("frame") || "0");
+    render(p);
+    window.__READY = true;
+  </script>
+</body>
+</html>

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cybersec Skills — Progressive Disclosure Architecture</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #0f1419;
+      margin: 0;
+      padding: 16px;
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    #capture {
+      width: 1120px;
+      max-width: 100%;
+      background: linear-gradient(165deg, #0f172a 0%, #1e293b 45%, #0f172a 100%);
+      border-radius: 24px;
+      padding: 36px 40px 44px;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(148, 163, 184, 0.12);
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 28px;
+    }
+    h1 {
+      font-size: 30px;
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.5px;
+      color: #f8fafc;
+    }
+    h1 .accent { color: #6fdc8c; }
+    h1 .sub {
+      display: block;
+      font-size: 15px;
+      font-weight: 600;
+      color: #94a3b8;
+      margin-top: 6px;
+    }
+    .badge {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(110, 179, 255, 0.35);
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-size: 12px;
+      color: #cbd5e1;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+    .badge strong { color: #6fdc8c; }
+    svg.flow { width: 100%; height: auto; display: block; }
+
+    @keyframes pulse-ring {
+      0%, 100% { opacity: 0.25; r: 5; }
+      50% { opacity: 1; r: 7; }
+    }
+    .anim-dot { animation: pulse-ring 1.6s ease-in-out infinite; }
+    .anim-dot.d1 { animation-delay: 0s; }
+    .anim-dot.d2 { animation-delay: 0.22s; }
+    .anim-dot.d3 { animation-delay: 0.44s; }
+    .anim-dot.d4 { animation-delay: 0.66s; }
+    .anim-dot.d5 { animation-delay: 0.88s; }
+    .anim-dot.d6 { animation-delay: 1.1s; }
+    .anim-dot.d7 { animation-delay: 1.32s; }
+
+    @keyframes dash-flow { to { stroke-dashoffset: -28; } }
+    .flow-line {
+      stroke-dasharray: 10 8;
+      animation: dash-flow 1.1s linear infinite;
+    }
+
+    @keyframes stage-glow {
+      0%, 100% { opacity: 0.55; filter: none; }
+      12%, 28% { opacity: 1; filter: drop-shadow(0 0 12px rgba(111, 220, 140, 0.55)); }
+    }
+    .stage { animation: stage-glow 8s ease-in-out infinite; }
+    .stage.s1 { animation-delay: 0s; }
+    .stage.s2 { animation-delay: 1s; }
+    .stage.s3 { animation-delay: 2s; }
+    .stage.s4 { animation-delay: 3s; }
+    .stage.s5 { animation-delay: 4s; }
+    .stage.s6 { animation-delay: 5s; }
+    .stage.s7 { animation-delay: 6s; }
+
+    @keyframes layer-pulse {
+      0%, 100% { opacity: 0.7; }
+      50% { opacity: 1; }
+    }
+    .layer-bar { animation: layer-pulse 3s ease-in-out infinite; }
+    .layer-bar.l1 { animation-delay: 0s; }
+    .layer-bar.l2 { animation-delay: 0.5s; }
+    .layer-bar.l3 { animation-delay: 1s; }
+  </style>
+</head>
+<body>
+  <div id="capture">
+    <div class="header">
+      <h1>
+        <span class="accent">Progressive Disclosure</span> Architecture
+        <span class="sub">754 skills · scan frontmatter first · load full playbooks on demand</span>
+      </h1>
+      <div class="badge"><strong>agentskills.io</strong> · ~30 tok scan · 500–2K execute</div>
+    </div>
+
+    <svg class="flow" viewBox="0 0 1040 480" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="gAgent" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#22c55e"/>
+          <stop offset="100%" stop-color="#059669"/>
+        </linearGradient>
+        <linearGradient id="gScan" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#38bdf8"/>
+          <stop offset="100%" stop-color="#2563eb"/>
+        </linearGradient>
+        <linearGradient id="gSkill" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#a78bfa"/>
+          <stop offset="100%" stop-color="#7c3aed"/>
+        </linearGradient>
+        <linearGradient id="gTool" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#fb923c"/>
+          <stop offset="100%" stop-color="#ea580c"/>
+        </linearGradient>
+        <linearGradient id="gVerify" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#2dd4bf"/>
+          <stop offset="100%" stop-color="#0d9488"/>
+        </linearGradient>
+        <linearGradient id="gReport" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#f87171"/>
+          <stop offset="100%" stop-color="#dc2626"/>
+        </linearGradient>
+        <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill="#64748b"/>
+        </marker>
+        <filter id="glow">
+          <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#6fdc8c" flood-opacity="0.25"/>
+        </filter>
+      </defs>
+
+      <!-- Prompt label -->
+      <text x="52" y="58" text-anchor="middle" font-size="10" fill="#64748b" font-weight="600">USER PROMPT</text>
+      <line x1="52" y1="118" x2="52" y2="148" stroke="#475569" stroke-width="1.5" marker-end="url(#arrow)" class="flow-line"/>
+
+      <!-- 1 Analyst -->
+      <g class="stage s1" filter="url(#glow)">
+        <rect x="8" y="68" width="88" height="52" rx="12" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+        <text x="52" y="92" text-anchor="middle" font-size="11" font-weight="700" fill="#e2e8f0">Analyst</text>
+        <text x="52" y="108" text-anchor="middle" font-size="9" fill="#94a3b8">credential theft</text>
+      </g>
+
+      <line x1="96" y1="94" x2="118" y2="94" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)" class="flow-line"/>
+      <circle cx="107" cy="94" r="5" fill="#6fdc8c" class="anim-dot d1"/>
+
+      <!-- 2 AI Agent -->
+      <g class="stage s2">
+        <rect x="118" y="68" width="100" height="52" rx="12" fill="url(#gAgent)"/>
+        <text x="168" y="92" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">AI Agent</text>
+        <text x="168" y="108" text-anchor="middle" font-size="9" fill="#dcfce7">Cursor · Claude</text>
+      </g>
+
+      <line x1="218" y1="94" x2="240" y2="94" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)" class="flow-line"/>
+      <circle cx="229" cy="94" r="5" fill="#38bdf8" class="anim-dot d2"/>
+
+      <!-- 3 Frontmatter scan -->
+      <g class="stage s3">
+        <rect x="240" y="58" width="130" height="72" rx="12" fill="url(#gScan)"/>
+        <text x="305" y="82" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">Frontmatter</text>
+        <text x="305" y="98" text-anchor="middle" font-size="10" fill="#dbeafe">Scan 754 skills</text>
+        <text x="305" y="116" text-anchor="middle" font-size="9" fill="#bfdbfe">~30 tokens each</text>
+      </g>
+
+      <line x1="370" y1="94" x2="392" y2="94" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)" class="flow-line"/>
+      <circle cx="381" cy="94" r="5" fill="#a78bfa" class="anim-dot d3"/>
+
+      <!-- 4 Matches -->
+      <g class="stage s4">
+        <rect x="392" y="58" width="118" height="72" rx="12" fill="#1e293b" stroke="#a78bfa" stroke-width="2"/>
+        <text x="451" y="82" text-anchor="middle" font-size="11" font-weight="700" fill="#e9d5ff">12 matches</text>
+        <text x="451" y="100" text-anchor="middle" font-size="9" fill="#c4b5fd">tags · description</text>
+        <text x="451" y="118" text-anchor="middle" font-size="9" fill="#a78bfa">→ load top 3</text>
+      </g>
+
+      <line x1="510" y1="94" x2="532" y2="94" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)" class="flow-line"/>
+      <circle cx="521" cy="94" r="5" fill="#a78bfa" class="anim-dot d4"/>
+
+      <!-- 5 SKILL.md -->
+      <g class="stage s5">
+        <rect x="532" y="58" width="120" height="72" rx="12" fill="url(#gSkill)"/>
+        <text x="592" y="82" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">SKILL.md</text>
+        <text x="592" y="100" text-anchor="middle" font-size="9" fill="#ede9fe">Workflow section</text>
+        <text x="592" y="118" text-anchor="middle" font-size="9" fill="#ddd6fe">500–2K tokens</text>
+      </g>
+
+      <line x1="652" y1="94" x2="674" y2="94" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)" class="flow-line"/>
+      <circle cx="663" cy="94" r="5" fill="#fb923c" class="anim-dot d5"/>
+
+      <!-- 6 Tools -->
+      <g class="stage s6">
+        <rect x="674" y="68" width="108" height="52" rx="12" fill="url(#gTool)"/>
+        <text x="728" y="92" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">Tools</text>
+        <text x="728" y="108" text-anchor="middle" font-size="9" fill="#ffedd5">scripts · Volatility</text>
+      </g>
+
+      <line x1="782" y1="94" x2="804" y2="94" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)" class="flow-line"/>
+      <circle cx="793" cy="94" r="5" fill="#2dd4bf" class="anim-dot d6"/>
+
+      <!-- 7 Verification -->
+      <g class="stage s7">
+        <rect x="804" y="68" width="100" height="52" rx="12" fill="url(#gVerify)"/>
+        <text x="854" y="92" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">Verify</text>
+        <text x="854" y="108" text-anchor="middle" font-size="9" fill="#ccfbf1">IOCs · success</text>
+      </g>
+
+      <line x1="904" y1="94" x2="926" y2="94" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)" class="flow-line"/>
+
+      <!-- 8 Report -->
+      <g class="stage s1">
+        <rect x="926" y="58" width="106" height="72" rx="12" fill="url(#gReport)"/>
+        <text x="979" y="82" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">Report</text>
+        <text x="979" y="100" text-anchor="middle" font-size="9" fill="#fecaca">ATT&CK T1003</text>
+        <text x="979" y="118" text-anchor="middle" font-size="9" fill="#fecaca">NIST · D3FEND</text>
+      </g>
+
+      <!-- Progressive disclosure layers -->
+      <text x="520" y="168" text-anchor="middle" font-size="11" font-weight="700" fill="#64748b" letter-spacing="0.08em">PROGRESSIVE DISCLOSURE LAYERS</text>
+
+      <g class="layer-bar l1">
+        <rect x="80" y="188" width="280" height="56" rx="10" fill="rgba(56, 189, 248, 0.15)" stroke="#38bdf8" stroke-width="2"/>
+        <text x="220" y="212" text-anchor="middle" font-size="12" font-weight="700" fill="#7dd3fc">Discovery</text>
+        <text x="220" y="232" text-anchor="middle" font-size="10" fill="#94a3b8">YAML frontmatter only · ~30 tokens/skill</text>
+      </g>
+
+      <g class="layer-bar l2">
+        <rect x="380" y="188" width="280" height="56" rx="10" fill="rgba(167, 139, 250, 0.15)" stroke="#a78bfa" stroke-width="2"/>
+        <text x="520" y="212" text-anchor="middle" font-size="12" font-weight="700" fill="#c4b5fd">Execution</text>
+        <text x="520" y="232" text-anchor="middle" font-size="10" fill="#94a3b8">Full SKILL.md body · 500–2,000 tokens</text>
+      </g>
+
+      <g class="layer-bar l3">
+        <rect x="680" y="188" width="280" height="56" rx="10" fill="rgba(45, 212, 191, 0.12)" stroke="#2dd4bf" stroke-width="2"/>
+        <text x="820" y="212" text-anchor="middle" font-size="12" font-weight="700" fill="#5eead4">Deep dive</text>
+        <text x="820" y="232" text-anchor="middle" font-size="10" fill="#94a3b8">references/ · scripts/ · assets/</text>
+      </g>
+
+      <!-- Example skills box -->
+      <rect x="80" y="268" width="880" height="88" rx="14" fill="rgba(15, 23, 42, 0.6)" stroke="#334155" stroke-width="1.5"/>
+      <text x="100" y="292" font-size="11" font-weight="700" fill="#6fdc8c">Example incident flow</text>
+      <text x="100" y="314" font-size="10" fill="#94a3b8">Prompt: “Analyze memory dump for credential theft”</text>
+      <text x="100" y="334" font-size="10" fill="#cbd5e1">
+        → performing-memory-forensics-with-volatility3 · hunting-for-credential-dumping-lsass · analyzing-windows-event-logs-for-credential-access
+      </text>
+      <text x="100" y="348" font-size="9" fill="#64748b">Agent scans all 754 in one pass · loads only matching playbooks · maps finding to MITRE ATT&CK</text>
+
+      <!-- Token budget footer -->
+      <rect x="80" y="378" width="880" height="44" rx="10" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+      <text x="520" y="406" text-anchor="middle" font-size="11" fill="#94a3b8">
+        Context-efficient: <tspan fill="#38bdf8" font-weight="700">754 × 30 ≈ 22K scan</tspan>
+        <tspan fill="#64748b"> vs </tspan>
+        <tspan fill="#f87171" font-weight="700">754 × 2K = blow context</tspan>
+        <tspan fill="#64748b"> — progressive disclosure wins</tspan>
+      </text>
+    </svg>
+  </div>
+  <script>window.__READY = true;</script>
+</body>
+</html>

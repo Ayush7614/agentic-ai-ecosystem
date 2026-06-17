@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1200px;height:600px;overflow:hidden;font-family:Inter,sans-serif}
+#capture{width:1200px;height:600px;position:relative;overflow:hidden;background:#060812}
+.ring-bg{position:absolute;inset:-40%;background:conic-gradient(from 180deg,#f472b6,#38bdf8,#a78bfa,#f472b6);opacity:.1;animation:spin 24s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.vig{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 45%,transparent 35%,#060812 80%)}
+.particles{position:absolute;inset:0;overflow:hidden;opacity:.4}
+.particles i{position:absolute;width:4px;height:4px;background:#38bdf8;border-radius:50%;animation:float 4s ease-in-out infinite}
+.particles i:nth-child(1){left:10%;top:20%;animation-delay:0s}
+.particles i:nth-child(2){left:85%;top:30%;animation-delay:.8s;background:#f472b6}
+.particles i:nth-child(3){left:70%;top:75%;animation-delay:1.6s}
+.particles i:nth-child(4){left:25%;top:65%;animation-delay:2.4s}
+@keyframes float{0%,100%{transform:translateY(0);opacity:.3}50%{transform:translateY(-12px);opacity:1}}
+.top{padding:30px 40px 0;position:relative;z-index:3}
+.brand{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.2em;color:#f472b6;text-transform:uppercase;font-weight:700}
+h1{font-size:38px;font-weight:900;color:#fff;letter-spacing:-1.5px;margin-top:4px}
+h1 em{font-style:normal;background:linear-gradient(90deg,#f472b6,#38bdf8,#c4b5fd);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stage{position:absolute;left:36px;right:36px;top:96px;bottom:32px;z-index:3;display:flex;align-items:center;justify-content:center}
+.act-tag{position:absolute;top:28px;right:40px;text-align:right;z-index:4}
+.act-tag .n{font-size:10px;font-weight:800;color:#38bdf8;letter-spacing:.14em}
+.act-tag .t{font-size:15px;font-weight:800;color:#f1f5f9;margin-top:3px}
+.bar{position:absolute;bottom:0;left:0;height:5px;background:linear-gradient(90deg,#f472b6,#38bdf8,#a78bfa);z-index:5}
+/* flows */
+.flow{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;width:100%;max-width:1000px}
+.node{min-width:118px;padding:18px 14px;border-radius:14px;text-align:center;border:1px solid rgba(51,65,85,.8);background:rgba(12,18,35,.92);opacity:.12;transform:translateY(14px) scale(.96)}
+.node.on{opacity:1;transform:none}
+.node.hot{border-color:#f472b6;box-shadow:0 0 28px rgba(244,114,182,.22)}
+.node.dim-n{opacity:.35;transform:none}
+.node .t{font-size:12px;font-weight:800;color:#f8fafc}
+.node .s{font-size:9px;color:#64748b;margin-top:5px;line-height:1.3}
+.arr{font-size:22px;color:#334155;opacity:.1;font-weight:800}
+.arr.on{opacity:1;color:#38bdf8}
+.grid5{display:grid;grid-template-columns:repeat(5,1fr);gap:11px;width:100%;max-width:960px}
+.cell{padding:14px 8px;border-radius:12px;text-align:center;border:1px solid rgba(51,65,85,.7);background:rgba(15,23,42,.85);opacity:.12}
+.cell.on{opacity:1;border-color:rgba(56,189,248,.45)}
+.cell.hot{border-color:#f472b6;box-shadow:0 0 20px rgba(244,114,182,.18)}
+.cell .ic{font-size:20px}
+.cell .nm{font-size:10px;font-weight:800;color:#e2e8f0;margin-top:5px}
+.cell .sub{font-size:8px;color:#64748b;margin-top:3px}
+.split{display:flex;gap:22px;width:100%;max-width:920px}
+.panel{flex:1;padding:22px 20px;border-radius:16px;border:2px solid rgba(255,255,255,.06);background:rgba(10,14,28,.88);opacity:.15;transform:translateY(10px)}
+.panel.on{opacity:1;transform:none}
+.panel.open{border-color:rgba(251,146,60,.35)}.panel.closed{border-color:rgba(52,211,153,.35)}
+.panel h4{font-size:12px;font-weight:800;margin-bottom:10px;letter-spacing:.06em;text-transform:uppercase}
+.panel.open h4{color:#fb923c}.panel.closed h4{color:#6ee7b7}
+.panel li{font-size:11px;color:#94a3b8;margin:7px 0 7px 14px;line-height:1.45}
+.pills{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;max-width:880px}
+.pill{padding:14px 22px;border-radius:999px;font-size:13px;font-weight:800;border:2px solid rgba(244,114,182,.25);color:#fbcfe8;background:rgba(244,114,182,.08);opacity:.12;transform:scale(.92)}
+.pill.on{opacity:1;transform:scale(1)}.pill.hot{border-color:#38bdf8;color:#bae6fd;background:rgba(56,189,248,.12)}
+.finale{text-align:center;max-width:560px}
+.finale .big{font-size:44px;font-weight:900;line-height:1.15;margin-bottom:14px}
+.finale .big span{background:linear-gradient(90deg,#f472b6,#38bdf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.finale p{font-size:14px;color:#94a3b8;line-height:1.65}
+.loop-ring{position:absolute;width:320px;height:320px;border:2px dashed rgba(56,189,248,.2);border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none}
+</style>
+</head>
+<body>
+<div id="capture">
+  <div class="ring-bg"></div><div class="vig"></div>
+  <div class="particles"><i></i><i></i><i></i><i></i></div>
+  <div class="top"><div class="brand">Act · Observe · Repeat</div><h1><em>Loop</em> Engineering</h1></div>
+  <div class="stage" id="stage"></div>
+  <div class="act-tag"><div class="n" id="an">ACT I</div><div class="t" id="at">You were the loop</div></div>
+  <div class="bar" id="bar"></div>
+</div>
+<script>
+function flow(nodes,p,labels){
+  const total=nodes.length*2-1,vis=Math.ceil(p*total);
+  let h='<div class="flow">',idx=0;
+  nodes.forEach((n,i)=>{
+    const lbl=labels&&labels[i]?`<div class="s">${labels[i]}</div>`:'';
+    h+=`<div class="node${idx<vis?' on':''}${idx===vis-1?' hot':''}"><div class="t">${n}</div>${lbl}</div>`;
+    idx++;
+    if(i<nodes.length-1){h+=`<span class="arr${idx<vis?' on':''}">→</span>`;idx++;}
+  });
+  return h+'</div>';
+}
+const ACTS=[
+  {n:"ACT I",t:"You were the loop",r:p=>`
+    <div class="finale"><div class="big">Prompt → Review → <span>Prompt</span></div>
+    <p>You were the checkpoint between every step.<br>Models improved. The workflow didn't.</p></div>`,
+  },
+  {n:"ACT II",t:"ReAct core loop",r:p=>flow(
+    ["Reason","Act","Observe","Reason again","Repeat"],
+    p,["plan","tool call","stdout/tests","adapt","until done"]
+  )},
+  {n:"ACT III",t:"Eval gate",r:p=>flow(
+    ["Output","Run criteria","Pass → exit","Fail → retry","Max → escalate"],
+    p,["agent work","tests/lint","done","fix loop","human"]
+  )},
+  {n:"ACT IV",t:"Five parts",r:p=>{
+    const c=[["🎯","Goal","testable done"],["🔧","Tools","shell · tests"],["🧠","Context","summarize"],["🛑","Stop","max iter"],["⚡","Errors","adapt"]];
+    const v=Math.ceil(p*5);
+    return `<div class="grid5">${c.map((x,i)=>`<div class="cell${i<v?' on':''}${i===v-1?' hot':''}"><div class="ic">${x[0]}</div><div class="nm">${x[1]}</div><div class="sub">${x[2]}</div></div>`).join("")}</div>`;
+  }},
+  {n:"ACT V",t:"Open vs closed",r:p=>`
+    <div class="split">
+      <div class="panel open${p>.35?' on':''}"><h4>Open loop</h4><ul><li>Wide explore · high token cost</li><li>Plausible slop at scale</li><li>Research budget</li></ul></div>
+      <div class="panel closed${p>.65?' on':''}"><h4>Closed loop</h4><ul><li>Defined path · eval gates</li><li>Stops early · auditable</li><li>Production default</li></ul></div>
+    </div>`,
+  },
+  {n:"ACT VI",t:"Loop patterns",r:p=>{
+    const pills=["Retry","Plan-execute-verify","Explore-narrow","Human-in-loop"];
+    const v=Math.ceil(p*4);
+    return `<div class="pills">${pills.map((x,i)=>`<div class="pill${i<v?' on':''}${i===v-1?' hot':''}">${x}</div>`).join("")}</div>`;
+  }},
+  {n:"FINALE",t:"Automate the checkpoint",r:()=>`
+    <div class="finale"><div class="big"><span>Act · Observe · Repeat</span></div>
+    <p>Define pass/fail. Let the agent run the revision cycle.<br>Start <b style="color:#6ee7b7">closed</b> · single agent · eval gate · then fleet.</p></div>`,
+  },
+];
+function render(prog){
+  const n=ACTS.length,idx=Math.min(n-1,Math.floor(prog*n)),local=(prog*n)-idx,a=ACTS[idx];
+  document.getElementById("an").textContent=a.n;
+  document.getElementById("at").textContent=a.t;
+  document.getElementById("bar").style.width=(prog*100)+"%";
+  document.getElementById("stage").innerHTML=a.r(local);
+}
+render(parseFloat(new URLSearchParams(location.search).get("frame")||"0"));
+window.__READY=true;
+</script>
+</body>
+</html>
