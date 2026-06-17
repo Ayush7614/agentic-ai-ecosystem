@@ -45,6 +45,8 @@ plugins:
       rewrite_relative_urls: false
 
 markdown_extensions:
+  - attr_list
+  - md_in_html
   - admonition
   - pymdownx.details
   - pymdownx.superfences:
