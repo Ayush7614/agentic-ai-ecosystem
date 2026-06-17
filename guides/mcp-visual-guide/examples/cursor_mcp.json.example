@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "weather-demo": {
+      "command": "python",
+      "args": ["examples/minimal_weather_server.py"],
+      "cwd": "/absolute/path/to/guides/mcp-visual-guide"
+    }
+  }
+}

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#ffffff;--text:#1e293b;--muted:#64748b;
+  --blue:#e8f4fc;--blue-b:#7eb8da;
+  --purple:#eee8f8;--purple-b:#b8a9d4;
+  --yellow:#fff8e7;--yellow-b:#e8c86a;
+  --green:#e8f8ef;--green-b:#6bc49a;--hl:#c8f0d8;
+  --dash:#94a3b8;--shadow:0 3px 14px rgba(0,0,0,.07);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1200px;height:600px;overflow:hidden;font-family:Nunito,sans-serif}
+#capture{width:1200px;height:600px;position:relative;overflow:hidden;background:var(--bg)}
+.top{padding:28px 44px 0;position:relative;z-index:3;border-bottom:2px dashed rgba(148,163,184,.3);padding-bottom:16px}
+.brand{font-family:Caveat,cursive;font-size:20px;font-weight:700;color:var(--muted)}
+h1{font-family:Caveat,cursive;font-size:40px;font-weight:700;color:var(--text);margin-top:2px}
+h1 em{font-style:normal;color:#2d9f6f}
+.stage{position:absolute;left:44px;right:44px;top:108px;bottom:36px;z-index:3;display:flex;align-items:center;justify-content:center}
+.act-tag{
+  position:absolute;top:28px;right:44px;text-align:right;z-index:4;
+  padding:8px 14px;border-radius:12px;background:var(--purple);border:1.5px solid var(--purple-b);
+}
+.act-tag .n{font-size:11px;font-weight:800;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+.act-tag .t{font-family:Caveat,cursive;font-size:20px;font-weight:700;color:var(--text);margin-top:2px}
+.bar{position:absolute;bottom:0;left:0;height:4px;background:linear-gradient(90deg,var(--blue-b),#2d9f6f,var(--yellow-b));z-index:5}
+.flow{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;max-width:980px}
+.node{
+  min-width:110px;padding:16px 12px;border-radius:14px;text-align:center;
+  border:2px solid var(--blue-b);background:var(--blue);box-shadow:var(--shadow);
+  opacity:.12;transform:translateY(10px);
+}
+.node.on{opacity:1;transform:none}
+.node.hot{box-shadow:0 0 0 3px rgba(45,159,111,.2),var(--shadow)}
+.node .t{font-family:Caveat,cursive;font-size:18px;font-weight:700;color:var(--text)}
+.node .s{font-size:11px;color:var(--muted);margin-top:4px;font-weight:600}
+.arr{font-size:20px;color:var(--dash);opacity:.12;font-weight:700}
+.arr.on{opacity:1;color:#2d9f6f}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:720px;width:100%}
+.cell{
+  padding:18px 12px;border-radius:14px;text-align:center;
+  border:2px solid var(--green-b);background:var(--green);box-shadow:var(--shadow);opacity:.12;
+}
+.cell.on{opacity:1}
+.cell.hot{box-shadow:0 0 0 3px rgba(45,159,111,.2),var(--shadow)}
+.cell .ic{font-size:28px}
+.cell .nm{font-family:Caveat,cursive;font-size:18px;font-weight:700;margin-top:6px}
+.split{display:flex;gap:24px;max-width:920px;width:100%}
+.panel{
+  flex:1;padding:22px 20px;border-radius:16px;border:2px solid;box-shadow:var(--shadow);opacity:.15;
+}
+.panel.on{opacity:1}
+.panel.bad{background:#fef2f2;border-color:#fca5a5}
+.panel.good{background:var(--green);border-color:var(--green-b)}
+.panel h4{font-family:Caveat,cursive;font-size:22px;font-weight:700;margin-bottom:8px}
+.panel.bad h4{color:#991b1b}.panel.good h4{color:#166534}
+.panel p{font-size:13px;color:var(--muted);line-height:1.5;font-weight:600}
+.finale{text-align:center;max-width:560px}
+.finale .big{font-family:Caveat,cursive;font-size:48px;font-weight:700;margin-bottom:12px;color:var(--text)}
+.finale .big span{color:#2d9f6f}
+.finale p{font-size:16px;color:var(--muted);line-height:1.65;font-weight:600}
+</style>
+</head>
+<body>
+<div id="capture">
+<div class="top"><div class="brand">Agentic AI Ecosystem · Visual Guide</div><h1><em>MCP</em> — clearly explained</h1></div>
+<div class="stage" id="stage"></div>
+<div class="act-tag"><div class="n" id="an">ACT I</div><div class="t" id="at">USB-C for AI</div></div>
+<div class="bar" id="bar"></div>
+</div>
+<script>
+function flow(nodes,labels,p){
+  const total=nodes.length*2-1,vis=Math.ceil(p*total);let h='<div class="flow">',idx=0;
+  nodes.forEach((n,i)=>{const lbl=labels&&labels[i]?`<div class="s">${labels[i]}</div>`:'';
+    h+=`<div class="node${idx<vis?' on':''}${idx===vis-1?' hot':''}"><div class="t">${n}</div>${lbl}</div>`;idx++;
+    if(i<nodes.length-1){h+=`<span class="arr${idx<vis?' on':''}">→</span>`;idx++;}});
+  return h+'</div>';
+}
+const ACTS=[
+  {n:"ACT I",t:"USB-C for AI",r:()=>`<div class="finale"><div class="big"><span>One protocol</span></div><p>Many data sources · one wire between host and tools</p></div>`},
+  {n:"ACT II",t:"Three roles",r:p=>flow(["Host","Client","Server","Tools/Resources"],["Cursor","in-process","adapter","exposed"],p)},
+  {n:"ACT III",t:"Server primitives",r:p=>{
+    const c=[["🔧","Tools","actions"],["📂","Resources","data"],["📋","Prompts","templates"]];
+    const v=Math.ceil(p*3);
+    return `<div class="grid3">${c.map((x,i)=>`<div class="cell${i<v?' on':''}${i===v-1?' hot':''}"><div class="ic">${x[0]}</div><div class="nm">${x[1]}</div><div class="s" style="font-size:11px;color:var(--muted);margin-top:4px;font-weight:600">${x[2]}</div></div>`).join('')}</div>`;
+  }},
+  {n:"ACT IV",t:"Handshake",r:p=>flow(["Initialize","Capabilities","Ready","Tool calls"],["connect","schemas","ack","runtime"],p)},
+  {n:"ACT V",t:"API vs MCP",r:p=>`<div class="split">
+    <div class="panel bad${p>.35?' on':''}"><h4>Rigid REST</h4><p>Hardcoded params · breaking changes · redeploy clients</p></div>
+    <div class="panel good${p>.65?' on':''}"><h4>MCP discover</h4><p>Schema at connect · new optional fields · agent adapts</p></div></div>`},
+  {n:"ACT VI",t:"Build & wire",r:p=>flow(["pip install mcp","FastMCP server","Cursor config","Inspector test"],["SDK","stdio","spawn","verify"],p)},
+  {n:"FINALE",t:"Beyond markdown",r:()=>`<div class="finale"><div class="big"><span>App MCP</span></div><p>Tables · trees · UI apps — LLM as controller, host as renderer</p></div>`},
+];
+function render(prog){
+  const n=ACTS.length,idx=Math.min(n-1,Math.floor(prog*n)),local=(prog*n)-idx,a=ACTS[idx];
+  document.getElementById("an").textContent=a.n;
+  document.getElementById("at").textContent=a.t;
+  document.getElementById("bar").style.width=(prog*100)+"%";
+  document.getElementById("stage").innerHTML=a.r(local);
+}
+const p=new URLSearchParams(location.search);
+render(parseFloat(p.get("frame")||"0"));
+window.__READY=true;
+</script>
+</body>
+</html>

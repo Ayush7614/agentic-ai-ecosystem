@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1200px;height:600px;overflow:hidden;font-family:"JetBrains Mono",Menlo,monospace}
+body{display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 30%,#1e1b4b,#0f172a 55%,#020617)}
+#capture{width:1200px;height:600px;padding:40px 48px;display:flex;align-items:center;justify-content:center}
+.terminal{width:100%;height:100%;border-radius:16px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.55);background:#1e1e24;border:1px solid rgba(255,255,255,.06);display:flex;flex-direction:column}
+.titlebar{height:52px;background:linear-gradient(180deg,#2d2d35,#25252c);display:flex;align-items:center;padding:0 20px;gap:10px;border-bottom:1px solid rgba(0,0,0,.35)}
+.dot{width:15px;height:15px;border-radius:50%}.dot.red{background:#ff5f57}.dot.yellow{background:#febc2e}.dot.green{background:#28c840}
+.titlebar-label{flex:1;text-align:center;font-size:14px;color:#8a8a90;margin-right:60px}
+.body{flex:1;padding:32px 40px;background:#18181c;font-size:17px;line-height:1.75;color:#d4d4d8;overflow:hidden}
+.line{white-space:pre-wrap;word-break:break-all}
+.prompt-user{color:#818cf8;font-weight:500}.prompt-path{color:#34d399}.prompt-arrow{color:#a78bfa;margin:0 6px 0 2px}
+.cmd{color:#f0f0f4}.dim{color:#8b8b95}.success{color:#6fdc8c}.info{color:#38bdf8}.warn{color:#fbbf24}
+</style>
+</head>
+<body>
+<div id="capture"><div class="terminal">
+<div class="titlebar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+<span class="titlebar-label">Terminal — MCP Visual Guide</span></div>
+<div class="body" id="terminal-body"></div></div></div>
+<script>
+const STEPS={
+  "01-install-sdk":{user:"techlatest",path:"~/mcp-demo",lines:[
+    {type:"cmd",text:"python -m venv .venv && source .venv/bin/activate"},
+    {type:"cmd",text:'pip install "mcp[cli]>=1.2"'},
+    {type:"success",text:"Installed mcp SDK + CLI"},
+  ]},
+  "02-scaffold-server":{user:"techlatest",path:"~/mcp-demo",lines:[
+    {type:"cmd",text:"cp ../examples/minimal_weather_server.py ."},
+    {type:"cmd",text:"python minimal_weather_server.py &"},
+    {type:"info",text:"stdio server waiting on stdin (FastMCP weather-demo)"},
+    {type:"success",text:"Tool: get_forecast(location, day?, unit=celsius)"},
+  ]},
+  "03-cursor-config":{user:"techlatest",path:"~/mcp-demo",lines:[
+    {type:"cmd",text:"cat ../examples/cursor_mcp.json.example"},
+    {type:"out",text:'  "weather-demo": { command: "python", args: [...] }'},
+    {type:"info",text:"Cursor → Settings → MCP → paste JSON"},
+    {type:"success",text:"Restart Cursor · server spawns on connect"},
+  ]},
+  "04-list-tools":{user:"techlatest",path:"~/mcp-demo",lines:[
+    {type:"cmd",text:"npx @modelcontextprotocol/inspector python minimal_weather_server.py"},
+    {type:"info",text:"Connected · protocol 2024-11-05"},
+    {type:"success",text:"tools/list → get_forecast"},
+    {type:"out",text:"  parameters: location (req), day, unit"},
+  ]},
+  "05-test-tool":{user:"techlatest",path:"~/mcp-demo",lines:[
+    {type:"cmd",text:'tools/call get_forecast {"location":"Berlin","unit":"celsius"}'},
+    {type:"out",text:'{"location":"Berlin","forecast":"Sunny, 22°C..."}'},
+    {type:"success",text:"✓ Tool OK · ready for host LLM"},
+  ]},
+};
+function prompt(u,p){return `<span class="prompt-user">${u}</span><span class="prompt-path"> (${p})</span><span class="prompt-arrow">⇒</span>`;}
+function renderStep(id,progress){
+  const s=STEPS[id];if(!s)return;
+  const vis=Math.ceil(progress*s.lines.length);let html="";
+  for(let i=0;i<vis;i++){
+    const L=s.lines[i];
+    if(L.type==="cmd")html+=`<div class="line">${prompt(s.user,s.path)}<span class="cmd">${L.text}</span></div>`;
+    else if(L.type==="success")html+=`<div class="line success">${L.text}</div>`;
+    else if(L.type==="info")html+=`<div class="line info">${L.text}</div>`;
+    else if(L.type==="warn")html+=`<div class="line warn">${L.text}</div>`;
+    else html+=`<div class="line">${L.text}</div>`;
+  }
+  document.getElementById("terminal-body").innerHTML=html;
+}
+const p=new URLSearchParams(location.search);
+renderStep(p.get("step")||"01-install-sdk",parseFloat(p.get("frame")||"1"));
+window.__READY=true;
+</script>
+</body>
+</html>

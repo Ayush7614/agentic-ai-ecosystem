@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#ffffff;--text:#1e293b;--muted:#64748b;
+  --blue:#e8f4fc;--blue-b:#7eb8da;
+  --purple:#eee8f8;--purple-b:#b8a9d4;
+  --yellow:#fff8e7;--yellow-b:#e8c86a;
+  --green:#e8f8ef;--green-b:#6bc49a;--hl:#c8f0d8;
+  --dash:#94a3b8;--shadow:0 3px 14px rgba(0,0,0,.07);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1200px;height:600px;overflow:hidden;font-family:Nunito,sans-serif}
+body{background:var(--bg);display:flex;align-items:center;justify-content:center}
+#capture{
+  width:1200px;height:600px;padding:28px 40px 24px;
+  background:var(--bg);display:flex;flex-direction:column;
+}
+.eyebrow{font-family:Caveat,cursive;font-size:22px;font-weight:700;color:var(--muted);margin-bottom:2px}
+h1{
+  font-family:Caveat,cursive;font-size:42px;font-weight:700;color:var(--text);
+  margin-bottom:18px;line-height:1.1;
+}
+h1 span{color:#2d9f6f}
+h1 .pill{
+  display:inline-block;background:var(--hl);border-radius:999px;
+  padding:0 14px;margin:0 2px;
+}
+#content{flex:1;display:flex;align-items:center;justify-content:center;width:100%;position:relative}
+
+/* shared boxes */
+.box{
+  border-radius:14px;border:2px solid;box-shadow:var(--shadow);
+  text-align:center;transition:opacity .2s,transform .2s;
+}
+.box.blue{background:var(--blue);border-color:var(--blue-b)}
+.box.purple{background:var(--purple);border-color:var(--purple-b)}
+.box.yellow{background:var(--yellow);border-color:var(--yellow-b)}
+.box.green{background:var(--green);border-color:var(--green-b)}
+.box .ic{font-size:28px;line-height:1}
+.box .lb{font-family:Caveat,cursive;font-size:18px;font-weight:700;color:var(--text);margin-top:4px}
+.box .sm{font-size:12px;color:var(--muted);margin-top:2px;font-weight:600}
+
+.fade{opacity:.12;transform:translateY(6px) scale(.97)}
+.fade.on{opacity:1;transform:none}
+.fade.hot{box-shadow:0 0 0 3px rgba(45,159,111,.25),var(--shadow)}
+
+.dash{color:var(--dash);font-size:22px;font-weight:700;opacity:.15}
+.dash.on{opacity:1}
+.dash-v{
+  width:2px;height:36px;margin:0 auto;
+  background:repeating-linear-gradient(180deg,var(--dash) 0 5px,transparent 5px 10px);
+  opacity:.15;
+}
+.dash-v.on{opacity:.75}
+.dash-h{
+  height:2px;flex:1;min-width:24px;
+  background:repeating-linear-gradient(90deg,var(--dash) 0 5px,transparent 5px 10px);
+  opacity:.15;
+}
+.dash-h.on{opacity:.75}
+.lbl{font-family:Caveat,cursive;font-size:16px;font-weight:700;color:var(--text);white-space:nowrap}
+
+/* hub */
+.hub{position:relative;width:100%;height:380px}
+.hub-center{
+  position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);
+  width:148px;padding:18px 12px;
+}
+.hub-center .lb{font-size:20px}
+.spoke{position:absolute;text-align:center;opacity:.12;transform:scale(.92)}
+.spoke.on{opacity:1;transform:scale(1)}
+.spoke .box{padding:12px 10px;min-width:100px}
+.spoke .ic{font-size:24px}
+.spoke .lb{font-size:16px}
+.conn{
+  position:absolute;height:2px;background:repeating-linear-gradient(90deg,var(--dash) 0 4px,transparent 4px 8px);
+  transform-origin:left center;opacity:0;pointer-events:none;
+}
+.conn.on{opacity:.7}
+.conn-lbl{
+  position:absolute;font-family:Caveat,cursive;font-size:14px;font-weight:700;
+  color:var(--muted);opacity:0;transform:translate(-50%,-50%);
+}
+.conn-lbl.on{opacity:1}
+
+/* architecture */
+.arch{display:flex;align-items:stretch;justify-content:center;gap:0;width:100%;max-width:1080px}
+.arch-host{
+  flex:0 0 300px;padding:16px;border-radius:16px;border:2px solid var(--blue-b);
+  background:var(--blue);box-shadow:var(--shadow);display:flex;flex-direction:column;gap:10px;
+}
+.arch-host .ht{font-family:Caveat,cursive;font-size:22px;font-weight:700;text-align:center;margin-bottom:4px}
+.host-apps{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.mini{padding:8px 10px;border-radius:10px;background:#fff;border:1.5px solid var(--blue-b);text-align:center;min-width:72px}
+.mini .ic{font-size:20px}.mini .lb{font-family:Caveat,cursive;font-size:13px;font-weight:700}
+.clients{display:flex;flex-direction:column;gap:8px;margin-top:6px}
+.client{padding:10px;border-radius:10px;background:var(--purple);border:1.5px solid var(--purple-b);text-align:center}
+.client .lb{font-family:Caveat,cursive;font-size:16px;font-weight:700}
+.arch-mid{display:flex;flex-direction:column;justify-content:center;gap:28px;padding:0 8px;min-width:120px}
+.arch-row{display:flex;align-items:center;gap:6px}
+.arch-srv{
+  flex:0 0 150px;padding:16px 12px;border-radius:14px;
+  background:var(--yellow);border:2px solid var(--yellow-b);box-shadow:var(--shadow);text-align:center;
+}
+.arch-srv .ic{font-size:30px}
+.arch-srv .lb{font-family:Caveat,cursive;font-size:18px;font-weight:700}
+.arch-data{
+  flex:0 0 200px;display:flex;flex-direction:column;justify-content:center;gap:24px;
+}
+.data-item{text-align:center;padding:12px;border-radius:12px;background:#f8fafc;border:1.5px dashed var(--dash)}
+.data-item .ic{font-size:26px}
+.data-item .lb{font-family:Caveat,cursive;font-size:16px;font-weight:700;margin-top:4px}
+
+/* server stack */
+.srv-stack{display:flex;flex-direction:column;align-items:center;gap:0;max-width:520px;width:100%}
+.srv-box{padding:20px 28px;min-width:200px}
+.srv-prims{display:flex;gap:20px;justify-content:center;width:100%;margin-top:4px}
+.prim{flex:1;max-width:150px;padding:16px 10px}
+.prim .ic{font-size:32px}
+.prim .lb{font-size:18px}
+
+/* sequence */
+.seq{display:flex;align-items:flex-start;justify-content:center;gap:0;width:100%;max-width:900px;padding-top:8px}
+.life{width:130px;text-align:center;flex-shrink:0}
+.life .av{width:76px;height:76px;margin:0 auto 8px;padding:10px;border-radius:14px}
+.life .nm{font-family:Caveat,cursive;font-size:20px;font-weight:700}
+.life-line{width:3px;height:280px;margin:8px auto 0;background:repeating-linear-gradient(180deg,var(--dash) 0 6px,transparent 6px 12px);opacity:.5}
+.seq-mid{flex:1;padding:30px 20px 0;display:flex;flex-direction:column;gap:18px}
+.msg{display:flex;align-items:center;gap:10px;opacity:.12}
+.msg.on{opacity:1}
+.msg .num{
+  width:28px;height:28px;border-radius:50%;background:var(--purple);border:2px solid var(--purple-b);
+  font-family:Caveat,cursive;font-size:16px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.msg .arrow{flex:1;height:2px;background:repeating-linear-gradient(90deg,var(--dash) 0 5px,transparent 5px 10px);position:relative}
+.msg .arrow::after{
+  content:'';position:absolute;right:-1px;top:-4px;
+  border:5px solid transparent;border-left-color:var(--dash);
+}
+.msg.rev .arrow{transform:scaleX(-1)}
+.msg .tx{font-family:Caveat,cursive;font-size:18px;font-weight:700;min-width:160px}
+.ready{
+  margin-top:8px;padding:12px 24px;border-radius:999px;
+  background:var(--blue);border:2px solid var(--blue-b);
+  font-family:Caveat,cursive;font-size:20px;font-weight:700;color:var(--text);
+  text-align:center;opacity:.12;
+}
+.ready.on{opacity:1}
+
+/* flow row */
+.row{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;width:100%}
+.node{
+  min-width:120px;padding:16px 14px;border-radius:14px;text-align:center;
+  border:2px solid var(--blue-b);background:var(--blue);box-shadow:var(--shadow);
+  opacity:.12;transform:translateY(6px);
+}
+.node.on{opacity:1;transform:none}
+.node.hot{box-shadow:0 0 0 3px rgba(45,159,111,.2),var(--shadow)}
+.node h2{font-family:Caveat,cursive;font-size:18px;font-weight:700;color:var(--text)}
+
+/* compare */
+.cols{display:flex;gap:24px;justify-content:center;width:100%;max-width:920px}
+.col{
+  flex:1;padding:22px 20px;border-radius:16px;border:2px solid;
+  opacity:.12;transform:translateY(6px);box-shadow:var(--shadow);
+}
+.col.on{opacity:1;transform:none}
+.col.a{background:var(--blue);border-color:var(--blue-b)}
+.col.b{background:var(--yellow);border-color:var(--yellow-b)}
+.col h3{font-family:Caveat,cursive;font-size:22px;font-weight:700;margin-bottom:10px;color:var(--text)}
+.col p{font-size:14px;color:var(--muted);line-height:1.55;font-weight:600}
+
+/* api scene */
+.api-scene{width:100%;max-width:880px;text-align:center}
+.users{display:flex;justify-content:center;gap:16px;margin-bottom:20px}
+.user{font-size:40px;opacity:.12}
+.user.on{opacity:1}
+.api-flow{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+.api-box{
+  padding:16px 22px;border-radius:14px;background:var(--yellow);border:2px solid var(--yellow-b);
+  box-shadow:var(--shadow);min-width:180px;
+}
+.api-box h2{font-family:Caveat,cursive;font-size:18px;font-weight:700}
+.scene-lbl{
+  font-family:Caveat,cursive;font-size:20px;font-weight:700;padding:8px 16px;border-radius:10px;
+  opacity:.12;
+}
+.scene-lbl.on{opacity:1}
+.scene-lbl.info{background:var(--blue);border:1.5px solid var(--blue-b)}
+.scene-lbl.good{background:var(--green);border:1.5px solid var(--green-b);color:#166534}
+.scene-lbl.bad{background:#fee2e2;border:1.5px solid #fca5a5;color:#991b1b}
+
+/* primitives row */
+.stack3{display:flex;gap:20px;justify-content:center;flex-wrap:wrap}
+.prim-card{
+  width:190px;padding:22px 16px;border-radius:16px;text-align:center;
+  border:2px solid var(--green-b);background:var(--green);box-shadow:var(--shadow);
+  opacity:.12;transform:translateY(8px);
+}
+.prim-card.on{opacity:1;transform:none}
+.prim-card.hot{box-shadow:0 0 0 3px rgba(45,159,111,.2),var(--shadow)}
+.prim-card .ic{font-size:34px}
+.prim-card h3{font-family:Caveat,cursive;font-size:20px;font-weight:700;margin:8px 0 6px}
+.prim-card p{font-size:12px;color:var(--muted);font-weight:600;line-height:1.4}
+</style>
+</head>
+<body>
+<div id="capture"><div class="eyebrow" id="eyebrow"></div><h1 id="title"></h1><div id="content"></div></div>
+<script>
+const HUB_SPOKES=[
+  {ic:"🗄️",lb:"Database",x:"6%",y:"14%"},{ic:"🐙",lb:"GitHub",x:"76%",y:"8%"},
+  {ic:"📧",lb:"Gmail",x:"80%",y:"58%"},{ic:"📁",lb:"Filesystem",x:"58%",y:"78%"},
+  {ic:"💬",lb:"Slack",x:"10%",y:"68%"},{ic:"🌐",lb:"Web APIs",x:"2%",y:"38%"}
+];
+const CX=600,CY=220;
+const D={
+  "usbc-hub":{eyebrow:"",title:'What is <span class="pill">MCP</span>?',type:"hub"},
+  "host-stack":{eyebrow:"Architecture",title:'Host · Client · <span>Server</span>',type:"architecture"},
+  "server-primitives":{eyebrow:"MCP Server",title:'Tools · Resources · <span>Prompts</span>',type:"server-stack"},
+  "transport":{eyebrow:"Transport",title:'stdio vs <span>remote</span>',type:"compare",
+    cols:[["stdio (local)","Host spawns subprocess · stdin/stdout JSON-RPC · default for Cursor/Claude"],
+          ["SSE / HTTP (remote)","Server listens on network · auth at edge · team-shared tools"]]},
+  "handshake":{eyebrow:"Connect",title:'Capability <span>exchange</span>',type:"sequence"},
+  "api-rigid":{eyebrow:"REST API",title:'Fixed <span>contract</span>',type:"api-scene",
+    req:"location & date",res:"200 + JSON",endpoint:"Weather API",mood:"good"},
+  "api-break":{eyebrow:"Breaking change",title:'Third param · <span>all fail</span>',type:"api-scene",
+    req:"location & date",res:"400 errors",endpoint:"Weather API + unit",mood:"bad",multi:true},
+  "mcp-dynamic":{eyebrow:"MCP",title:'Discover · <span>adapt</span>',type:"api-scene",
+    req:"what can you do?",res:"invoke with unit",endpoint:"MCP Server schema",mood:"good"},
+  "text-vs-ui":{eyebrow:"Evolution",title:'Text MCP vs <span>App MCP</span>',type:"compare",
+    cols:[["Text MCP","Markdown tables · JSON strings · file paths · context-heavy"],
+          ["App MCP","Sortable grids · trees · master-detail · theme-aware React apps"]]},
+  "visuals-flow":{eyebrow:"App MCP",title:'Prompt → <span>UI render</span>',
+    nodes:["User prompt","LLM tool call","MCP server JSON","Host loads HTML","Interactive UI"]},
+};
+
+function hubConn(s){
+  const bx=parseFloat(s.x)/100*1120+40+50,by=parseFloat(s.y)/100*380+28+40;
+  const dx=CX-bx,dy=CY-by,len=Math.hypot(dx,dy),ang=Math.atan2(dy,dx)*180/Math.PI;
+  const mx=(bx+CX)/2,my=(by+CY)/2;
+  return {bx,by,len,ang,mx,my};
+}
+
+function renderHub(prog){
+  const vis=Math.ceil(prog*8);
+  let h='<div class="hub">';
+  HUB_SPOKES.forEach((s,i)=>{
+    const on=i+2<=vis,hot=i+2===vis;
+    const c=hubConn(s);
+    h+=`<div class="conn${on?' on':''}" style="left:${c.bx}px;top:${c.by}px;width:${c.len}px;transform:rotate(${c.ang}deg)"></div>`;
+    h+=`<div class="conn-lbl${on?' on':''}" style="left:${c.mx}px;top:${c.my}px">MCP</div>`;
+    h+=`<div class="spoke${on?' on':''}" style="left:${s.x};top:${s.y}">
+      <div class="box yellow"><div class="ic">${s.ic}</div><div class="lb">${s.lb}</div></div></div>`;
+  });
+  h+=`<div class="hub-center box blue${vis>=1?' fade on':''}${vis===1?' hot':''}">
+    <div class="ic">📱</div><div class="lb">AI Application</div></div></div>`;
+  return h;
+}
+
+function renderArchitecture(prog){
+  const steps=[
+    ()=>`<div class="arch-host fade on"><div class="ht">MCP Host</div>
+      <div class="host-apps">
+        <div class="mini"><div class="ic">🤖</div><div class="lb">Claude</div></div>
+        <div class="mini"><div class="ic">💻</div><div class="lb">IDE</div></div>
+        <div class="mini"><div class="ic">📱</div><div class="lb">AI Tools</div></div>
+      </div></div>`,
+    ()=>`<div class="arch-host fade on"><div class="ht">MCP Host</div>
+      <div class="host-apps">
+        <div class="mini"><div class="ic">🤖</div><div class="lb">Claude</div></div>
+        <div class="mini"><div class="ic">💻</div><div class="lb">IDE</div></div>
+        <div class="mini"><div class="ic">📱</div><div class="lb">AI Tools</div></div>
+      </div>
+      <div class="clients">
+        <div class="client fade on"><div class="lb">MCP Client</div></div>
+        <div class="client fade on"><div class="lb">MCP Client</div></div>
+        <div class="client fade on"><div class="lb">MCP Client</div></div>
+      </div></div>`,
+    ()=>`<div class="arch-host fade on"><div class="ht">MCP Host</div>
+      <div class="host-apps">
+        <div class="mini"><div class="ic">🤖</div><div class="lb">Claude</div></div>
+        <div class="mini"><div class="ic">💻</div><div class="lb">IDE</div></div>
+        <div class="mini"><div class="ic">📱</div><div class="lb">AI Tools</div></div>
+      </div>
+      <div class="clients">
+        <div class="client fade on"><div class="lb">MCP Client</div></div>
+        <div class="client fade on"><div class="lb">MCP Client</div></div>
+        <div class="client fade on"><div class="lb">MCP Client</div></div>
+      </div></div>
+      <div class="arch-mid">
+        <div class="arch-row"><div class="dash-h on"></div><div class="lbl">MCP</div><div class="dash-h on"></div></div>
+        <div class="arch-row"><div class="dash-h on"></div><div class="lbl">MCP</div><div class="dash-h on"></div></div>
+        <div class="arch-row"><div class="dash-h on"></div><div class="lbl">MCP</div><div class="dash-h on"></div></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <div class="arch-srv fade on"><div class="ic">🖥️</div><div class="lb">MCP Server</div></div>
+        <div class="arch-srv fade on"><div class="ic">🖥️</div><div class="lb">MCP Server</div></div>
+        <div class="arch-srv fade on"><div class="ic">🖥️</div><div class="lb">MCP Server</div></div>
+      </div>`,
+    ()=>`<div class="arch-host fade on"><div class="ht">MCP Host</div>
+      <div class="host-apps">
+        <div class="mini"><div class="ic">🤖</div><div class="lb">Claude</div></div>
+        <div class="mini"><div class="ic">💻</div><div class="lb">IDE</div></div>
+        <div class="mini"><div class="ic">📱</div><div class="lb">AI Tools</div></div>
+      </div>
+      <div class="clients">
+        <div class="client fade on"><div class="lb">MCP Client</div></div>
+        <div class="client fade on"><div class="lb">MCP Client</div></div>
+        <div class="client fade on"><div class="lb">MCP Client</div></div>
+      </div></div>
+      <div class="arch-mid">
+        <div class="arch-row"><div class="dash-h on"></div><div class="lbl">MCP</div><div class="dash-h on"></div></div>
+        <div class="arch-row"><div class="dash-h on"></div><div class="lbl">MCP</div><div class="dash-h on"></div></div>
+        <div class="arch-row"><div class="dash-h on"></div><div class="lbl">MCP</div><div class="dash-h on"></div></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <div class="arch-srv fade on"><div class="ic">🖥️</div><div class="lb">MCP Server</div></div>
+        <div class="arch-srv fade on"><div class="ic">🖥️</div><div class="lb">MCP Server</div></div>
+        <div class="arch-srv fade on"><div class="ic">🖥️</div><div class="lb">MCP Server</div></div>
+      </div>
+      <div class="arch-mid">
+        <div class="arch-row"><div class="dash-h on"></div></div>
+        <div class="arch-row"><div class="dash-h on"></div></div>
+        <div class="arch-row"><div class="dash-h on"></div></div>
+      </div>
+      <div class="arch-data">
+        <div class="data-item fade on"><div class="ic">📁</div><div class="lb">Local Filesystem</div></div>
+        <div class="data-item fade on"><div class="ic">🗄️</div><div class="lb">Database</div></div>
+        <div class="data-item fade on"><div class="ic">🌐</div><div class="lb">Web APIs</div></div>
+      </div>`
+  ];
+  const idx=Math.min(steps.length-1,Math.floor(prog*steps.length));
+  return `<div class="arch">${steps[idx]()}</div>`;
+}
+
+function renderServerStack(prog){
+  const v=Math.ceil(prog*5);
+  return `<div class="srv-stack">
+    <div class="box yellow srv-box fade${v>=1?' on':''}"><div class="ic">🌐 🗄️ 💬 🐙</div><div class="lb">Data Sources</div></div>
+    <div class="dash-v${v>=2?' on':''}"></div>
+    <div class="lbl${v>=2?' fade on':''}" style="margin:4px 0">Data Sources</div>
+    <div class="dash-v${v>=3?' on':''}"></div>
+    <div class="box yellow srv-box fade${v>=3?' on':''}"><div class="ic">🖥️</div><div class="lb">MCP Server</div></div>
+    <div class="dash-v${v>=4?' on':''}"></div>
+    <div class="lbl${v>=4?' fade on':''}" style="margin:4px 0">Capabilities</div>
+    <div class="srv-prims">
+      <div class="box green prim fade${v>=5?' on':''}"><div class="ic">🔧</div><div class="lb">Tools</div></div>
+      <div class="box green prim fade${v>=5?' on':''}"><div class="ic">📂</div><div class="lb">Resources</div></div>
+      <div class="box green prim fade${v>=5?' on':''}"><div class="ic">📋</div><div class="lb">Prompts</div></div>
+    </div></div>`;
+}
+
+function renderSequence(prog){
+  const steps=[
+    {tx:"initial request",rev:false},
+    {tx:"initial response",rev:true},
+    {tx:"notification",rev:false}
+  ];
+  const v=Math.ceil(prog*4);
+  const msgs=steps.map((s,i)=>`<div class="msg${i<v?' on':''}${s.rev?' rev':''}">
+    ${s.rev?`<div class="tx" style="text-align:right">${s.tx}</div><div class="arrow"></div><div class="num">${i+1}</div>`:
+    `<div class="num">${i+1}</div><div class="arrow"></div><div class="tx">${s.tx}</div>`}</div>`).join('');
+  return `<div class="seq">
+    <div class="life"><div class="av box purple"><div class="ic">🌐</div></div><div class="nm">MCP Client</div><div class="life-line"></div></div>
+    <div class="seq-mid">${msgs}<div class="ready${v>=4?' on':''}">Ready for message exchange</div></div>
+    <div class="life"><div class="av box yellow"><div class="ic">🖥️</div></div><div class="nm">MCP Server</div><div class="life-line"></div></div></div>`;
+}
+
+function renderPrimitives(prog){
+  const p=[["🔧","Tools","Actions the model invokes"],["📂","Resources","Data & content URIs"],["📋","Prompts","Reusable templates"]];
+  const v=Math.ceil(prog*3);
+  return '<div class="stack3">'+p.map((x,i)=>`<div class="prim-card${i<v?' on':''}${i===v-1?' hot':''}">
+    <div class="ic">${x[0]}</div><h3>${x[1]}</h3><p>${x[2]}</p></div>`).join('')+'</div>';
+}
+
+function flow(nodes,prog){
+  const total=nodes.length*2-1,vis=Math.ceil(prog*total);let h='<div class="row">',idx=0;
+  nodes.forEach((n,i)=>{h+=`<div class="node${idx<vis?' on':''}${idx===vis-1?' hot':''}"><h2>${n}</h2></div>`;idx++;
+    if(i<nodes.length-1){h+=`<span class="dash${idx<vis?' on':''}">→</span>`;idx++;}});
+  return h+'</div>';
+}
+
+function renderApiScene(d,prog){
+  const users=d.multi?3:1;
+  let h='<div class="api-scene"><div class="users">';
+  for(let i=0;i<users;i++) h+=`<div class="user${prog>.08?' on':''}">🧑‍💻</div>`;
+  h+='</div><div class="api-flow">';
+  if(prog>.2) h+=`<span class="scene-lbl info on">${d.req}</span><span class="dash on">→</span>`;
+  if(prog>.1) h+=`<div class="api-box fade on"><h2>${d.endpoint}</h2></div>`;
+  if(prog>.55) h+=`<span class="dash on">→</span><span class="scene-lbl ${d.mood} on">${d.res}</span>`;
+  return h+'</div></div>';
+}
+
+function render(id,prog){
+  const d=D[id];if(!d)return;
+  document.getElementById("eyebrow").textContent=d.eyebrow;
+  document.getElementById("title").innerHTML=d.title;
+  const el=document.getElementById("content");
+  if(d.type==="hub") el.innerHTML=renderHub(prog);
+  else if(d.type==="architecture") el.innerHTML=renderArchitecture(prog);
+  else if(d.type==="server-stack") el.innerHTML=renderServerStack(prog);
+  else if(d.type==="primitives") el.innerHTML=renderPrimitives(prog);
+  else if(d.type==="sequence") el.innerHTML=renderSequence(prog);
+  else if(d.type==="api-scene") el.innerHTML=renderApiScene(d,prog);
+  else if(d.type==="compare"){
+    const vis=Math.ceil(prog*2);
+    el.innerHTML='<div class="cols">'+d.cols.map((c,i)=>`<div class="col ${i===0?'a':'b'}${i<vis?' on':''}">
+      <h3>${c[0]}</h3><p>${c[1]}</p></div>`).join('')+'</div>';
+  } else el.innerHTML=flow(d.nodes,prog);
+}
+const p=new URLSearchParams(location.search);
+render(p.get("diagram")||"usbc-hub",parseFloat(p.get("frame")||"1"));
+window.__READY=true;
+</script>
+</body>
+</html>

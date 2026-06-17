@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;800;900&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{margin:0;display:flex;align-items:center;justify-content:center;min-height:100vh;background:#0a0f1a}
+#capture{
+  width:1200px;height:600px;position:relative;overflow:hidden;
+  background:radial-gradient(ellipse 85% 70% at 50% 45%,#172035 0%,#0a0f1a 50%,#050810 100%);
+  font-family:Inter,sans-serif;color:#fff;
+}
+.grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(129,140,248,.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(129,140,248,.05) 1px,transparent 1px);
+  background-size:40px 40px;
+  mask-image:radial-gradient(ellipse 75% 75% at 50% 50%,#000 15%,transparent 80%);
+}
+.glow{position:absolute;border-radius:50%;filter:blur(100px)}
+.g1{width:560px;height:560px;background:#4f46e5;top:-160px;left:50%;transform:translateX(-50%);opacity:.28}
+.g2{width:400px;height:400px;background:#10b981;bottom:-140px;left:8%;opacity:.16}
+.g3{width:340px;height:340px;background:#0ea5e9;bottom:-100px;right:6%;opacity:.14}
+
+.deco{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:500px;height:500px;opacity:.14;pointer-events:none;
+}
+.ring{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(129,140,248,.45)}
+.ring2{position:absolute;inset:55px;border-radius:50%;border:1px dashed rgba(52,211,153,.35)}
+.spoke{
+  position:absolute;left:50%;top:50%;width:1px;height:220px;
+  background:linear-gradient(180deg,transparent,rgba(129,140,248,.5),transparent);
+  transform-origin:center center;
+}
+.spoke.s1{transform:translate(-50%,-50%) rotate(0deg)}
+.spoke.s2{transform:translate(-50%,-50%) rotate(45deg)}
+.spoke.s3{transform:translate(-50%,-50%) rotate(90deg)}
+.spoke.s4{transform:translate(-50%,-50%) rotate(135deg)}
+
+.corner{
+  position:absolute;width:44px;height:44px;border-radius:12px;
+  background:rgba(15,23,42,.7);border:1px solid rgba(129,140,248,.28);
+  display:flex;align-items:center;justify-content:center;font-size:18px;
+  box-shadow:0 6px 20px rgba(0,0,0,.3);
+}
+.c-tl{top:36px;left:44px}.c-tr{top:36px;right:44px}
+.c-bl{bottom:36px;left:44px}.c-br{bottom:36px;right:44px}
+
+.content{
+  position:relative;z-index:3;height:100%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:48px 96px;
+}
+.brand{
+  font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:600;
+  letter-spacing:.22em;color:#a5b4fc;text-transform:uppercase;margin-bottom:20px;
+}
+h1{
+  font-size:56px;font-weight:900;line-height:1.06;letter-spacing:-2.5px;
+  max-width:920px;margin-bottom:18px;
+  text-shadow:0 2px 40px rgba(0,0,0,.45);
+}
+h1 .grad{
+  display:block;margin-top:4px;
+  background:linear-gradient(90deg,#818cf8 0%,#34d399 50%,#38bdf8 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.sub{
+  font-size:19px;line-height:1.55;color:rgba(226,232,240,.88);
+  max-width:680px;margin-bottom:30px;
+}
+.tags{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.tag{
+  font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:600;
+  padding:9px 18px;border-radius:999px;
+  color:#e0e7ff;background:rgba(99,102,241,.16);
+  border:1px solid rgba(129,140,248,.38);
+  backdrop-filter:blur(4px);
+}
+.hub-row{
+  margin-top:34px;display:flex;align-items:center;gap:14px;
+  padding:14px 22px;border-radius:16px;
+  background:rgba(15,23,42,.45);border:1px solid rgba(129,140,248,.2);
+}
+.hub-pill{
+  display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:#cbd5e1;
+}
+.hub-pill span{font-size:16px}
+.sep{width:1px;height:20px;background:rgba(148,163,184,.25)}
+.footer{
+  position:absolute;bottom:20px;left:50%;transform:translateX(-50%);
+  font-size:11px;font-weight:600;color:rgba(148,163,184,.5);letter-spacing:.04em;
+}
+.footer b{color:#34d399;font-weight:700}
+</style>
+</head>
+<body>
+<div id="capture">
+  <div class="grid"></div>
+  <div class="glow g1"></div>
+  <div class="glow g2"></div>
+  <div class="glow g3"></div>
+
+  <div class="deco">
+    <div class="ring"></div>
+    <div class="ring2"></div>
+    <div class="spoke s1"></div>
+    <div class="spoke s2"></div>
+    <div class="spoke s3"></div>
+    <div class="spoke s4"></div>
+  </div>
+
+  <div class="corner c-tl">🗄️</div>
+  <div class="corner c-tr">🐙</div>
+  <div class="corner c-bl">📁</div>
+  <div class="corner c-br">🌐</div>
+
+  <div class="content">
+    <div class="brand">Agentic AI Ecosystem · Visual Guide</div>
+    <h1>Model Context Protocol<br/><span class="grad">USB-C for AI Tools</span></h1>
+    <p class="sub">Host · Client · Server · capability exchange · App MCP</p>
+    <div class="tags">
+      <span class="tag">MCP</span>
+      <span class="tag">Tools</span>
+      <span class="tag">Cursor</span>
+      <span class="tag">Visuals MCP</span>
+    </div>
+    <div class="hub-row">
+      <div class="hub-pill"><span>📱</span> Host</div>
+      <div class="sep"></div>
+      <div class="hub-pill"><span>🔌</span> Client</div>
+      <div class="sep"></div>
+      <div class="hub-pill"><span>⚙️</span> Server</div>
+    </div>
+  </div>
+
+  <div class="footer"><b>Visual guide</b> · Agentic AI Ecosystem</div>
+</div>
+</body>
+</html>
