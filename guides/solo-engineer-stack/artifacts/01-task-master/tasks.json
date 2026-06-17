@@ -1,0 +1,69 @@
+{
+  "project": "PulseFeedback",
+  "source_prd": "examples/prd-pulsefeedback.md",
+  "generated_at": "2026-06-12T07:11:17.267762+00:00",
+  "generator": "scripts/01-task-master/generate_tasks.py",
+  "note": "Run claude-task-master parse-prd for LLM-generated tasks; this file is the demo baseline.",
+  "epics": [
+    {
+      "id": "E1",
+      "tool": "crewai",
+      "title": "Run research crew",
+      "description": "Produce brief.md, spec.md, test-plan.md"
+    },
+    {
+      "id": "E2",
+      "tool": "langgraph",
+      "title": "Approve Deca-Loop gate",
+      "description": "Human sign-off before code generation"
+    },
+    {
+      "id": "E3",
+      "tool": "openhands",
+      "title": "Scaffold PulseFeedback repo",
+      "description": "FastAPI + frontend + CI skeleton"
+    },
+    {
+      "id": "E4",
+      "tool": "aider",
+      "title": "Implement feedback API",
+      "description": "POST/GET/PATCH /api/feedback with tests"
+    },
+    {
+      "id": "E5",
+      "tool": "cline",
+      "title": "Build triage dashboard UI",
+      "description": "Submit form + status badges + browser verify"
+    },
+    {
+      "id": "E6",
+      "tool": "n8n",
+      "title": "Wire ops workflows",
+      "description": "Deploy notify + CSAT loop webhooks"
+    },
+    {
+      "id": "E7",
+      "tool": "coolify",
+      "title": "Deploy to HTTPS",
+      "description": "Git push deploy for app + n8n"
+    },
+    {
+      "id": "E8",
+      "tool": "posthog",
+      "title": "Instrument analytics",
+      "description": "feedback_submitted funnel + feature flag"
+    },
+    {
+      "id": "E9",
+      "tool": "chatwoot",
+      "title": "Embed support widget",
+      "description": "Inbox + Captain bot on marketing page"
+    },
+    {
+      "id": "E10",
+      "tool": "task_master",
+      "title": "Close CSAT loop",
+      "description": "Low score creates next sprint tasks"
+    }
+  ]
+}

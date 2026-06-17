@@ -1,0 +1,57 @@
+{
+  "name": "PulseFeedback CSAT Loop",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "csat",
+        "responseMode": "lastNode"
+      },
+      "name": "Webhook CSAT",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:8080/api/webhooks/csat",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { \"score\": $json.body.score, \"comment\": $json.body.comment } }}"
+      },
+      "name": "Forward to PulseFeedback",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [480, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $json.loop_triggered }}",
+              "operation": "equal",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "name": "Loop triggered?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [720, 300]
+    }
+  ],
+  "connections": {
+    "Webhook CSAT": {
+      "main": [[{ "node": "Forward to PulseFeedback", "type": "main", "index": 0 }]]
+    },
+    "Forward to PulseFeedback": {
+      "main": [[{ "node": "Loop triggered?", "type": "main", "index": 0 }]]
+    }
+  },
+  "meta": {
+    "instanceId": "pulsefeedback-demo"
+  }
+}

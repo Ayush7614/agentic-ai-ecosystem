@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Solo Engineer Stack — Terminal</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      background: radial-gradient(ellipse at 50% 30%, #1e293b 0%, #0f172a 55%, #020617 100%);
+      font-family: "JetBrains Mono", Menlo, monospace;
+    }
+    #capture { width: 920px; padding: 28px; }
+    .terminal {
+      border-radius: 12px; overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06);
+      background: #1e1e24;
+    }
+    .titlebar {
+      height: 44px; background: linear-gradient(180deg, #2d2d35 0%, #25252c 100%);
+      display: flex; align-items: center; padding: 0 16px; gap: 8px;
+      border-bottom: 1px solid rgba(0,0,0,.35);
+    }
+    .dot { width: 13px; height: 13px; border-radius: 50%; }
+    .dot.red { background: #ff5f57; }
+    .dot.yellow { background: #febc2e; }
+    .dot.green { background: #28c840; }
+    .titlebar-label { flex: 1; text-align: center; font-size: 12px; color: #8a8a90; margin-right: 52px; }
+    .body { min-height: 340px; padding: 28px 32px 36px; background: #18181c; font-size: 14px; line-height: 1.72; color: #d4d4d8; }
+    .line { white-space: pre-wrap; word-break: break-all; }
+    .prompt-user { color: #6fdc8c; font-weight: 500; }
+    .prompt-path { color: #5eb3ff; }
+    .prompt-arrow { color: #e06cff; margin: 0 6px 0 2px; }
+    .cmd { color: #f0f0f4; }
+    .dim { color: #8b8b95; }
+    .success { color: #6fdc8c; }
+    .info { color: #5eb3ff; }
+    .warn { color: #febc2e; }
+    .cursor { display: inline-block; width: 9px; height: 18px; background: #c8c8cc; vertical-align: text-bottom; }
+    .cursor.blink { animation: blink 1.05s step-end infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+    .spacer { height: 10px; }
+  </style>
+</head>
+<body>
+  <div id="capture">
+    <div class="terminal">
+      <div class="titlebar">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+        <span class="titlebar-label">Terminal — PulseFeedback · Solo Engineer Stack</span>
+      </div>
+      <div class="body" id="terminal-body"></div>
+    </div>
+  </div>
+  <script>
+    const STEPS = {
+      "00-demo": {
+        user: "techlatest", path: "~/agentic-ai-ecosystem/guides/solo-engineer-stack",
+        lines: [
+          { type: "cmd", text: "chmod +x scripts/demo.sh && ./scripts/demo.sh" },
+          { type: "out", text: "══════════════════════════════════════════════════" },
+          { type: "info", text: "  PulseFeedback — Solo Engineer Stack LIVE DEMO" },
+          { type: "out", text: "Wrote artifacts/01-task-master/tasks.json (10 epics)" },
+          { type: "out", text: "Wrote mock artifacts to artifacts/02-crewai/" },
+          { type: "success", text: "Starting PulseFeedback on http://127.0.0.1:8080" },
+          { type: "out", text: '{"status":"ok","product":"PulseFeedback"}' },
+          { type: "success", text: "OPEN IN BROWSER → Submit · Dashboard · Analytics · Support · 10 Tools" },
+        ], showCursor: false,
+      },
+      "01-task-master": {
+        user: "techlatest", path: "~/guides/solo-engineer-stack",
+        lines: [
+          { type: "cmd", text: "python scripts/01-task-master/generate_tasks.py" },
+          { type: "success", text: "Wrote artifacts/01-task-master/tasks.json (10 epics)" },
+          { type: "cmd", text: "jq '.epics | length' artifacts/01-task-master/tasks.json" },
+          { type: "success", text: "10" },
+          { type: "dim", text: "# optional: npx task-master parse-prd examples/prd-pulsefeedback.md" },
+        ], showCursor: false,
+      },
+      "02-crewai": {
+        user: "techlatest", path: "~/guides/solo-engineer-stack",
+        lines: [
+          { type: "cmd", text: "python scripts/02-crewai/run_crew.py --mock" },
+          { type: "success", text: "Wrote mock artifacts to artifacts/02-crewai/" },
+          { type: "cmd", text: "ls artifacts/02-crewai/" },
+          { type: "out", text: "brief.md  spec.md  test-plan.md" },
+          { type: "dim", text: "# live: export OPENAI_API_KEY=... && python scripts/02-crewai/run_crew.py" },
+        ], showCursor: false,
+      },
+      "03-langgraph": {
+        user: "techlatest", path: "~/guides/solo-engineer-stack",
+        lines: [
+          { type: "cmd", text: "python orchestrator/graph.py --dry-run" },
+          { type: "out", text: "  1. task_master  → tasks.json" },
+          { type: "out", text: "  2. crewai       → brief.md + spec.md + test-plan.md" },
+          { type: "out", text: " … 10. chatwoot   → inbox + widget embedded" },
+          { type: "cmd", text: "python scripts/03-langgraph/approve_gate.py" },
+          { type: "success", text: "Wrote artifacts/03-langgraph/state-approved.json" },
+        ], showCursor: false,
+      },
+      "04-openhands": {
+        user: "techlatest", path: "~/guides/solo-engineer-stack/pulsefeedback/backend",
+        lines: [
+          { type: "cmd", text: "source ../../.venv/bin/activate" },
+          { type: "cmd", text: "uvicorn main:app --reload --port 8080" },
+          { type: "success", text: "Uvicorn running on http://127.0.0.1:8080" },
+          { type: "cmd", text: "curl -s http://127.0.0.1:8080/health | python -m json.tool" },
+          { type: "out", text: '{ "status": "ok", "product": "PulseFeedback" }' },
+          { type: "dim", text: "# OpenHands scaffolds pulsefeedback/ — reference app in repo" },
+        ], showCursor: false,
+      },
+      "05-aider": {
+        user: "techlatest", path: "~/guides/solo-engineer-stack",
+        lines: [
+          { type: "cmd", text: 'curl -X POST http://127.0.0.1:8080/api/feedback \\' },
+          { type: "cmd", text: '  -H "Content-Type: application/json" \\' },
+          { type: "cmd", text: '  -d \'{"title":"Dark mode","body":"Please add dark theme"}\'' },
+          { type: "out", text: '{ "id": 1, "status": "new", "title": "Dark mode", ... }' },
+          { type: "cmd", text: "pytest tests/test_api.py::test_feedback_crud -q" },
+          { type: "success", text: "1 passed" },
+          { type: "dim", text: "# aider --model openai/gpt-4o pulsefeedback/backend/main.py" },
+        ], showCursor: false,
+      },
+      "06-cline": {
+        user: "techlatest", path: "~/guides/solo-engineer-stack",
+        lines: [
+          { type: "info", text: "Browser → http://127.0.0.1:8080" },
+          { type: "out", text: "Tab: Submit → Dashboard → triage new → triaged → done" },
+          { type: "cmd", text: "curl -s http://127.0.0.1:8080/ | grep -q PulseFeedback && echo OK" },
+          { type: "success", text: "OK" },
+          { type: "dim", text: "# Cline in Cursor: edit pulsefeedback/frontend/ + browser verify" },
+        ], showCursor: false,
+      },
+      "07-n8n": {
+        user: "techlatest", path: "~/guides/solo-engineer-stack",
+        lines: [
+          { type: "cmd", text: "docker compose up -d n8n" },
+          { type: "success", text: "n8n → http://localhost:5678" },
+          { type: "cmd", text: "# Import n8n/workflows/csat-loop.json → Activate" },
+          { type: "cmd", text: "curl -s http://localhost:5678/healthz" },
+          { type: "success", text: "ok" },
+        ], showCursor: false,
+      },
+      "08-coolify": {
+        user: "techlatest", path: "~/guides/solo-engineer-stack",
+        lines: [
+          { type: "cmd", text: "docker compose up -d --build" },
+          { type: "success", text: "Built pulsefeedback/Dockerfile → :8080" },
+          { type: "cmd", text: "curl -sf http://localhost:8080/health" },
+          { type: "out", text: '{"status":"ok","stack":"solo-engineer-stack"}' },
+          { type: "dim", text: "# Production: Coolify VPS + git push deploy + SSL" },
+        ], showCursor: false,
+      },
+      "09-posthog": {
+        user: "techlatest", path: "~/guides/solo-engineer-stack",
+        lines: [
+          { type: "cmd", text: "curl -s http://127.0.0.1:8080/api/events | python -m json.tool | head -20" },
+          { type: "out", text: '[ { "event": "feedback_submitted", "properties": { "id": 1 } },' },
+          { type: "out", text: '  { "event": "feedback_status_changed", ... } ]' },
+          { type: "dim", text: "# Wire posthog-js in prod · funnel: submit → triage" },
+        ], showCursor: false,
+      },
+      "10-chatwoot": {
+        user: "techlatest", path: "~/guides/solo-engineer-stack",
+        lines: [
+          { type: "cmd", text: 'curl -X POST http://127.0.0.1:8080/api/webhooks/csat \\' },
+          { type: "cmd", text: '  -H "Content-Type: application/json" \\' },
+          { type: "cmd", text: '  -d \'{"score":1,"comment":"Bot failed"}\'' },
+          { type: "success", text: '{ "ok": true, "loop_triggered": true }' },
+          { type: "cmd", text: "cat artifacts/11-csat-loop/new-task.json" },
+          { type: "out", text: '"next_tool": "task_master"' },
+        ], showCursor: false,
+      },
+      "11-verify": {
+        user: "techlatest", path: "~/guides/solo-engineer-stack",
+        lines: [
+          { type: "cmd", text: "./scripts/verify-stack.sh" },
+          { type: "success", text: "  ✓ tasks.json" },
+          { type: "success", text: "  ✓ brief.md · spec.md · test-plan.md" },
+          { type: "success", text: "  ✓ pulsefeedback/backend · frontend · tests" },
+          { type: "success", text: "All checks passed (15). Run ./scripts/demo.sh" },
+          { type: "cmd", text: "pytest tests/ -q" },
+          { type: "success", text: "4 passed" },
+        ], showCursor: false,
+      },
+      "12-loop": {
+        user: "techlatest", path: "~/guides/solo-engineer-stack",
+        lines: [
+          { type: "cmd", text: "python orchestrator/graph.py --csat 1.5" },
+          { type: "success", text: "Final stage: task_master" },
+          { type: "dim", text: "Chatwoot CSAT ≤ 2 → n8n → /api/webhooks/csat → new-task.json" },
+          { type: "cmd", text: "python scripts/01-task-master/generate_tasks.py" },
+          { type: "info", text: "→ Next sprint starts · Deca-Loop closed" },
+        ], showCursor: false,
+      },
+    };
+
+    function prompt(user, path) {
+      return `<span class="prompt-user">${user}</span><span class="prompt-path"> (${path})</span><span class="prompt-arrow">⇒</span>`;
+    }
+
+    function renderLine(line, user, path, isLastCmd) {
+      if (line.type === "cmd") {
+        const cur = isLastCmd ? '<span class="cursor blink"></span>' : "";
+        return `<div class="line">${prompt(user, path)}<span class="cmd">${line.text}</span>${cur}</div>`;
+      }
+      const cls = { success: "success", info: "info", warn: "warn", dim: "dim" }[line.type] || "dim";
+      if (line.text === "") return '<div class="spacer"></div>';
+      return `<div class="line ${cls}">${line.text}</div>`;
+    }
+
+    function renderStep(stepId, progress) {
+      const step = STEPS[stepId];
+      if (!step) return;
+      const body = document.getElementById("terminal-body");
+      const totalLines = step.lines.length;
+      const visibleCount = progress === undefined ? totalLines : Math.min(totalLines, Math.ceil(progress * totalLines));
+      let html = "", lastCmdIdx = -1;
+      for (let i = 0; i < visibleCount; i++) if (step.lines[i].type === "cmd") lastCmdIdx = i;
+      for (let i = 0; i < visibleCount; i++) {
+        html += renderLine(step.lines[i], step.user, step.path, i === lastCmdIdx && step.showCursor !== false && visibleCount === totalLines);
+      }
+      if (visibleCount === 0) html = `<div class="line">${prompt(step.user, step.path)}<span class="cursor blink"></span></div>`;
+      body.innerHTML = html;
+    }
+
+    const params = new URLSearchParams(location.search);
+    const stepId = params.get("step") || "00-demo";
+    const frame = params.get("frame");
+    if (frame !== null) renderStep(stepId, parseFloat(frame));
+    else renderStep(stepId);
+    window.__READY = true;
+  </script>
+</body>
+</html>

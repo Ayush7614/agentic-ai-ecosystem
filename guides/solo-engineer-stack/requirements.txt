@@ -1,0 +1,10 @@
+fastapi>=0.115.0
+uvicorn[standard]>=0.32.0
+pydantic>=2.0.0
+python-dotenv>=1.0.0
+httpx>=0.27.0
+pytest>=8.0.0
+
+# Optional — CrewAI live run (scripts/02-crewai/run_crew.py without --mock)
+# crewai>=0.86.0
+# langgraph>=0.2.0
