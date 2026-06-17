@@ -16,6 +16,8 @@ Maintained by [Ayush Kumar](https://github.com/Ayush7614) · [NeuralVerse](https
 
 | [MCP Visual Guide](guides/mcp-visual-guide/index.md) | Model Context Protocol — host/client/server, capability exchange, API vs MCP, App MCP |
 
+| [AI Agents Masterclass](guides/ai-agents-masterclass/index.md) | **Visual masterclass** — agent anatomy, ReAct/ReWOO, 15+ frameworks, use cases, MCP/A2A, five code examples |
+
 Each guide is a self-contained project under `guides/<name>/` in the repo. The site pages mirror those READMEs and tutorials so you can read online without cloning.
 
 ## Run locally (any guide)
