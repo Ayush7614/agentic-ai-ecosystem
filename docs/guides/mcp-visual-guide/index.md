@@ -9,7 +9,6 @@ description: Model Context Protocol — host, client, server, capability exchang
 
 ![Mega MCP overview](assets/mega-mcp-everything.gif){ width="100%" }
 
-{% include-markdown "../../../guides/mcp-visual-guide/README.md" start="## Guide map" end="## Related guides" %}
+{% include-markdown "../../../guides/mcp-visual-guide/README.md" start="## Related guides" end="## License" %}
 
 [Read the full tutorial →](tutorial.md){ .md-button .md-button--primary }
-[Hermes Masterclass →](../hermes-agent-masterclass/tutorial.md){ .md-button }

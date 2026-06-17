@@ -20,6 +20,8 @@ The public site is built with [MkDocs Material](https://squidfunk.github.io/mkdo
    - `docs/guides/<slug>/index.md` — include `guides/<slug>/README.md`
    - `docs/guides/<slug>/tutorial.md` — include `guides/<slug>/TUTORIAL.md` (if present)
 
+   Keep `rewrite_relative_urls: false` in `mkdocs.yml` so `./assets/...` in included tutorials resolves to `docs/guides/<slug>/assets/` after `prepare-docs.sh` (not `guides/<slug>/assets/`).
+
 3. Register navigation in `mkdocs.yml` under `nav` → `Guides`.
 4. Add a row to `docs/index.md` guide table.
 5. Push to `main`; the [Deploy docs](https://github.com/Ayush7614/agentic-ai-ecosystem/actions) workflow publishes automatically.
