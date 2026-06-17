@@ -1,0 +1,21 @@
+# Eval gate config — copy to your agent harness
+
+goal: "All pytest tests in tests/ pass; ruff check src/ is clean"
+
+success:
+  - metric: pytest_exit_code
+    equals: 0
+  - metric: ruff_violations
+    equals: 0
+
+failure:
+  max_iterations: 10
+  no_progress_streak: 3   # same error 3x → stop and escalate
+
+escalation:
+  on_failure: human_review
+  include: [iteration_log, last_patch, stack_trace]
+
+context:
+  summarize_every: 3      # compress loop history every N iters
+  keep_last_errors: 5
