@@ -3,7 +3,7 @@ title: ML Model in 6 Steps
 description: Visual blog pack — problem framing through deploy and monitor with animated GIFs.
 ---
 
-{% include-markdown "../../../guides/ml-model-6-steps/BLOG.md" start="## Introduction" end="## Step 1" %}
+{% include-markdown "../../../guides/ml-model-6-steps/BLOG.md" start="## How to read this guide" end="## Step 1" %}
 
 ![Pipeline overview](assets/gif-01-pipeline-overview.gif){ width="100%" }
 
