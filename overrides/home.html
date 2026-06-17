@@ -1,0 +1,361 @@
+{% extends "main.html" %}
+
+{% block tabs %}
+{{ super() }}
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+<style>
+  /* Remove the empty content shell so the splash is full-bleed */
+  .md-main__inner { margin-top: 0; }
+  .md-content { display: none; }
+  @media screen and (min-width: 60em) { .md-sidebar--secondary { display: none; } }
+  @media screen and (min-width: 76.25em) { .md-sidebar--primary { display: none; } }
+
+  :root {
+    --aae-bg: #08080b;
+    --aae-bg2: #0e0e13;
+    --aae-panel: #121218;
+    --aae-line: rgba(255,255,255,.08);
+    --aae-line2: rgba(255,255,255,.16);
+    --aae-text: #f5f6f8;
+    --aae-muted: #9aa0ab;
+    --aae-dim: #6b7280;
+    --aae-amber: #ffb800;
+    --aae-amber2: #ffcf4d;
+  }
+
+  .aae {
+    position: relative;
+    background: var(--aae-bg);
+    color: var(--aae-text);
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+    margin-top: -2.4rem; /* tuck under the tabs bar */
+  }
+  .aae * { box-sizing: border-box; }
+  .aae a { text-decoration: none; color: inherit; }
+  .aae .mono { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .aae .wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 2; }
+
+  #aae-stars { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+  .aae-glow {
+    position: absolute; z-index: 0; pointer-events: none;
+    width: 820px; height: 820px; left: 50%; top: -260px; transform: translateX(-50%);
+    background: radial-gradient(circle at center, rgba(255,184,0,.16), rgba(255,184,0,0) 60%);
+    filter: blur(30px);
+  }
+
+  /* hero */
+  .aae-hero { text-align: center; padding: 96px 0 60px; }
+  .aae-badge {
+    display: inline-flex; align-items: center; gap: 10px;
+    border: 1px solid var(--aae-line2); border-radius: 999px;
+    padding: 8px 18px; font-size: 11.5px; letter-spacing: .18em; font-weight: 600;
+    color: var(--aae-muted); text-transform: uppercase;
+  }
+  .aae-badge .pip { width: 6px; height: 6px; border-radius: 50%; background: var(--aae-amber); box-shadow: 0 0 12px var(--aae-amber); }
+  .aae-hero h1 {
+    font-weight: 900; letter-spacing: -.03em; line-height: .92;
+    font-size: clamp(44px, 9vw, 116px); margin: 26px 0 0; color: var(--aae-text);
+  }
+  .aae-hero h1 .amber { background: linear-gradient(120deg, var(--aae-amber), var(--aae-amber2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .aae-sub { max-width: 660px; margin: 24px auto 0; color: var(--aae-muted); font-size: 17px; line-height: 1.65; }
+
+  .aae-copy {
+    margin: 34px auto 0; max-width: 540px;
+    display: flex; align-items: center; gap: 14px;
+    border: 1px solid var(--aae-amber); border-radius: 12px;
+    background: rgba(255,184,0,.05); padding: 14px 18px;
+    box-shadow: 0 0 0 4px rgba(255,184,0,.06);
+  }
+  .aae-copy .pr { color: var(--aae-amber); font-weight: 700; }
+  .aae-copy code { flex: 1; text-align: left; color: var(--aae-text); font-size: 13.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .aae-copy button { background: none; border: none; color: var(--aae-dim); font-size: 11px; letter-spacing: .12em; cursor: pointer; font-weight: 700; transition: color .15s; }
+  .aae-copy button:hover { color: var(--aae-amber); }
+
+  .aae-btns { margin-top: 26px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .aae-btn {
+    display: inline-flex; align-items: center; gap: 9px;
+    padding: 13px 26px; border-radius: 11px; font-weight: 700; font-size: 14px; letter-spacing: .02em;
+    border: 1px solid var(--aae-line2); transition: transform .12s, background .15s, box-shadow .2s;
+  }
+  .aae-btn:hover { transform: translateY(-2px); }
+  .aae-btn.solid { background: var(--aae-amber); color: #1a1300; border-color: var(--aae-amber); }
+  .aae-btn.solid:hover { box-shadow: 0 10px 30px rgba(255,184,0,.3); }
+  .aae-btn.ghost:hover { background: rgba(255,255,255,.05); }
+
+  .aae-stats { margin-top: 48px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .aae-stat { border: 1px solid var(--aae-line); border-radius: 12px; background: var(--aae-panel); padding: 14px 22px; min-width: 130px; }
+  .aae-stat b { display: block; font-size: 26px; font-weight: 800; color: var(--aae-amber); line-height: 1; }
+  .aae-stat span { display: block; margin-top: 6px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--aae-dim); }
+
+  /* sections */
+  .aae-sec { padding: 72px 0; border-top: 1px solid var(--aae-line); }
+  .aae-eyebrow { color: var(--aae-amber); font-size: 12px; letter-spacing: .22em; font-weight: 700; text-transform: uppercase; text-align: center; }
+  .aae-h2 { text-align: center; font-size: clamp(28px, 5vw, 44px); font-weight: 850; letter-spacing: -.02em; margin: 12px 0 0; }
+  .aae-lead { text-align: center; color: var(--aae-muted); font-size: 16px; line-height: 1.6; margin: 14px auto 0; max-width: 620px; }
+
+  .aae-grid { margin-top: 46px; display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 18px; }
+  .aae-card {
+    position: relative; display: flex; flex-direction: column; gap: 12px;
+    border: 1px solid var(--aae-line); border-radius: 16px;
+    background: linear-gradient(180deg, var(--aae-panel), var(--aae-bg2));
+    padding: 22px; min-height: 168px;
+    transition: transform .15s, border-color .15s, box-shadow .2s;
+  }
+  .aae-card:hover { transform: translateY(-4px); border-color: var(--aae-line2); box-shadow: 0 16px 40px rgba(0,0,0,.45); }
+  .aae-card .ico {
+    width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center; font-size: 22px;
+    background: rgba(255,184,0,.1); border: 1px solid rgba(255,184,0,.2);
+  }
+  .aae-card h3 { margin: 0; font-size: 17px; font-weight: 700; color: var(--aae-text); letter-spacing: -.01em; }
+  .aae-card p { margin: 0; font-size: 13.5px; line-height: 1.55; color: var(--aae-muted); }
+  .aae-card .go { margin-top: auto; color: var(--aae-amber); font-size: 13px; font-weight: 700; }
+  .aae-tag {
+    position: absolute; top: 18px; right: 18px;
+    font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase; font-weight: 700;
+    color: #1a1300; background: var(--aae-amber); padding: 4px 9px; border-radius: 999px;
+  }
+
+  /* run block */
+  .aae-run { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: center; }
+  .aae-run .term {
+    background: #0a0a0e; border: 1px solid var(--aae-line); border-radius: 14px; overflow: hidden;
+  }
+  .aae-run .term .bar { display: flex; align-items: center; gap: 7px; padding: 12px 16px; border-bottom: 1px solid var(--aae-line); }
+  .aae-run .term .bar i { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
+  .aae-run .term .bar i:nth-child(1) { background: #ff5f56; }
+  .aae-run .term .bar i:nth-child(2) { background: #ffbd2e; }
+  .aae-run .term .bar i:nth-child(3) { background: #27c93f; }
+  .aae-run .term pre { margin: 0; padding: 20px; font-size: 13px; line-height: 1.8; color: #d6d8de; overflow-x: auto; }
+  .aae-run .term .c { color: var(--aae-amber); }
+  .aae-run .term .g { color: var(--aae-dim); }
+  .aae-run h2 { font-size: clamp(26px, 4vw, 38px); font-weight: 850; letter-spacing: -.02em; margin: 12px 0 0; }
+  .aae-run p { color: var(--aae-muted); font-size: 15px; line-height: 1.65; margin-top: 14px; }
+
+  /* footer cta */
+  .aae-cta { text-align: center; padding: 90px 0 110px; border-top: 1px solid var(--aae-line); }
+  .aae-cta h2 { font-size: clamp(30px, 6vw, 56px); font-weight: 900; letter-spacing: -.03em; margin: 0; }
+  .aae-cta p { color: var(--aae-muted); font-size: 16px; margin: 18px auto 28px; max-width: 520px; }
+  .aae-maintain { margin-top: 30px; color: var(--aae-dim); font-size: 13px; }
+  .aae-maintain a { color: var(--aae-amber); font-weight: 600; }
+
+  @media (max-width: 720px) {
+    .aae-run { grid-template-columns: 1fr; }
+    .aae-hero { padding: 64px 0 40px; }
+  }
+</style>
+
+<div class="aae">
+  <canvas id="aae-stars"></canvas>
+  <div class="aae-glow"></div>
+
+  <header class="aae-hero wrap">
+    <span class="aae-badge"><span class="pip"></span> Local-first · Private · Open source</span>
+    <h1>Agentic <span class="amber">AI</span><br>Ecosystem</h1>
+    <p class="aae-sub">Hands-on, visual guides for building <strong>local, private agentic AI</strong> — RAG pipelines, multi-agent crews, MCP tooling, and production-style APIs. Read online, clone, and ship.</p>
+
+    <div class="aae-copy">
+      <span class="pr mono">$</span>
+      <code class="mono" id="aae-clone">git clone https://github.com/Ayush7614/agentic-ai-ecosystem.git</code>
+      <button onclick="aaeCopy()" id="aae-copybtn">COPY</button>
+    </div>
+
+    <div class="aae-btns">
+      <a class="aae-btn solid" href="#aae-guides">Browse the guides →</a>
+      <a class="aae-btn ghost" href="{{ config.repo_url }}" target="_blank" rel="noopener">★ Star on GitHub</a>
+    </div>
+
+    <div class="aae-stats">
+      <div class="aae-stat"><b>16</b><span>Guides</span></div>
+      <div class="aae-stat"><b>100%</b><span>Local-first</span></div>
+      <div class="aae-stat"><b>RAG·MCP·A2A</b><span>Covered</span></div>
+      <div class="aae-stat"><b>15+</b><span>Frameworks</span></div>
+    </div>
+  </header>
+
+  <section class="aae-sec" id="aae-guides">
+    <div class="wrap">
+      <p class="aae-eyebrow">The collection</p>
+      <h2 class="aae-h2">Every guide, one ecosystem</h2>
+      <p class="aae-lead">Each guide is a self-contained project under <code class="mono">guides/&lt;name&gt;/</code>. The site mirrors every README and tutorial so you can read online without cloning.</p>
+
+      <div class="aae-grid">
+        <a class="aae-card" href="guides/ai-agents-masterclass/">
+          <span class="aae-tag">Featured</span>
+          <div class="ico">🎓</div>
+          <h3>AI Agents Masterclass</h3>
+          <p>Agent anatomy, ReAct/ReWOO, 15+ frameworks, use cases, MCP/A2A, and five runnable code examples.</p>
+          <span class="go">Open guide →</span>
+        </a>
+        <a class="aae-card" href="guides/hermes-agent-masterclass/">
+          <span class="aae-tag">Featured</span>
+          <div class="ico">🧠</div>
+          <h3>Hermes Agent Masterclass</h3>
+          <p>Complete Hermes guide — learning loop, Profile Builder, memory, Curator, GEPA, and three agents.</p>
+          <span class="go">Open guide →</span>
+        </a>
+        <a class="aae-card" href="guides/qwen-agentic-rag/">
+          <div class="ico">🔍</div>
+          <h3>Qwen Agentic RAG</h3>
+          <p>Private two-agent RAG API with Qwen (Ollama), CrewAI, Qdrant, Firecrawl, LitServe, and Gradio.</p>
+          <span class="go">Open guide →</span>
+        </a>
+        <a class="aae-card" href="guides/openclaw-gemma-rag/">
+          <div class="ico">💬</div>
+          <h3>OpenClaw + Gemma + RAG</h3>
+          <p>Messaging assistant on <code class="mono">gemma4:e2b</code> with a local RAG skill calling the LitServe API.</p>
+          <span class="go">Open guide →</span>
+        </a>
+        <a class="aae-card" href="guides/claude-code-dot-claude/">
+          <div class="ico">📁</div>
+          <h3>Claude Code .claude/</h3>
+          <p>Team-aware Claude Code layout — CLAUDE.md, permissions, rules, skills, and subagents.</p>
+          <span class="go">Open guide →</span>
+        </a>
+        <a class="aae-card" href="guides/openclaw/">
+          <div class="ico">🦅</div>
+          <h3>OpenClaw</h3>
+          <p>Install and extend the self-hosted personal AI assistant — gateway, channels, skills, cron.</p>
+          <span class="go">Open guide →</span>
+        </a>
+        <a class="aae-card" href="guides/awesome-hermes-agent/">
+          <div class="ico">⚡</div>
+          <h3>Awesome Hermes Agent</h3>
+          <p>Install Hermes Agent and map the skills, plugins, GUIs, and integrations ecosystem.</p>
+          <span class="go">Open guide →</span>
+        </a>
+        <a class="aae-card" href="guides/hermes-vs-openclaw/">
+          <div class="ico">⚖️</div>
+          <h3>Hermes vs OpenClaw</h3>
+          <p>Compare Hermes Agent and OpenClaw — gateways, skills, migration, and a decision guide.</p>
+          <span class="go">Open guide →</span>
+        </a>
+        <a class="aae-card" href="guides/mcp-visual-guide/">
+          <div class="ico">🔌</div>
+          <h3>MCP Visual Guide</h3>
+          <p>Model Context Protocol — host/client/server, capability exchange, API vs MCP, App MCP.</p>
+          <span class="go">Open guide →</span>
+        </a>
+        <a class="aae-card" href="guides/ml-model-6-steps/">
+          <div class="ico">📊</div>
+          <h3>ML Model in 6 Steps</h3>
+          <p>Visual ML pipeline — problem framing through deploy and monitor, with animated GIFs.</p>
+          <span class="go">Open guide →</span>
+        </a>
+        <a class="aae-card" href="guides/solo-engineer-stack/">
+          <div class="ico">🛠️</div>
+          <h3>Solo Engineer Stack</h3>
+          <p>Build PulseFeedback with 10 equal tools — PM to support in one closed loop.</p>
+          <span class="go">Open guide →</span>
+        </a>
+        <a class="aae-card" href="guides/loop-engineering/">
+          <div class="ico">🔁</div>
+          <h3>Loop Engineering</h3>
+          <p>Act, observe, repeat — eval gates, open vs closed loops, fleet patterns, ReAct.</p>
+          <span class="go">Open guide →</span>
+        </a>
+        <a class="aae-card" href="guides/harness-engineering/">
+          <div class="ico">🏗️</div>
+          <h3>Harness Engineering</h3>
+          <p>Agent = Model + Harness — five subsystems, session lifecycle, verification gates.</p>
+          <span class="go">Open guide →</span>
+        </a>
+        <a class="aae-card" href="guides/llm-fine-tuning/">
+          <div class="ico">🎛️</div>
+          <h3>LLM Fine-Tuning</h3>
+          <p>LoRA, QLoRA, RLHF, DPO, GRPO — when to fine-tune, PEFT math, HuggingFace walkthroughs.</p>
+          <span class="go">Open guide →</span>
+        </a>
+        <a class="aae-card" href="guides/hermes-profile-builder/">
+          <div class="ico">👤</div>
+          <h3>Hermes Profile Builder</h3>
+          <p>Quick index — the full Profile Builder walkthrough lives in Masterclass Parts 11–12.</p>
+          <span class="go">Open guide →</span>
+        </a>
+        <a class="aae-card" href="guides/anthropic-cybersecurity-skills/">
+          <div class="ico">🛡️</div>
+          <h3>Anthropic Cybersecurity Skills</h3>
+          <p>754 MITRE-mapped security skills for AI agents — install, frameworks, SOC walkthroughs.</p>
+          <span class="go">Open guide →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="aae-sec">
+    <div class="wrap aae-run">
+      <div class="term">
+        <div class="bar"><i></i><i></i><i></i></div>
+        <pre><span class="g"># clone and pick any guide</span>
+git clone https://github.com/Ayush7614/agentic-ai-ecosystem.git
+<span class="c">cd</span> agentic-ai-ecosystem/guides/&lt;guide-name&gt;
+
+<span class="g"># spin up an isolated env</span>
+python -m venv .venv && <span class="c">source</span> .venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env
+
+<span class="g"># follow the README or the tutorial page</span></pre>
+      </div>
+      <div>
+        <p class="aae-eyebrow" style="text-align:left">Run locally</p>
+        <h2>Clone once. Run any guide.</h2>
+        <p>Every guide ships with its own <code class="mono">requirements.txt</code> and <code class="mono">.env.example</code>. Create a virtual environment, install, and follow the step-by-step tutorial — online here or in the repo.</p>
+        <div class="aae-btns" style="justify-content:flex-start;margin-top:24px">
+          <a class="aae-btn solid" href="publishing.md">How publishing works →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="aae-cta">
+    <div class="wrap">
+      <p class="aae-eyebrow">Start building</p>
+      <h2>Build agents that<br><span style="color:var(--aae-amber)">actually ship.</span></h2>
+      <p>Pick a guide, clone the repo, and go from idea to a running local agent in an afternoon.</p>
+      <div class="aae-btns">
+        <a class="aae-btn solid" href="#aae-guides">Explore guides →</a>
+        <a class="aae-btn ghost" href="{{ config.repo_url }}" target="_blank" rel="noopener">View source</a>
+      </div>
+      <p class="aae-maintain">Maintained by <a href="https://github.com/Ayush7614" target="_blank" rel="noopener">Ayush Kumar</a> · <a href="https://neural-verse-peach.vercel.app/" target="_blank" rel="noopener">NeuralVerse</a> · <a href="https://ayushbuilds-dev.vercel.app/" target="_blank" rel="noopener">Portfolio</a> · MIT licensed</p>
+    </div>
+  </section>
+</div>
+
+<script>
+  function aaeCopy() {
+    var t = document.getElementById('aae-clone').innerText;
+    navigator.clipboard.writeText(t).then(function () {
+      var b = document.getElementById('aae-copybtn');
+      b.innerText = 'COPIED'; setTimeout(function () { b.innerText = 'COPY'; }, 1600);
+    });
+  }
+  (function () {
+    var c = document.getElementById('aae-stars');
+    if (!c) return;
+    var ctx = c.getContext('2d'), stars = [], w, h;
+    function size() { w = c.width = c.offsetWidth; h = c.height = c.offsetHeight; }
+    function init() {
+      size(); stars = [];
+      var n = Math.min(160, Math.floor((w * h) / 9000));
+      for (var i = 0; i < n; i++) stars.push({ x: Math.random() * w, y: Math.random() * h, r: Math.random() * 1.4 + .2, a: Math.random(), s: Math.random() * .02 + .004 });
+    }
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+      for (var i = 0; i < stars.length; i++) {
+        var st = stars[i]; st.a += st.s; var o = .35 + Math.abs(Math.sin(st.a)) * .5;
+        ctx.beginPath(); ctx.arc(st.x, st.y, st.r, 0, 6.283);
+        ctx.fillStyle = 'rgba(255,255,255,' + o + ')'; ctx.fill();
+      }
+      requestAnimationFrame(draw);
+    }
+    var ro = new ResizeObserver(init); ro.observe(c);
+    init(); draw();
+  })();
+</script>
+{% endblock %}
+
+{% block content %}{% endblock %}
