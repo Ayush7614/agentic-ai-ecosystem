@@ -35,10 +35,10 @@ python examples/minimal_weather_server.py   # stdio MCP server
 
 ## Related guides
 
-- [Hermes masterclass](../hermes-agent-masterclass/) — agents that consume MCP tools  
-- [Loop engineering](../loop-engineering/) — tool-call loops inside the host  
-- [Harness engineering](../harness-engineering/) — environment around the agent  
-- [OpenClaw](../openclaw/) — gateway + skills + MCP-style tool wiring  
+- [Hermes masterclass](https://github.com/Ayush7614/agentic-ai-ecosystem/tree/main/guides/hermes-agent-masterclass) — agents that consume MCP tools  
+- [Loop engineering](https://github.com/Ayush7614/agentic-ai-ecosystem/tree/main/guides/loop-engineering) — tool-call loops inside the host  
+- [Harness engineering](https://github.com/Ayush7614/agentic-ai-ecosystem/tree/main/guides/harness-engineering) — environment around the agent  
+- [OpenClaw](https://github.com/Ayush7614/agentic-ai-ecosystem/tree/main/guides/openclaw) — gateway + skills + MCP-style tool wiring  
 
 **Blog header:** `assets/blog-poster-1200x600.png` · Regenerate: `cd assets && python3 render_blog_poster.py`
 

@@ -37,7 +37,9 @@ theme:
 plugins:
   - search
   - include-markdown:
-      rewrite_relative_urls: true
+      # Keep false so ./assets/ in included guides/ TUTORIAL.md resolves to
+      # docs/guides/<slug>/assets/ (copied by prepare-docs.sh), not guides/<slug>/assets/.
+      rewrite_relative_urls: false
 
 markdown_extensions:
   - admonition

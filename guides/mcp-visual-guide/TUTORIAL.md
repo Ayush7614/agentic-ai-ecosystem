@@ -4,7 +4,7 @@ Connect AI hosts — Cursor, Claude Desktop, VS Code Copilot — to **your** dat
 
 **References (original guide, not copies):** [Daily Dose of Data — Visual Guide to MCP](https://www.dailydoseofds.com/p/visual-guide-to-model-context-protocol-mcp/) · [Visuals MCP — App MCP servers](https://harrybin.de/posts/visuals-mcp-server/)
 
-Format matches our [Loop Engineering](../loop-engineering/TUTORIAL.md) and [Hermes masterclass](../hermes-agent-masterclass/TUTORIAL.md) guides: prose, lists, **animated diagram + terminal GIFs**.
+Format matches our [Loop Engineering](https://github.com/Ayush7614/agentic-ai-ecosystem/tree/main/guides/loop-engineering) and [Hermes masterclass](https://github.com/Ayush7614/agentic-ai-ecosystem/tree/main/guides/hermes-agent-masterclass) guides: prose, lists, **animated diagram + terminal GIFs**.
 
 ---
 
