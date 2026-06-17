@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Solo Engineer Stack — Tutorial Tables</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&family=Inter:wght@500;700;800&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #0f1419;
+      display: flex; align-items: center; justify-content: center;
+      min-height: 100vh; font-family: Inter, system-ui, sans-serif;
+    }
+    #capture {
+      width: var(--w, 1040px);
+      background: linear-gradient(165deg, #0b1020 0%, #1a2444 48%, #0b1020 100%);
+      border-radius: 20px; padding: 28px 32px 32px;
+      border: 1px solid rgba(129, 140, 248, 0.18);
+      box-shadow: 0 24px 80px rgba(0,0,0,0.55);
+    }
+    .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; gap: 16px; }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #818cf8; margin-bottom: 6px; }
+    h1 { font-size: 23px; font-weight: 800; color: #f8fafc; letter-spacing: -0.03em; line-height: 1.2; }
+    h1 span { color: #6ee7b7; }
+    .sub { margin-top: 6px; font-size: 12px; color: #94a3b8; max-width: 620px; }
+    .badge {
+      font-size: 11px; font-weight: 600; color: #94a3b8; flex-shrink: 0;
+      background: rgba(15,23,42,0.85); border: 1px solid rgba(110,231,183,0.3);
+      border-radius: 10px; padding: 8px 14px; text-align: right;
+    }
+    .badge strong { color: #6ee7b7; font-size: 16px; display: block; }
+    table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    thead th {
+      text-align: left; padding: 8px 10px; color: #64748b; font-weight: 700;
+      font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase;
+      border-bottom: 2px solid #334155;
+    }
+    tbody tr { opacity: 0.12; transform: translateY(4px); }
+    tbody tr.visible { opacity: 1; transform: translateY(0); }
+    tbody tr.active { background: rgba(110, 231, 183, 0.08); }
+    tbody tr.active td:first-child { box-shadow: inset 3px 0 0 #6ee7b7; }
+    td { padding: 7px 10px; color: #cbd5e1; border-bottom: 1px solid rgba(51,65,85,0.55); vertical-align: top; }
+    td.mono, code {
+      font-family: "JetBrains Mono", monospace; font-size: 11px;
+      color: #a5b4fc; word-break: break-word;
+    }
+    td strong { color: #f1f5f9; }
+    td.dim { color: #94a3b8; font-size: 11px; }
+    td.ok { color: #6ee7b7; font-weight: 600; }
+    td.num { font-family: "JetBrains Mono", monospace; font-weight: 700; color: #818cf8; text-align: center; width: 36px; }
+    .footer { margin-top: 12px; font-size: 10px; color: #64748b; text-align: center; }
+    .grid-2 { display: grid; grid-template-columns: 1fr auto 1fr; gap: 14px; }
+    .grid-2 h2 { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; text-align: center; margin-bottom: 10px; }
+    .grid-2 .old h2 { color: #64748b; }
+    .grid-2 .new h2 { color: #818cf8; }
+    .grid-2 .arrow { display: flex; align-items: center; font-size: 24px; color: #6ee7b7; padding-top: 28px; }
+    .pair {
+      opacity: 0.12; transform: translateX(-6px);
+      background: rgba(15,23,42,0.6); border: 1px solid rgba(51,65,85,0.6);
+      border-radius: 8px; padding: 8px 12px; margin-bottom: 6px; font-size: 12px;
+    }
+    .grid-2 .new .pair { transform: translateX(6px); }
+    .pair.visible { opacity: 1; transform: translateX(0); }
+    .pair.active { border-color: rgba(110,231,183,0.45); background: rgba(16,185,129,0.08); }
+    .grid-2 .new .pair strong { color: #a5b4fc; }
+    .grid-2 .old .pair { color: #94a3b8; }
+  </style>
+</head>
+<body>
+  <div id="capture">
+    <div class="header">
+      <div>
+        <div class="eyebrow" id="eyebrow"></div>
+        <h1 id="title"></h1>
+        <p class="sub" id="subtitle"></p>
+      </div>
+      <div class="badge" id="badge" style="display:none"></div>
+    </div>
+    <div id="content"></div>
+    <div class="footer" id="footer">PulseFeedback · Solo Engineer Stack</div>
+  </div>
+  <script>
+    const CONFIG = {
+      "demo-output": {
+        w: "880px", eyebrow: "Part 0", title: "Live demo <span>outputs</span>",
+        subtitle: "What you should see after ./scripts/demo.sh",
+        badge: null, cols: ["Output", "Meaning"],
+        rows: [
+          ["tasks.json written", "Stage 1 — Task Master done"],
+          ["02-crewai/ artifacts", "Stage 2 — CrewAI done"],
+          ["10-stage dry-run", "Stage 3 — LangGraph preview"],
+          ["curl JSON + CSAT", "API live on :8080"],
+          ["new-task.json", "Deca-Loop closed"],
+        ],
+      },
+      "ui-tabs": {
+        w: "960px", eyebrow: "Part 0", title: "Browser <span>5 tabs</span>",
+        subtitle: "Each tab maps to a real API and stack tool",
+        cols: ["UI tab", "Real API", "Stack tool"],
+        rows: [
+          ["Submit", "POST /api/feedback", "Cline-built form"],
+          ["Dashboard", "PATCH /api/feedback/{id}", "Cline triage UI"],
+          ["Analytics", "GET /api/events", "PostHog stand-in"],
+          ["Support", "POST /api/webhooks/csat", "Chatwoot + n8n"],
+          ["10 Tools", "GET /api/stack", "All repos status"],
+        ],
+      },
+      "hire-artifacts": {
+        w: "1080px", eyebrow: "Part 0b", title: "Hire → repo → <span>artifact</span>",
+        subtitle: "Every 2026 tool ships one concrete deliverable",
+        cols: ["2022 hire", "2026 repo", "PulseFeedback artifact"],
+        rows: [
+          ["PM", "Task Master", "tasks.json"],
+          ["Tech lead", "CrewAI", "brief.md + spec.md + test-plan.md"],
+          ["Architect", "LangGraph", "state-approved.json"],
+          ["Junior dev", "OpenHands", "pulsefeedback/ scaffold"],
+          ["Mid-level dev", "Aider", "main.py + git commits"],
+          ["IDE dev", "Cline", "frontend/ UI"],
+          ["Ops", "n8n", "csat-loop.json"],
+          ["DevOps", "Coolify", "Dockerfile + URL"],
+          ["QA / data", "PostHog", "/api/events funnel"],
+          ["Support", "Chatwoot", "CSAT → new-task.json"],
+        ],
+      },
+      "crewai-agents": {
+        w: "920px", eyebrow: "Part 2", title: "CrewAI · <span>3 agents</span>",
+        subtitle: "Equal weight — one markdown file per agent",
+        cols: ["File", "Agent role", "Output"],
+        rows: [
+          ["brief.md", "Market Researcher", "Competitors & positioning"],
+          ["spec.md", "Technical Architect", "API routes & schema"],
+          ["test-plan.md", "QA Lead", "Acceptance for all 10 tools"],
+        ],
+        monoCols: [0],
+      },
+      "langgraph-nodes": {
+        w: "920px", eyebrow: "Part 3", title: "LangGraph <span>nodes</span>",
+        subtitle: "Deca-Loop state machine in orchestrator/graph.py",
+        cols: ["Node", "Next stage"],
+        rows: [
+          ["task_master", "crewai"],
+          ["crewai", "langgraph_gate"],
+          ["langgraph_gate", "openhands (if approved)"],
+          ["openhands → cline", "… pipeline …"],
+          ["chatwoot", "task_master if CSAT ≤ 2, else done"],
+        ],
+        monoCols: [0, 1],
+      },
+      "handoff-summary": {
+        w: "1000px", eyebrow: "All parts", title: "Artifacts & <span>handoffs</span>",
+        subtitle: "Field → Value summary for every tutorial part",
+        cols: ["Part", "Tool", "Artifact", "Handoff →"],
+        rows: [
+          ["1", "Task Master", "tasks.json", "CrewAI"],
+          ["2", "CrewAI", "brief + spec + QA", "LangGraph"],
+          ["3", "LangGraph", "state-approved.json", "OpenHands"],
+          ["4", "OpenHands", "pulsefeedback/", "Aider"],
+          ["5", "Aider", "API + tests", "Cline"],
+          ["6", "Cline", "frontend/", "n8n"],
+          ["7", "n8n", "csat-loop.json", "Coolify"],
+          ["8", "Coolify", "urls.txt", "PostHog"],
+          ["9", "PostHog", "/api/events", "Chatwoot"],
+          ["10", "Chatwoot", "new-task.json", "Task Master loop"],
+        ],
+        numCol: 0,
+      },
+      "api-routes": {
+        w: "920px", eyebrow: "Part 5", title: "Aider · <span>API routes</span>",
+        subtitle: "Implemented in pulsefeedback/backend/main.py",
+        cols: ["Method", "Path", "Status"],
+        rows: [
+          ["POST", "/api/feedback", "✅ Create"],
+          ["GET", "/api/feedback", "✅ List"],
+          ["PATCH", "/api/feedback/{id}", "✅ Triage"],
+          ["POST", "/api/events", "✅ Analytics"],
+          ["GET", "/api/events", "✅ Event stream"],
+          ["POST", "/api/webhooks/csat", "✅ CSAT loop"],
+          ["GET", "/api/stack", "✅ 10-tool board"],
+        ],
+        monoCols: [1],
+        okCol: 2,
+      },
+      "n8n-workflows": {
+        w: "960px", eyebrow: "Part 7", title: "n8n <span>workflows</span>",
+        subtitle: "Three equal ops automations",
+        cols: ["Workflow", "Trigger", "Action"],
+        rows: [
+          ["Deploy", "GitHub push main", "Coolify redeploy API"],
+          ["Notify", "Deploy success", "Slack / email alert"],
+          ["CSAT loop", "✅ included JSON", "→ PulseFeedback → Task Master"],
+        ],
+      },
+      "posthog-events": {
+        w: "820px", eyebrow: "Part 9", title: "PostHog <span>events</span>",
+        subtitle: "Captured automatically via /api/events",
+        cols: ["Event", "When"],
+        rows: [
+          ["feedback_submitted", "User submits form"],
+          ["feedback_status_changed", "Triage status update"],
+          ["csat_received", "CSAT webhook fired"],
+        ],
+        monoCols: [0],
+      },
+      "weekly-ritual": {
+        w: "880px", eyebrow: "Part 11", title: "Weekly <span>ritual</span>",
+        subtitle: "One dedicated session per tool — equal attention",
+        cols: ["Day", "Tool", "Action"],
+        rows: [
+          ["Mon", "PostHog", "Review /api/events funnel"],
+          ["Tue", "Chatwoot", "Triage inbox + tag themes"],
+          ["Wed", "Task Master", "generate_tasks.py or CLI"],
+          ["Thu", "Aider + Cline", "Ship one epic"],
+          ["Fri", "n8n + Coolify", "Deploy + notify"],
+        ],
+      },
+      "api-reference": {
+        w: "920px", eyebrow: "Part 12", title: "API <span>reference</span>",
+        subtitle: "Quick endpoint map for PulseFeedback",
+        cols: ["Endpoint", "Method", "Purpose"],
+        rows: [
+          ["/health", "GET", "Health check"],
+          ["/api/feedback", "POST, GET", "Create / list feedback"],
+          ["/api/feedback/{id}", "PATCH", "Triage status"],
+          ["/api/events", "POST, GET", "Analytics (PostHog)"],
+          ["/api/webhooks/csat", "POST", "Chatwoot / n8n CSAT"],
+          ["/api/stack", "GET", "10-tool status board"],
+          ["/docs", "GET", "OpenAPI (FastAPI)"],
+        ],
+        monoCols: [0],
+      },
+      "troubleshooting": {
+        w: "1000px", eyebrow: "Part 13", title: "<span>Troubleshooting</span>",
+        subtitle: "Common issues when running the demo",
+        cols: ["Symptom", "Fix"],
+        rows: [
+          ["demo.sh — port in use", "PORT=8081 ./scripts/demo.sh"],
+          ["ModuleNotFoundError: fastapi", "source .venv && pip install -r requirements.txt"],
+          ["UI loads but API 404", "uvicorn main:app --port 8080 from backend/"],
+          ["CSAT loop no file", "Score must be ≤ 2; check artifacts/11-csat-loop/"],
+          ["n8n webhook fails", "Use host.docker.internal:8080 in Docker"],
+          ["verify-stack Part 3 fail", "python scripts/03-langgraph/approve_gate.py"],
+          ["CrewAI live run fails", "Use --mock or set OPENAI_API_KEY"],
+          ["PostHog tab empty", "Submit feedback first, refresh Analytics"],
+          ["Coolify build fails", "STACK_ROOT=/app in Dockerfile"],
+        ],
+        monoCols: [1],
+      },
+      "whats-next": {
+        w: "880px", eyebrow: "What's next", title: "Related <span>guides</span>",
+        subtitle: "Extend the Solo Engineer Stack",
+        cols: ["Goal", "Guide"],
+        rows: [
+          ["Private LLM for coding agents", "Gemma 4 12B"],
+          ["CrewAI + RAG research", "Qwen Agentic RAG"],
+          ["Cursor team rules", "Claude Code .claude/"],
+          ["10-tool config reference", "STACK.md"],
+          ["5-min recording script", "DEMO.md"],
+        ],
+      },
+      "deca-loop": {
+        w: "1080px", eyebrow: "Overview", title: "Deca-Loop · <span>10 tools</span>",
+        subtitle: "Equal stages — one artifact each",
+        badge: ["10", "repos · 1 product"],
+        cols: ["#", "Tool", "Role", "Artifact"],
+        rows: [
+          ["1", "Task Master", "PM", "tasks.json"],
+          ["2", "CrewAI", "Tech lead", "brief · spec · test-plan"],
+          ["3", "LangGraph", "Architect", "state-approved.json"],
+          ["4", "OpenHands", "Junior dev", "pulsefeedback/"],
+          ["5", "Aider", "Mid-level", "API + commits"],
+          ["6", "Cline", "IDE teammate", "frontend/ UI"],
+          ["7", "n8n", "Ops", "csat-loop.json"],
+          ["8", "Coolify", "DevOps", "Dockerfile · HTTPS"],
+          ["9", "PostHog", "QA + data", "/api/events"],
+          ["10", "Chatwoot", "Support", "new-task.json loop"],
+        ],
+        numCol: 0,
+      },
+    };
+
+    const TEAM_PAIRS = [
+      ["Project Manager", "Task Master"],
+      ["Tech Lead", "CrewAI"],
+      ["Architect", "LangGraph"],
+      ["Junior Developers", "OpenHands"],
+      ["Mid-level Developers", "Aider"],
+      ["IDE Power User", "Cline"],
+      ["Operations", "n8n"],
+      ["DevOps Engineer", "Coolify"],
+      ["QA + Data Team", "PostHog"],
+      ["Customer Support", "Chatwoot"],
+    ];
+
+    function renderTable(cfg, progress) {
+      document.getElementById("capture").style.setProperty("--w", cfg.w || "1040px");
+      document.getElementById("eyebrow").textContent = cfg.eyebrow || "";
+      document.getElementById("title").innerHTML = cfg.title || "";
+      document.getElementById("subtitle").textContent = cfg.subtitle || "";
+      const badge = document.getElementById("badge");
+      if (cfg.badge) {
+        badge.style.display = "block";
+        badge.innerHTML = `<strong>${cfg.badge[0]}</strong>${cfg.badge[1]}`;
+      } else badge.style.display = "none";
+
+      const total = cfg.rows.length;
+      const visible = Math.min(total, Math.max(0, Math.ceil(progress * total)));
+      const activeIdx = Math.min(total - 1, Math.max(0, visible - 1));
+      const mono = new Set(cfg.monoCols || []);
+      const okCol = cfg.okCol;
+
+      let html = "<table><thead><tr>";
+      cfg.cols.forEach(c => { html += `<th>${c}</th>`; });
+      html += "</tr></thead><tbody>";
+      cfg.rows.forEach((row, i) => {
+        const cls = (i < visible ? "visible" : "") + (i === activeIdx && visible ? " active" : "");
+        html += `<tr class="${cls}">`;
+        row.forEach((cell, j) => {
+          let tdClass = "";
+          if (cfg.numCol === j) tdClass = "num";
+          else if (mono.has(j)) tdClass = "mono";
+          else if (okCol === j) tdClass = "ok";
+          else if (j === 0) tdClass = "strong";
+          html += `<td class="${tdClass}">${cell}</td>`;
+        });
+        html += "</tr>";
+      });
+      html += "</tbody></table>";
+      document.getElementById("content").innerHTML = html;
+    }
+
+    function renderTeamPairs(progress) {
+      document.getElementById("capture").style.setProperty("--w", "960px");
+      document.getElementById("eyebrow").textContent = "Part 0b";
+      document.getElementById("title").innerHTML = "2022 team → <span>2026 stack</span>";
+      document.getElementById("subtitle").textContent = "You orchestrate systems — not people";
+      document.getElementById("badge").style.display = "none";
+
+      const total = TEAM_PAIRS.length;
+      const visible = Math.min(total, Math.max(0, Math.ceil(progress * total)));
+      const activeIdx = Math.min(total - 1, Math.max(0, visible - 1));
+
+      let oldH = "", newH = "";
+      TEAM_PAIRS.forEach(([o, n], i) => {
+        const cls = "pair" + (i < visible ? " visible" : "") + (i === activeIdx && visible ? " active" : "");
+        oldH += `<div class="${cls}">${o}</div>`;
+        newH += `<div class="${cls}"><strong>${n}</strong></div>`;
+      });
+      document.getElementById("content").innerHTML = `
+        <div class="grid-2">
+          <div class="old"><h2>Old hire</h2>${oldH}</div>
+          <div class="arrow">→</div>
+          <div class="new"><h2>Open-source repo</h2>${newH}</div>
+        </div>`;
+    }
+
+    const params = new URLSearchParams(location.search);
+    const tableId = params.get("table") || "demo-output";
+    const progress = parseFloat(params.get("frame") || "1");
+
+    if (tableId === "team-vs-stack") {
+      renderTeamPairs(progress);
+    } else if (CONFIG[tableId]) {
+      renderTable(CONFIG[tableId], progress);
+    }
+
+    window.__READY = true;
+  </script>
+</body>
+</html>

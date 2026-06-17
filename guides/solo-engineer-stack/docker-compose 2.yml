@@ -1,0 +1,32 @@
+# Solo Engineer Stack — local demo stack
+# Usage:
+#   docker compose up -d          # app + n8n
+#   open http://localhost:8080    # PulseFeedback UI
+#   open http://localhost:5678    # n8n (import n8n/workflows/csat-loop.json)
+
+services:
+  app:
+    build: ./pulsefeedback
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./artifacts:/app/artifacts
+    environment:
+      - PYTHONUNBUFFERED=1
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  n8n:
+    image: n8nio/n8n:latest
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_HOST=localhost
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - WEBHOOK_URL=http://localhost:5678/
+    volumes:
+      - n8n_data:/home/node/.n8n
+
+volumes:
+  n8n_data:
