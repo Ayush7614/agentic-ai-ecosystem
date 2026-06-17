@@ -14,6 +14,8 @@ Maintained by [Ayush Kumar](https://github.com/Ayush7614) · [NeuralVerse](https
 | [Awesome Hermes Agent](guides/awesome-hermes-agent/index.md) | Install Hermes Agent and map the skills, plugins, GUIs, and integrations ecosystem |
 | [Hermes vs OpenClaw](guides/hermes-vs-openclaw/index.md) | Compare Hermes Agent and OpenClaw — gateways, skills, migration, decision guide |
 
+| [MCP Visual Guide](guides/mcp-visual-guide/index.md) | Model Context Protocol — host/client/server, capability exchange, API vs MCP, App MCP |
+
 Each guide is a self-contained project under `guides/<name>/` in the repo. The site pages mirror those READMEs and tutorials so you can read online without cloning.
 
 ## Run locally (any guide)

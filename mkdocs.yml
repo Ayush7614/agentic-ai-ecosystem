@@ -76,6 +76,9 @@ nav:
       - Overview: guides/hermes-vs-openclaw/index.md
       - Full tutorial: guides/hermes-vs-openclaw/tutorial.md
       - Feature matrix: guides/hermes-vs-openclaw/comparison.md
+    - MCP Visual Guide:
+      - Overview: guides/mcp-visual-guide/index.md
+      - Full tutorial: guides/mcp-visual-guide/tutorial.md
   - Publishing: publishing.md
 
 extra:
