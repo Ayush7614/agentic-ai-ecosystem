@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>ML Step 6 — Deploy & Monitor</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #eef1f8; margin: 0; padding: 12px; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+    #capture {
+      width: 1200px;
+      background: linear-gradient(165deg, #faf8ff 0%, #f3eeff 42%, #fff8ed 100%);
+      border-radius: 28px; padding: 40px 44px 38px;
+      box-shadow: 0 24px 64px rgba(76, 29, 149, 0.14); overflow: hidden;
+    }
+    .header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px; }
+    h1 { font-size: 34px; font-weight: 800; letter-spacing: -0.6px; line-height: 1.1; color: #1e1b4b; }
+    h1 em { font-style: normal; background: linear-gradient(90deg, #6d28d9, #d97706); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .subtitle { margin-top: 8px; font-size: 15px; font-weight: 600; color: #64748b; }
+    .pill { background: #fff; border: 1px solid #e9d5ff; border-radius: 999px; padding: 10px 18px; font-size: 13px; font-weight: 600; color: #5b21b6; }
+    svg.flow { width: 100%; height: auto; display: block; }
+
+    @keyframes dash-flow { to { stroke-dashoffset: -24; } }
+    .flow-line { stroke-dasharray: 10 8; animation: dash-flow 1.1s linear infinite; }
+    .flow-line-slow { stroke-dasharray: 10 8; animation: dash-flow 1.8s linear infinite; }
+
+    @keyframes packet-forward {
+      0% { offset-distance: 0%; opacity: 0; }
+      8% { opacity: 1; }
+      45% { opacity: 1; }
+      55%, 100% { offset-distance: 100%; opacity: 0; }
+    }
+    .packet-fwd { offset-path: path("M 140 200 L 380 200 L 620 200 L 860 200"); animation: packet-forward 4s ease-in-out infinite; }
+
+    @keyframes packet-monitor {
+      0%, 42% { offset-distance: 0%; opacity: 0; }
+      50% { opacity: 1; }
+      88% { opacity: 1; }
+      100% { offset-distance: 100%; opacity: 0; }
+    }
+    .packet-mon { offset-path: path("M 860 200 L 860 280 L 620 320 L 380 320 L 140 280 L 140 200"); animation: packet-monitor 4s ease-in-out infinite; animation-delay: 0.3s; }
+
+    @keyframes alert-blink {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; }
+    }
+    .alert-icon { animation: alert-blink 1.4s ease-in-out infinite; }
+
+    @keyframes live-pulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+    .live-dot { animation: live-pulse 1.6s ease-in-out infinite; }
+
+    @keyframes drift-line {
+      0%, 100% { transform: scaleX(0.6); opacity: 0.5; }
+      50% { transform: scaleX(1); opacity: 1; }
+    }
+    .drift-bar { transform-origin: left center; animation: drift-line 2s ease-in-out infinite; }
+  </style>
+</head>
+<body>
+  <div id="capture">
+    <div class="header">
+      <div>
+        <h1>Step 6 — <em>Deploy &amp; Monitor</em></h1>
+        <p class="subtitle">Ship the API — then watch for drift and decay</p>
+      </div>
+      <div class="pill">Production loop</div>
+    </div>
+
+    <svg class="flow" viewBox="0 0 1112 360" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="modelGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#5b21b6"/>
+        </linearGradient>
+        <linearGradient id="apiGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#059669"/><stop offset="100%" stop-color="#10b981"/>
+        </linearGradient>
+        <marker id="arrowP" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="#7c3aed"/>
+        </marker>
+        <marker id="arrowA" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="#d97706"/>
+        </marker>
+        <filter id="shadow"><feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#6d28d9" flood-opacity="0.12"/></filter>
+      </defs>
+
+      <!-- Forward path -->
+      <line x1="200" y1="200" x2="960" y2="200" stroke="#c4b5fd" stroke-width="3" class="flow-line" marker-end="url(#arrowP)"/>
+
+      <!-- Feedback loop -->
+      <path d="M 960 220 Q 1020 280 960 320 Q 556 380 140 320 Q 80 280 140 220"
+            fill="none" stroke="#d97706" stroke-width="2.5" class="flow-line-slow" marker-end="url(#arrowA)" opacity="0.75"/>
+      <text x="556" y="348" text-anchor="middle" font-size="11" font-weight="800" fill="#b45309">retrain · fix data · rollback</text>
+
+      <!-- Model box -->
+      <rect x="80" y="160" width="120" height="80" rx="14" fill="url(#modelGrad)" filter="url(#shadow)"/>
+      <text x="140" y="192" text-anchor="middle" font-size="12" font-weight="800" fill="#fff">Model</text>
+      <text x="140" y="212" text-anchor="middle" font-size="9" font-weight="600" fill="#e9d5ff">v2.4.pkl</text>
+
+      <!-- Container -->
+      <rect x="320" y="160" width="120" height="80" rx="14" fill="#fff" stroke="#7c3aed" stroke-width="2" filter="url(#shadow)"/>
+      <text x="380" y="192" text-anchor="middle" font-size="12" font-weight="800" fill="#4c1d95">Docker</text>
+      <text x="380" y="212" text-anchor="middle" font-size="9" font-weight="600" fill="#64748b">container</text>
+
+      <!-- API -->
+      <rect x="560" y="152" width="120" height="96" rx="14" fill="url(#apiGrad)" filter="url(#shadow)"/>
+      <text x="620" y="188" text-anchor="middle" font-size="12" font-weight="800" fill="#fff">REST API</text>
+      <text x="620" y="208" text-anchor="middle" font-size="9" font-weight="600" fill="#d1fae5">/predict</text>
+      <circle class="live-dot" cx="660" cy="168" r="5" fill="#86efac"/>
+
+      <!-- Users -->
+      <rect x="800" y="160" width="120" height="80" rx="14" fill="#fff" stroke="#10b981" stroke-width="2" filter="url(#shadow)"/>
+      <text x="860" y="192" text-anchor="middle" font-size="12" font-weight="800" fill="#047857">Users</text>
+      <text x="860" y="212" text-anchor="middle" font-size="9" font-weight="600" fill="#64748b">app · batch</text>
+
+      <!-- Monitor panel -->
+      <rect x="720" y="48" width="352" height="88" rx="14" fill="#fff" stroke="#d97706" stroke-width="2" filter="url(#shadow)"/>
+      <text x="740" y="76" font-size="12" font-weight="800" fill="#92400e">Metrics + alerts</text>
+      <circle class="alert-icon" cx="1040" cy="68" r="8" fill="#ef4444"/>
+      <text x="1054" y="72" font-size="10" font-weight="800" fill="#b91c1c">!</text>
+
+      <text x="740" y="98" font-size="10" font-weight="600" fill="#64748b">latency</text>
+      <rect x="790" y="88" width="80" height="8" rx="4" fill="#ecfdf5"/>
+      <rect x="790" y="88" width="52" height="8" rx="4" fill="#10b981"/>
+
+      <text x="740" y="118" font-size="10" font-weight="600" fill="#64748b">data drift</text>
+      <rect x="790" y="108" width="120" height="8" rx="4" fill="#fef3c7"/>
+      <rect class="drift-bar" x="790" y="108" width="95" height="8" rx="4" fill="#d97706"/>
+
+      <line x1="860" y1="136" x2="860" y2="168" stroke="#d97706" stroke-width="2" stroke-dasharray="4 3" class="flow-line"/>
+
+      <!-- Moving packets -->
+      <rect class="packet-fwd" x="-20" y="-10" width="40" height="20" rx="6" fill="#7c3aed" opacity="0"/>
+      <rect class="packet-mon" x="-16" y="-8" width="32" height="16" rx="5" fill="#d97706" opacity="0"/>
+
+      <!-- Cloud badge -->
+      <rect x="480" y="268" width="152" height="28" rx="8" fill="#ede9fe" stroke="#7c3aed"/>
+      <text x="556" y="287" text-anchor="middle" font-size="10" font-weight="800" fill="#5b21b6">AWS · GCP · Azure</text>
+    </svg>
+  </div>
+</body>
+</html>

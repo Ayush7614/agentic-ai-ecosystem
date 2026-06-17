@@ -16,6 +16,7 @@ Maintained by [Ayush Kumar](https://github.com/Ayush7614) · [NeuralVerse](https
 
 | [MCP Visual Guide](guides/mcp-visual-guide/index.md) | Model Context Protocol — host/client/server, capability exchange, API vs MCP, App MCP |
 
+| [ML Model in 6 Steps](guides/ml-model-6-steps/index.md) | Visual ML pipeline — problem framing through deploy and monitor with animated GIFs |
 Each guide is a self-contained project under `guides/<name>/` in the repo. The site pages mirror those READMEs and tutorials so you can read online without cloning.
 
 ## Run locally (any guide)

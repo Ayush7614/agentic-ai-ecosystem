@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>ML Step 2 — Data Prep Funnel</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #eef1f8;
+      margin: 0;
+      padding: 12px;
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    #capture {
+      width: 1200px;
+      background: linear-gradient(165deg, #faf8ff 0%, #f3eeff 40%, #fff8ed 100%);
+      border-radius: 28px;
+      padding: 40px 44px 36px;
+      box-shadow: 0 24px 64px rgba(76, 29, 149, 0.14);
+      overflow: hidden;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 24px;
+    }
+    h1 {
+      font-size: 34px;
+      font-weight: 800;
+      letter-spacing: -0.6px;
+      line-height: 1.1;
+      color: #1e1b4b;
+    }
+    h1 em {
+      font-style: normal;
+      background: linear-gradient(90deg, #6d28d9, #d97706);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .subtitle {
+      margin-top: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #64748b;
+    }
+    .pill {
+      background: #fff;
+      border: 1px solid #e9d5ff;
+      border-radius: 999px;
+      padding: 10px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #5b21b6;
+      box-shadow: 0 6px 20px rgba(109, 40, 217, 0.08);
+    }
+    svg.flow { width: 100%; height: auto; display: block; }
+
+    @keyframes sheet-fall {
+      0% { transform: translate(0, -20px) rotate(-8deg); opacity: 0; }
+      8% { opacity: 1; }
+      38% { transform: translate(0, 118px) rotate(2deg); opacity: 1; }
+      48% { transform: translate(0, 140px) rotate(0deg) scale(0.85); opacity: 0.6; }
+      55%, 100% { transform: translate(0, 150px) rotate(0deg) scale(0.5); opacity: 0; }
+    }
+    .sheet-in.s1 { animation: sheet-fall 5s ease-in-out infinite; animation-delay: 0s; }
+    .sheet-in.s2 { animation: sheet-fall 5s ease-in-out infinite; animation-delay: 0.7s; }
+    .sheet-in.s3 { animation: sheet-fall 5s ease-in-out infinite; animation-delay: 1.4s; }
+
+    @keyframes leak-reject {
+      0%, 22% { transform: translate(0, -16px) rotate(6deg); opacity: 0; }
+      30% { opacity: 1; transform: translate(0, 90px) rotate(4deg); }
+      42% { transform: translate(0, 130px) rotate(-2deg); opacity: 1; }
+      50% { transform: translate(-48px, 145px) rotate(-18deg); opacity: 1; }
+      58% { transform: translate(-110px, 168px) rotate(-28deg); opacity: 0.9; }
+      68%, 100% { transform: translate(-140px, 190px) rotate(-32deg); opacity: 0; }
+    }
+    .sheet-leak { animation: leak-reject 5s ease-in-out infinite; animation-delay: 0.35s; }
+
+    @keyframes stamp-hit {
+      0%, 44% { transform: scale(2.2) rotate(-12deg); opacity: 0; }
+      50% { transform: scale(0.95) rotate(-8deg); opacity: 1; }
+      54% { transform: scale(1) rotate(-8deg); opacity: 1; }
+      68%, 100% { transform: scale(1) rotate(-8deg); opacity: 0; }
+    }
+    .leak-stamp { transform-origin: center; animation: stamp-hit 5s ease-in-out infinite; animation-delay: 0.35s; }
+
+    @keyframes funnel-glow {
+      0%, 100% { filter: drop-shadow(0 0 8px rgba(124, 58, 237, 0.25)); }
+      50% { filter: drop-shadow(0 0 18px rgba(217, 119, 6, 0.45)); }
+    }
+    .funnel-body { animation: funnel-glow 2.5s ease-in-out infinite; }
+
+    @keyframes flow-particle {
+      0% { offset-distance: 0%; opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { offset-distance: 100%; opacity: 0; }
+    }
+    .particle {
+      offset-path: path("M 556 248 L 556 310 L 556 368");
+      animation: flow-particle 5s linear infinite;
+    }
+    .particle.p2 { animation-delay: 1.2s; }
+    .particle.p3 { animation-delay: 2.4s; }
+
+    @keyframes row-exit {
+      0%, 48% { transform: translateX(-40px); opacity: 0; }
+      58% { transform: translateX(0); opacity: 1; }
+      78% { transform: translateX(0); opacity: 1; }
+      92%, 100% { transform: translateX(20px); opacity: 0; }
+    }
+    .clean-row.r1 { animation: row-exit 5s ease-out infinite; animation-delay: 0s; }
+    .clean-row.r2 { animation: row-exit 5s ease-out infinite; animation-delay: 0.25s; }
+    .clean-row.r3 { animation: row-exit 5s ease-out infinite; animation-delay: 0.5s; }
+    .clean-row.r4 { animation: row-exit 5s ease-out infinite; animation-delay: 0.75s; }
+
+    @keyframes dash-flow {
+      to { stroke-dashoffset: -20; }
+    }
+    .flow-line {
+      stroke-dasharray: 8 6;
+      animation: dash-flow 1s linear infinite;
+    }
+
+    @keyframes spin-gear {
+      to { transform: rotate(360deg); }
+    }
+    .mini-gear {
+      transform-origin: center;
+      animation: spin-gear 2s linear infinite;
+    }
+  </style>
+</head>
+<body>
+  <div id="capture">
+    <div class="header">
+      <div>
+        <h1>Step 2 — <em>Data Preparation</em></h1>
+        <p class="subtitle">Messy raw tables → clean features (leakage rejected)</p>
+      </div>
+      <div class="pill">Where most time goes</div>
+    </div>
+
+    <svg class="flow" viewBox="0 0 1112 400" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="funnelGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#7c3aed"/>
+          <stop offset="55%" stop-color="#6d28d9"/>
+          <stop offset="100%" stop-color="#d97706"/>
+        </linearGradient>
+        <linearGradient id="cleanGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#ede9fe"/>
+          <stop offset="100%" stop-color="#ecfdf5"/>
+        </linearGradient>
+        <filter id="softShadow" x="-15%" y="-15%" width="130%" height="130%">
+          <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#6d28d9" flood-opacity="0.15"/>
+        </filter>
+        <marker id="arrowGreen" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="#059669"/>
+        </marker>
+      </defs>
+
+      <!-- INPUT zone label -->
+      <text x="130" y="36" text-anchor="middle" font-size="13" font-weight="800" fill="#64748b">RAW INPUT</text>
+      <rect x="40" y="44" width="180" height="130" rx="14" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="6 4"/>
+
+      <!-- Messy sheet 1 -->
+      <g class="sheet-in s1" transform="translate(72, 58)">
+        <rect x="0" y="0" width="56" height="44" rx="4" fill="#fff" stroke="#94a3b8" stroke-width="2" transform="rotate(-6 28 22)"/>
+        <line x1="8" y1="12" x2="44" y2="10" stroke="#cbd5e1" stroke-width="2"/>
+        <line x1="8" y1="20" x2="36" y2="22" stroke="#e2e8f0" stroke-width="2"/>
+        <line x1="8" y1="28" x2="40" y2="26" stroke="#e2e8f0" stroke-width="2"/>
+        <text x="46" y="38" font-size="14" font-weight="900" fill="#ef4444">?</text>
+      </g>
+
+      <!-- Messy sheet 2 -->
+      <g class="sheet-in s2" transform="translate(148, 52)">
+        <rect x="0" y="0" width="52" height="40" rx="4" fill="#fff" stroke="#94a3b8" stroke-width="2" transform="rotate(8 26 20)"/>
+        <line x1="6" y1="10" x2="38" y2="12" stroke="#cbd5e1" stroke-width="2"/>
+        <rect x="6" y="18" width="10" height="8" fill="#fecaca" opacity="0.8"/>
+        <line x1="20" y1="22" x2="42" y2="20" stroke="#e2e8f0" stroke-width="2"/>
+        <line x1="6" y1="30" x2="28" y2="32" stroke="#e2e8f0" stroke-width="2"/>
+      </g>
+
+      <!-- Messy sheet 3 -->
+      <g class="sheet-in s3" transform="translate(108, 88)">
+        <rect x="0" y="0" width="48" height="38" rx="4" fill="#fff" stroke="#94a3b8" stroke-width="2"/>
+        <line x1="6" y1="10" x2="36" y2="10" stroke="#cbd5e1" stroke-width="2"/>
+        <line x1="6" y1="18" x2="30" y2="18" stroke="#e2e8f0" stroke-width="2"/>
+        <text x="32" y="32" font-size="11" font-weight="800" fill="#f59e0b">NULL</text>
+      </g>
+
+      <!-- LEAKAGE sheet (rejected) -->
+      <g class="sheet-leak" transform="translate(188, 62)">
+        <rect x="0" y="0" width="54" height="42" rx="4" fill="#fff5f5" stroke="#f87171" stroke-width="2.5"/>
+        <line x1="6" y1="10" x2="42" y2="10" stroke="#fca5a5" stroke-width="2"/>
+        <rect x="6" y="16" width="42" height="10" rx="2" fill="#fee2e2"/>
+        <text x="27" y="24" text-anchor="middle" font-size="7" font-weight="800" fill="#b91c1c">future_spend</text>
+        <line x1="6" y1="30" x2="34" y2="30" stroke="#fecaca" stroke-width="2"/>
+      </g>
+
+      <!-- LEAKAGE stamp -->
+      <g class="leak-stamp" transform="translate(168, 200)">
+        <rect x="0" y="0" width="88" height="28" rx="4" fill="#dc2626" stroke="#991b1b" stroke-width="2" transform="rotate(-8 44 14)"/>
+        <text x="44" y="19" text-anchor="middle" font-size="11" font-weight="900" fill="#fff" letter-spacing="0.08em" transform="rotate(-8 44 14)">LEAKAGE</text>
+      </g>
+
+      <!-- Reject arrow -->
+      <path d="M 210 175 L 120 210" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="5 4" opacity="0.7" class="flow-line"/>
+      <text x="108" y="228" text-anchor="middle" font-size="10" font-weight="700" fill="#b91c1c">rejected</text>
+
+      <!-- FUNNEL -->
+      <g class="funnel-body" transform="translate(456, 72)" filter="url(#softShadow)">
+        <path d="M 0 0 L 200 0 L 130 200 L 70 200 Z" fill="url(#funnelGrad)" opacity="0.95"/>
+        <path d="M 20 24 L 180 24 L 118 176 L 82 176 Z" fill="none" stroke="#fff" stroke-width="2" opacity="0.25"/>
+        <!-- funnel stages -->
+        <text x="100" y="52" text-anchor="middle" font-size="10" font-weight="700" fill="#fff" opacity="0.9">clean</text>
+        <text x="100" y="98" text-anchor="middle" font-size="10" font-weight="700" fill="#fff" opacity="0.9">encode</text>
+        <text x="100" y="144" text-anchor="middle" font-size="10" font-weight="700" fill="#fff" opacity="0.9">split</text>
+        <!-- mini gear -->
+        <g class="mini-gear" transform="translate(100, 118)">
+          <circle r="10" fill="none" stroke="#fff" stroke-width="2" opacity="0.6"/>
+          <circle r="3" fill="#fff" opacity="0.8"/>
+        </g>
+      </g>
+
+      <!-- Particles through funnel -->
+      <circle class="particle" r="5" fill="#f59e0b" cx="0" cy="0"/>
+      <circle class="particle p2" r="4" fill="#c4b5fd" cx="0" cy="0"/>
+      <circle class="particle p3" r="5" fill="#d97706" cx="0" cy="0"/>
+
+      <!-- Arrow to output -->
+      <line x1="656" y1="272" x2="720" y2="272" stroke="#059669" stroke-width="3" marker-end="url(#arrowGreen)" class="flow-line"/>
+
+      <!-- OUTPUT zone -->
+      <text x="920" y="36" text-anchor="middle" font-size="13" font-weight="800" fill="#047857">CLEAN FEATURES</text>
+      <rect x="740" y="44" width="360" height="300" rx="16" fill="url(#cleanGrad)" stroke="#10b981" stroke-width="2.5" filter="url(#softShadow)"/>
+
+      <!-- Table header -->
+      <rect x="756" y="58" width="328" height="36" rx="8" fill="#7c3aed"/>
+      <text x="772" y="81" font-size="11" font-weight="800" fill="#fff">user_id</text>
+      <text x="848" y="81" font-size="11" font-weight="800" fill="#fff">tenure</text>
+      <text x="924" y="81" font-size="11" font-weight="800" fill="#fff">usage_7d</text>
+      <text x="1000" y="81" font-size="11" font-weight="800" fill="#fff">churn</text>
+      <line x1="836" y1="58" x2="836" y2="94" stroke="#6d28d9" stroke-width="1"/>
+      <line x1="912" y1="58" x2="912" y2="94" stroke="#6d28d9" stroke-width="1"/>
+      <line x1="988" y1="58" x2="988" y2="94" stroke="#6d28d9" stroke-width="1"/>
+
+      <!-- Clean rows animating out -->
+      <g class="clean-row r1">
+        <rect x="756" y="104" width="328" height="32" rx="6" fill="#fff" stroke="#d1fae5" stroke-width="1.5"/>
+        <text x="772" y="125" font-size="10" font-weight="600" fill="#334155">U-1042</text>
+        <text x="852" y="125" font-size="10" font-weight="600" fill="#334155">14</text>
+        <text x="928" y="125" font-size="10" font-weight="600" fill="#334155">0.82</text>
+        <text x="1004" y="125" font-size="10" font-weight="600" fill="#059669">0</text>
+      </g>
+      <g class="clean-row r2">
+        <rect x="756" y="142" width="328" height="32" rx="6" fill="#fff" stroke="#d1fae5" stroke-width="1.5"/>
+        <text x="772" y="163" font-size="10" font-weight="600" fill="#334155">U-2091</text>
+        <text x="852" y="163" font-size="10" font-weight="600" fill="#334155">3</text>
+        <text x="928" y="163" font-size="10" font-weight="600" fill="#334155">0.21</text>
+        <text x="1004" y="163" font-size="10" font-weight="600" fill="#dc2626">1</text>
+      </g>
+      <g class="clean-row r3">
+        <rect x="756" y="180" width="328" height="32" rx="6" fill="#fff" stroke="#d1fae5" stroke-width="1.5"/>
+        <text x="772" y="201" font-size="10" font-weight="600" fill="#334155">U-3310</text>
+        <text x="852" y="201" font-size="10" font-weight="600" fill="#334155">28</text>
+        <text x="928" y="201" font-size="10" font-weight="600" fill="#334155">0.67</text>
+        <text x="1004" y="201" font-size="10" font-weight="600" fill="#059669">0</text>
+      </g>
+      <g class="clean-row r4">
+        <rect x="756" y="218" width="328" height="32" rx="6" fill="#fff" stroke="#d1fae5" stroke-width="1.5"/>
+        <text x="772" y="239" font-size="10" font-weight="600" fill="#334155">U-4488</text>
+        <text x="852" y="239" font-size="10" font-weight="600" fill="#334155">7</text>
+        <text x="928" y="239" font-size="10" font-weight="600" fill="#334155">0.44</text>
+        <text x="1004" y="239" font-size="10" font-weight="600" fill="#059669">0</text>
+      </g>
+
+      <!-- Split badges -->
+      <rect x="756" y="268" width="100" height="26" rx="8" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/>
+      <text x="806" y="286" text-anchor="middle" font-size="10" font-weight="800" fill="#5b21b6">train 70%</text>
+      <rect x="870" y="268" width="100" height="26" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+      <text x="920" y="286" text-anchor="middle" font-size="10" font-weight="800" fill="#92400e">val 15%</text>
+      <rect x="984" y="268" width="100" height="26" rx="8" fill="#ecfdf5" stroke="#10b981" stroke-width="1.5"/>
+      <text x="1034" y="286" text-anchor="middle" font-size="10" font-weight="800" fill="#047857">test 15%</text>
+
+      <!-- Bottom legend -->
+      <rect x="320" y="368" width="472" height="24" rx="8" fill="#fff" stroke="#e9d5ff"/>
+      <circle cx="344" cy="380" r="5" fill="#94a3b8"/>
+      <text x="356" y="384" font-size="10" font-weight="600" fill="#475569">missing · duplicates · outliers</text>
+      <rect x="548" y="372" width="52" height="16" rx="3" fill="#dc2626"/>
+      <text x="574" y="383" text-anchor="middle" font-size="8" font-weight="800" fill="#fff">LEAKAGE</text>
+      <text x="612" y="384" font-size="10" font-weight="600" fill="#475569">→ drop before train</text>
+      <circle cx="752" cy="380" r="5" fill="#10b981"/>
+      <text x="764" y="384" font-size="10" font-weight="600" fill="#475569">clean feature matrix</text>
+    </svg>
+  </div>
+</body>
+</html>
