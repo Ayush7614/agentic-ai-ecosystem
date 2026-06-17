@@ -13,9 +13,7 @@ Maintained by [Ayush Kumar](https://github.com/Ayush7614) · [NeuralVerse](https
 | [Claude Code `.claude/`](guides/claude-code-dot-claude/index.md) | Team-aware Claude Code layout — `CLAUDE.md`, permissions, rules, skills, and subagents |
 | [Awesome Hermes Agent](guides/awesome-hermes-agent/index.md) | Install Hermes Agent and map the skills, plugins, GUIs, and integrations ecosystem |
 | [Hermes vs OpenClaw](guides/hermes-vs-openclaw/index.md) | Compare Hermes Agent and OpenClaw — gateways, skills, migration, decision guide |
-
 | [MCP Visual Guide](guides/mcp-visual-guide/index.md) | Model Context Protocol — host/client/server, capability exchange, API vs MCP, App MCP |
-
 | [ML Model in 6 Steps](guides/ml-model-6-steps/index.md) | Visual ML pipeline — problem framing through deploy and monitor with animated GIFs |
 | [Solo Engineer Stack](guides/solo-engineer-stack/index.md) | Build PulseFeedback with 10 equal tools — PM to support in one closed loop |
 | [Loop Engineering](guides/loop-engineering/index.md) | Act, observe, repeat — eval gates, open vs closed loops, fleet patterns, ReAct |
@@ -26,6 +24,7 @@ Maintained by [Ayush Kumar](https://github.com/Ayush7614) · [NeuralVerse](https
 | [Hermes Profile Builder](guides/hermes-profile-builder/index.md) | Quick index — full Profile Builder walkthrough in Masterclass Parts 11–12 |
 | [OpenClaw](guides/openclaw/index.md) | Install and extend the personal AI assistant from openclaw.ai — gateway, channels, skills |
 | [Anthropic Cybersecurity Skills](guides/anthropic-cybersecurity-skills/index.md) | 754 MITRE-mapped security skills for AI agents — install, frameworks, SOC walkthroughs |
+
 Each guide is a self-contained project under `guides/<name>/` in the repo. The site pages mirror those READMEs and tutorials so you can read online without cloning.
 
 ## Run locally (any guide)
