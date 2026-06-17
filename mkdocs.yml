@@ -79,6 +79,9 @@ nav:
     - MCP Visual Guide:
       - Overview: guides/mcp-visual-guide/index.md
       - Full tutorial: guides/mcp-visual-guide/tutorial.md
+    - LLM Fine-Tuning:
+      - Overview: guides/llm-fine-tuning/index.md
+      - Full tutorial: guides/llm-fine-tuning/tutorial.md
   - Publishing: publishing.md
 
 extra:

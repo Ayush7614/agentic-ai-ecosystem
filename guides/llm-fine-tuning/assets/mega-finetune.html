@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1200px;height:600px;overflow:hidden;font-family:Inter,sans-serif}
+#capture{width:1200px;height:600px;position:relative;overflow:hidden;background:#0a0f1e}
+.ring-bg{position:absolute;inset:-45%;background:conic-gradient(from 120deg,#a78bfa,#34d399,#38bdf8,#a78bfa);opacity:.11;animation:spin 22s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.vig{position:absolute;inset:0;background:radial-gradient(ellipse at 40% 35%,transparent 38%,#0a0f1e 82%)}
+.hex{position:absolute;inset:0;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5-13-7.5v-15z' fill='none' stroke='%23a78bfa' stroke-width='1'/%3E%3C/svg%3E")}
+.particles{position:absolute;inset:0;overflow:hidden;opacity:.35}
+.particles i{position:absolute;width:4px;height:4px;background:#34d399;border-radius:50%;animation:float 4s ease-in-out infinite}
+.particles i:nth-child(1){left:12%;top:22%}.particles i:nth-child(2){left:88%;top:28%;animation-delay:.9s;background:#a78bfa}
+.particles i:nth-child(3){left:72%;top:78%;animation-delay:1.8s}.particles i:nth-child(4){left:28%;top:68%;animation-delay:2.6s}
+@keyframes float{0%,100%{transform:translateY(0);opacity:.25}50%{transform:translateY(-10px);opacity:1}}
+.top{padding:30px 40px 0;position:relative;z-index:3}
+.brand{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.2em;color:#c4b5fd;text-transform:uppercase;font-weight:700}
+h1{font-size:38px;font-weight:900;color:#fff;letter-spacing:-1.5px;margin-top:4px}
+h1 em{font-style:normal;background:linear-gradient(90deg,#a78bfa,#34d399,#38bdf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stage{position:absolute;left:36px;right:36px;top:96px;bottom:32px;z-index:3;display:flex;align-items:center;justify-content:center}
+.act-tag{position:absolute;top:28px;right:40px;text-align:right;z-index:4}
+.act-tag .n{font-size:10px;font-weight:800;color:#34d399;letter-spacing:.14em}
+.act-tag .t{font-size:15px;font-weight:800;color:#f1f5f9;margin-top:3px}
+.bar{position:absolute;bottom:0;left:0;height:5px;background:linear-gradient(90deg,#a78bfa,#34d399,#38bdf8);z-index:5}
+.ladder{display:flex;flex-direction:column;gap:8px;width:100%;max-width:660px}
+.rung{padding:12px 18px;border-radius:10px;font-size:13px;font-weight:700;color:#e2e8f0;background:rgba(15,23,42,.75);border-left:4px solid #475569;transform:translateX(-16px);opacity:.15}
+.rung.lit{border-left-color:#34d399;opacity:1;transform:none;box-shadow:0 0 18px rgba(52,211,153,.12)}
+.wheel{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;max-width:920px}
+.fam{padding:16px 20px;border-radius:14px;font-size:13px;font-weight:800;min-width:158px;text-align:center;background:rgba(15,23,42,.88);border:2px solid rgba(167,139,250,.25);color:#ddd6fe;opacity:.2;transform:scale(.94)}
+.fam.on{opacity:1;border-color:#34d399;color:#6ee7b7;transform:scale(1.04);box-shadow:0 0 26px rgba(52,211,153,.18)}
+.lora-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center}
+.box{font-family:"JetBrains Mono",monospace;padding:22px 26px;border-radius:16px;font-size:17px;font-weight:700;text-align:center}
+.box.w{background:rgba(51,65,85,.55);border:2px solid #64748b;color:#94a3b8}
+.box.ab{background:rgba(52,211,153,.12);border:2px solid #34d399;color:#6ee7b7}
+.box.eq{color:#a78bfa;font-size:30px}
+.stack-col{display:flex;flex-direction:column;gap:10px;width:100%;max-width:540px}
+.layer{padding:16px 20px;border-radius:12px;font-size:14px;font-weight:600;color:#cbd5e1;background:rgba(15,23,42,.82);border:1px solid rgba(51,65,85,.7);opacity:.15}
+.layer.on{opacity:1;border-color:#a78bfa;background:rgba(167,139,250,.1)}
+.align{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+.al{padding:18px 22px;border-radius:16px;min-width:148px;text-align:center;font-weight:800;font-size:14px;background:rgba(30,27,75,.88);border:2px solid rgba(129,140,248,.3);color:#c7d2fe;opacity:.2}
+.al.on{opacity:1;border-color:#f472b6;color:#fbcfe8;box-shadow:0 0 22px rgba(244,114,182,.18)}
+.finale{text-align:center;max-width:560px}
+.finale .big{font-size:46px;font-weight:900;margin-bottom:12px}
+.finale .big span{background:linear-gradient(90deg,#34d399,#38bdf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.finale p{font-size:14px;color:#94a3b8;line-height:1.65}
+</style>
+</head>
+<body>
+<div id="capture">
+  <div class="ring-bg"></div><div class="hex"></div><div class="vig"></div>
+  <div class="particles"><i></i><i></i><i></i><i></i></div>
+  <div class="top"><div class="brand">LLMOps · PEFT · TRL · Alignment</div><h1><em>Fine-Tuning</em> Universe</h1></div>
+  <div class="stage" id="stage"></div>
+  <div class="act-tag"><div class="n" id="an">ACT I</div><div class="t" id="at">Adaptation ladder</div></div>
+  <div class="bar" id="bar"></div>
+</div>
+<script>
+const ACTS=[
+  {n:"ACT I",t:"Climb before you train",r:p=>{
+    const rungs=["① Prompt + few-shot","② RAG retrieve context","③ Tools · APIs · SQL","④ Fine-tune LoRA/QLoRA","⑤ Align DPO · RLHF · GRPO"];
+    const v=Math.ceil(p*5);
+    return `<div class="ladder">${rungs.map((r,i)=>`<div class="rung${i<v?' lit':''}">${r}</div>`).join("")}</div>`;
+  }},
+  {n:"ACT II",t:"Five families",r:p=>{
+    const f=[["A","Full SFT / CPT"],["B","Soft prompts"],["C","LoRA · QLoRA"],["D","Alignment"],["E","Federated"]];
+    const v=Math.ceil(p*5);
+    return `<div class="wheel">${f.map(([k,n],i)=>`<div class="fam${i<v?' on':''}">${k}<br>${n}</div>`).join("")}</div>`;
+  }},
+  {n:"ACT III",t:"LoRA — 0.4% params",r:p=>{
+    const s=p>.25&&p<.55,s2=p>=.55;
+    return `<div class="lora-row">
+      <div class="box w">W<br><small style="font-size:11px">frozen 4096²</small></div>
+      <div class="box eq">+</div>
+      <div class="box ab" style="opacity:${s||s2?1:.25}">B×A<br><small style="font-size:11px">rank r=8</small></div>
+      <div class="box eq" style="opacity:${s2?1:.25}">=</div>
+      <div class="box ab" style="opacity:${s2?1:.25}">W′<br><small style="font-size:11px">~65K trainable</small></div>
+    </div>`;
+  }},
+  {n:"ACT IV",t:"QLoRA stack",r:p=>{
+    const layers=[["4-bit NF4 base","frozen · dequant on forward"],["bf16 LoRA adapters","gradients flow here"],["Single GPU","7B–70B on one card"]];
+    const v=Math.ceil(p*3);
+    return `<div class="stack-col">${layers.map(([a,b],i)=>`<div class="layer${i<v?' on':''}"><strong style="color:#a78bfa">${a}</strong><br><span style="font-size:12px;color:#94a3b8">${b}</span></div>`).join("")}</div>`;
+  }},
+  {n:"ACT V",t:"Alignment train",r:p=>{
+    const a=[["RLHF","SFT→RM→PPO"],["DPO","preference pairs"],["GRPO","group score rank"]];
+    const v=Math.ceil(p*3);
+    return `<div class="align">${a.map(([n,d],i)=>`<div class="al${i<v?' on':''}">${n}<br><small style="font-weight:500;font-size:11px">${d}</small></div>`).join("")}</div>`;
+  }},
+  {n:"FINALE",t:"Ship the specialist",r:()=>`
+    <div class="finale"><div class="big"><span>1B › 70B</span></div>
+    <p>Merge adapter · quantize 4-bit · eval before & after<br>Prompt first · train last · maintain every checkpoint</p></div>`,
+  },
+];
+function render(prog){
+  const n=ACTS.length,idx=Math.min(n-1,Math.floor(prog*n)),local=(prog*n)-idx,a=ACTS[idx];
+  document.getElementById("an").textContent=a.n;
+  document.getElementById("at").textContent=a.t;
+  document.getElementById("bar").style.width=(prog*100)+"%";
+  document.getElementById("stage").innerHTML=a.r(local);
+}
+render(parseFloat(new URLSearchParams(location.search).get("frame")||"0"));
+window.__READY=true;
+</script>
+</body>
+</html>
