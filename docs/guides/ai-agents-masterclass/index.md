@@ -11,5 +11,6 @@ description: Visual masterclass — AI agents, frameworks, ReAct, use cases, cod
 
 {% include-markdown "../../../guides/ai-agents-masterclass/README.md" start="## Guide map" end="## Related guides" %}
 
-[Read the full tutorial →](tutorial.md){ .md-button .md-button--primary }
+[Launch the visual landing page →](landing.html){ .md-button .md-button--primary }
+[Read the full tutorial →](tutorial.md){ .md-button }
 [MCP Visual Guide →](../mcp-visual-guide/tutorial.md){ .md-button }

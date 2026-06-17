@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Agentic AI Ecosystem — AI Agents Masterclass</title>
+<meta name="description" content="The visual masterclass your coding agents deserve. Anatomy, ReAct/ReWOO, 15+ frameworks, MCP/A2A, and five runnable examples — all with animated diagrams." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #08080b;
+    --bg-soft: #0e0e13;
+    --panel: #121218;
+    --panel-2: #16161d;
+    --line: rgba(255,255,255,.08);
+    --line-2: rgba(255,255,255,.14);
+    --text: #f5f6f8;
+    --muted: #9aa0ab;
+    --dim: #6b7280;
+    --amber: #ffb800;
+    --amber-2: #ffcf4d;
+    --amber-soft: rgba(255,184,0,.12);
+    --radius: 14px;
+    --maxw: 1120px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+  .mono { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+  /* ---------- starfield ---------- */
+  #stars { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+  .glow {
+    position: fixed; z-index: 0; pointer-events: none;
+    width: 720px; height: 720px; left: 50%; top: -160px; transform: translateX(-50%);
+    background: radial-gradient(circle at center, rgba(255,184,0,.14), rgba(255,184,0,0) 60%);
+    filter: blur(20px);
+  }
+  .page { position: relative; z-index: 1; }
+
+  /* ---------- nav ---------- */
+  nav {
+    position: sticky; top: 0; z-index: 50;
+    backdrop-filter: blur(12px);
+    background: rgba(8,8,11,.72);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner { display: flex; align-items: center; gap: 28px; height: 64px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: .14em; font-size: 13px; }
+  .brand .dot { width: 22px; height: 22px; border-radius: 6px; background: linear-gradient(135deg, var(--amber), #ff7a00); display:grid; place-items:center; color:#1a1300; font-size:12px; font-weight:900; }
+  .nav-links { display: flex; gap: 26px; margin-left: 8px; }
+  .nav-links a { color: var(--muted); font-size: 12.5px; font-weight: 600; letter-spacing: .12em; transition: color .15s; }
+  .nav-links a:hover { color: var(--text); }
+  .nav-right { margin-left: auto; display: flex; align-items: center; gap: 14px; }
+  .ghbtn { display:flex; align-items:center; gap:8px; border:1px solid var(--line-2); padding:8px 12px; border-radius:10px; font-size:12px; font-weight:600; color:var(--muted); }
+  .ghbtn b { color: var(--amber); }
+  .cta { background: var(--amber); color:#1a1300; font-weight:800; padding:9px 16px; border-radius:10px; font-size:12.5px; letter-spacing:.06em; transition: transform .12s, box-shadow .2s; }
+  .cta:hover { transform: translateY(-1px); box-shadow: 0 8px 28px rgba(255,184,0,.28); }
+
+  /* ---------- hero ---------- */
+  header.hero { text-align: center; padding: 88px 0 56px; }
+  .badge { display:inline-flex; align-items:center; gap:10px; border:1px solid var(--line-2); border-radius:999px; padding:7px 16px; font-size:11.5px; letter-spacing:.18em; color:var(--muted); font-weight:600; }
+  .badge .pip { width:6px; height:6px; border-radius:50%; background: var(--amber); box-shadow:0 0 10px var(--amber); }
+  h1.title {
+    font-weight: 900; letter-spacing: -.02em; line-height: .92;
+    font-size: clamp(48px, 11vw, 132px);
+    margin: 26px 0 0;
+  }
+  h1.title .amber { color: var(--amber); }
+  .subtitle { max-width: 620px; margin: 22px auto 0; color: var(--muted); font-size: 16px; line-height: 1.6; }
+
+  .copybox {
+    margin: 34px auto 0; max-width: 460px;
+    display:flex; align-items:center; gap:12px;
+    border:1px solid var(--amber); border-radius:12px;
+    background: rgba(255,184,0,.05);
+    padding: 14px 16px;
+    box-shadow: 0 0 0 4px rgba(255,184,0,.06);
+  }
+  .copybox .prompt { color: var(--amber); font-weight:700; }
+  .copybox code { flex:1; text-align:left; color: var(--text); font-size: 14px; }
+  .copybox button { background:none; border:none; color: var(--dim); font-size:11px; letter-spacing:.1em; cursor:pointer; font-weight:700; transition: color .15s; }
+  .copybox button:hover { color: var(--amber); }
+
+  .hero-btns { margin-top: 26px; display:flex; gap:14px; justify-content:center; flex-wrap: wrap; }
+  .btn { display:inline-flex; align-items:center; gap:9px; padding:13px 24px; border-radius:11px; font-weight:700; font-size:13.5px; letter-spacing:.04em; border:1px solid var(--line-2); transition: transform .12s, border-color .15s, background .15s; }
+  .btn:hover { transform: translateY(-1px); border-color: var(--line-2); }
+  .btn.solid { background:#fff; color:#0a0a0c; border-color:#fff; }
+  .btn.solid:hover { background:#e9e9ee; }
+  .btn.ghost:hover { background: rgba(255,255,255,.04); }
+
+  .featured { margin-top: 70px; }
+  .featured .lbl { text-align:center; color:var(--dim); font-size:11px; letter-spacing:.28em; font-weight:600; }
+  .featured-grid { margin-top:20px; display:grid; grid-template-columns: repeat(4,1fr); gap:14px; }
+  .fcard { border:1px solid var(--line); border-radius:12px; background: linear-gradient(180deg, var(--panel), var(--bg-soft)); padding:16px; display:flex; flex-direction:column; gap:6px; min-height:84px; justify-content:center; }
+  .fcard .ico { font-size:18px; }
+  .fcard .nm { font-weight:700; font-size:13px; }
+  .fcard .sub { color:var(--dim); font-size:10.5px; letter-spacing:.12em; }
+
+  /* ---------- sections ---------- */
+  section { padding: 74px 0; border-top: 1px solid var(--line); }
+  .eyebrow { color: var(--amber); font-size:12px; letter-spacing:.2em; font-weight:700; text-transform:uppercase; }
+  .h2 { font-size: clamp(28px,5vw,46px); font-weight:850; letter-spacing:-.02em; margin:14px 0 0; }
+  .lead { color: var(--muted); font-size:16px; line-height:1.6; margin-top:14px; max-width:640px; }
+
+  .grid { display:grid; gap:16px; margin-top:40px; }
+  .g3 { grid-template-columns: repeat(3,1fr); }
+  .g2 { grid-template-columns: repeat(2,1fr); }
+  .g4 { grid-template-columns: repeat(4,1fr); }
+
+  .card { border:1px solid var(--line); border-radius: var(--radius); background: linear-gradient(180deg, var(--panel), var(--bg-soft)); padding:24px; transition: transform .15s, border-color .15s; }
+  .card:hover { transform: translateY(-3px); border-color: var(--line-2); }
+  .card .k { width:42px; height:42px; border-radius:11px; background: var(--amber-soft); display:grid; place-items:center; font-size:20px; margin-bottom:16px; }
+  .card h3 { margin:0 0 8px; font-size:17px; font-weight:750; }
+  .card p { margin:0; color: var(--muted); font-size:14px; line-height:1.6; }
+
+  .chip-row { display:flex; flex-wrap:wrap; gap:12px; margin-top:36px; }
+  .chip { border:1px solid var(--line-2); border-radius:999px; padding:11px 20px; font-weight:700; font-size:14px; background: var(--panel); transition: transform .12s, border-color .15s, color .15s; }
+  .chip:hover { transform: translateY(-2px); color: var(--amber); border-color: var(--amber); }
+  .chip span { color: var(--dim); font-weight:500; font-size:12px; margin-left:6px; }
+
+  .media { border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; background:#fff; }
+  .media img { display:block; width:100%; }
+  .media .cap { background: var(--panel); color:var(--muted); font-size:12.5px; padding:11px 16px; border-top:1px solid var(--line); letter-spacing:.04em; }
+
+  .demo-grid { display:grid; grid-template-columns: 1.3fr 1fr; gap:18px; margin-top:40px; align-items:start; }
+  .thumbs { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+
+  .code { border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; margin-top:36px; background: var(--bg-soft); }
+  .code .bar { display:flex; align-items:center; gap:8px; padding:12px 16px; border-bottom:1px solid var(--line); }
+  .code .bar i { width:11px; height:11px; border-radius:50%; display:inline-block; }
+  .code .bar .t { margin-left:10px; color:var(--dim); font-size:12px; }
+  .code pre { margin:0; padding:20px 22px; overflow:auto; font-size:13px; line-height:1.7; }
+  .code .cm { color:#6b7280; }
+  .code .ky { color: var(--amber-2); }
+  .code .st { color:#7fd9a6; }
+  .code .fn { color:#7fb6ff; }
+
+  .install-grid { display:grid; grid-template-columns: repeat(3,1fr); gap:16px; margin-top:40px; }
+  .step { border:1px solid var(--line); border-radius:var(--radius); padding:22px; background:var(--panel); }
+  .step .n { color:var(--amber); font-weight:900; font-size:13px; letter-spacing:.1em; }
+  .step h4 { margin:10px 0 8px; font-size:16px; }
+  .step p { margin:0 0 12px; color:var(--muted); font-size:13.5px; line-height:1.55; }
+  .step code { display:block; background:var(--bg); border:1px solid var(--line); border-radius:9px; padding:11px 13px; font-size:12.5px; color:var(--amber-2); overflow:auto; }
+
+  .cta-band { text-align:center; padding:90px 0; border-top:1px solid var(--line); background: radial-gradient(circle at 50% 0%, rgba(255,184,0,.08), transparent 55%); }
+  .cta-band h2 { font-size: clamp(30px,6vw,58px); font-weight:900; letter-spacing:-.02em; margin:0; }
+  .cta-band p { color:var(--muted); margin:16px auto 30px; max-width:520px; }
+
+  footer { border-top:1px solid var(--line); padding:38px 0; color:var(--dim); font-size:13px; }
+  .foot-inner { display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap; }
+  .foot-links { display:flex; gap:22px; }
+  .foot-links a:hover { color:var(--text); }
+
+  .toast { position:fixed; bottom:26px; left:50%; transform:translateX(-50%) translateY(20px); background:var(--amber); color:#1a1300; font-weight:800; padding:12px 22px; border-radius:11px; font-size:13px; opacity:0; pointer-events:none; transition:.25s; z-index:99; }
+  .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+
+  @media (max-width: 860px) {
+    .nav-links { display:none; }
+    .featured-grid { grid-template-columns: repeat(2,1fr); }
+    .g3,.g4,.install-grid { grid-template-columns: 1fr; }
+    .g2,.demo-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+<div class="glow"></div>
+
+<div class="page">
+  <nav>
+    <div class="wrap nav-inner">
+      <a class="brand" href="#top"><span class="dot">A</span> AGENTIC&nbsp;AI&nbsp;ECOSYSTEM</a>
+      <div class="nav-links">
+        <a href="#frameworks">FRAMEWORKS</a>
+        <a href="#capabilities">CAPABILITIES</a>
+        <a href="#patterns">PATTERNS</a>
+        <a href="#demo">DEMO</a>
+        <a href="#examples">EXAMPLES</a>
+        <a href="./">DOCS</a>
+      </div>
+      <div class="nav-right">
+        <a class="ghbtn" href="https://github.com/Ayush7614/agentic-ai-ecosystem" target="_blank" rel="noopener">★ <b>Star</b></a>
+        <a class="cta" href="#install">START BUILDING</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero wrap" id="top">
+    <span class="badge"><span class="pip"></span> 35 PARTS · 5 RUNNABLE EXAMPLES · v1.0</span>
+    <h1 class="title">AI&nbsp;AGENTS<br><span class="amber">MASTERCLASS</span></h1>
+    <p class="subtitle">The visual masterclass your coding agents deserve. Anatomy, ReAct &amp; ReWOO, 15+ frameworks, MCP/A2A protocols, and five runnable examples — every concept animated.</p>
+
+    <div class="copybox">
+      <span class="prompt mono">$</span>
+      <code class="mono" id="cmd">python examples/minimal_react_agent.py</code>
+      <button id="copyBtn">CLICK TO COPY</button>
+    </div>
+
+    <div class="hero-btns">
+      <a class="btn solid" href="#demo">▶ &nbsp;SEE IT MOVE</a>
+      <a class="btn ghost" href="https://github.com/Ayush7614/agentic-ai-ecosystem" target="_blank" rel="noopener">★ &nbsp;STAR ON GITHUB</a>
+    </div>
+
+    <div class="featured">
+      <div class="lbl">BUILT ON THE PATTERNS FROM</div>
+      <div class="featured-grid">
+        <div class="fcard"><span class="ico">🔷</span><span class="nm">Google Cloud</span><span class="sub">WHAT ARE AI AGENTS</span></div>
+        <div class="fcard"><span class="ico">🧠</span><span class="nm">IBM Think</span><span class="sub">AGENTS EXPLAINED</span></div>
+        <div class="fcard"><span class="ico">⚡</span><span class="nm">OpenAI</span><span class="sub">BUILDING AI AGENTS</span></div>
+        <div class="fcard"><span class="ico">🛠️</span><span class="nm">ServiceNow</span><span class="sub">AGENT MASTERCLASS</span></div>
+      </div>
+    </div>
+  </header>
+
+  <section id="frameworks" class="wrap">
+    <div class="eyebrow">The stack</div>
+    <h2 class="h2">15+ frameworks, one mental model</h2>
+    <p class="lead">Every framework is a different harness around the same loop: reason, act, observe, repeat. Learn the model once and read them all.</p>
+    <div class="chip-row">
+      <a class="chip" href="#examples">LangGraph <span>graphs</span></a>
+      <a class="chip" href="#examples">CrewAI <span>crews</span></a>
+      <a class="chip" href="#examples">AutoGen <span>conversation</span></a>
+      <a class="chip" href="#examples">OpenAI SDK <span>tools</span></a>
+      <a class="chip" href="#examples">Pydantic AI <span>typed</span></a>
+      <a class="chip" href="#examples">Google ADK <span>enterprise</span></a>
+      <a class="chip" href="#examples">Hermes <span>self-improving</span></a>
+      <a class="chip" href="#examples">OpenClaw <span>personal</span></a>
+    </div>
+    <div class="media" style="margin-top:36px">
+      <img src="assets/diagram-frameworks-map.gif" alt="Frameworks map" loading="lazy" />
+      <div class="cap">The framework landscape — mapped by autonomy and orchestration style.</div>
+    </div>
+  </section>
+
+  <section id="capabilities" class="wrap">
+    <div class="eyebrow">Anatomy</div>
+    <h2 class="h2">Six capabilities of a real agent</h2>
+    <p class="lead">An assistant answers. An agent reasons, acts, and self-corrects toward a goal. These are the six muscles that make the difference.</p>
+    <div class="grid g3">
+      <div class="card"><div class="k">🧩</div><h3>Reason</h3><p>Break a goal into steps and decide what to do next from the current state.</p></div>
+      <div class="card"><div class="k">⚙️</div><h3>Act</h3><p>Call tools, APIs, and code — turning thoughts into real-world side effects.</p></div>
+      <div class="card"><div class="k">👁️</div><h3>Observe</h3><p>Read tool results and environment feedback to ground the next decision.</p></div>
+      <div class="card"><div class="k">🗺️</div><h3>Plan</h3><p>Sequence multi-step work, with ReWOO-style upfront plans when it helps.</p></div>
+      <div class="card"><div class="k">🤝</div><h3>Collaborate</h3><p>Hand off to other agents over A2A — single brain or a coordinated fleet.</p></div>
+      <div class="card"><div class="k">♻️</div><h3>Self-refine</h3><p>Critique its own output, retry, and pass eval gates before finishing.</p></div>
+    </div>
+  </section>
+
+  <section id="patterns" class="wrap">
+    <div class="eyebrow">Reasoning paradigms</div>
+    <h2 class="h2">ReAct vs ReWOO — animated</h2>
+    <p class="lead">The two dominant loops. ReAct interleaves thought and action; ReWOO plans everything first, then executes. Watch both run.</p>
+    <div class="grid g2">
+      <div class="media"><img src="assets/diagram-react-loop.gif" alt="ReAct loop" loading="lazy" /><div class="cap">ReAct — reason, act, observe, repeat.</div></div>
+      <div class="media"><img src="assets/diagram-rewoo-flow.gif" alt="ReWOO flow" loading="lazy" /><div class="cap">ReWOO — plan upfront, then execute the plan.</div></div>
+    </div>
+  </section>
+
+  <section id="demo" class="wrap">
+    <div class="eyebrow">See it move</div>
+    <h2 class="h2">The whole masterclass, in motion</h2>
+    <p class="lead">Eighteen diagram GIFs and seven terminal walkthroughs. No static slides — every idea animates.</p>
+    <div class="demo-grid">
+      <div class="media">
+        <img src="assets/mega-agents-everything.gif" alt="Mega overview" loading="lazy" />
+        <div class="cap">mega-agents-everything — the full picture in one reel.</div>
+      </div>
+      <div class="thumbs">
+        <div class="media"><img src="assets/diagram-agent-anatomy.gif" alt="Anatomy" loading="lazy" /></div>
+        <div class="media"><img src="assets/diagram-single-multi.gif" alt="Single vs multi" loading="lazy" /></div>
+        <div class="media"><img src="assets/diagram-protocols.gif" alt="Protocols" loading="lazy" /></div>
+        <div class="media"><img src="assets/diagram-memory-tiers.gif" alt="Memory tiers" loading="lazy" /></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="examples" class="wrap">
+    <div class="eyebrow">Five runnable examples</div>
+    <h2 class="h2">Start with zero API keys</h2>
+    <p class="lead">The minimal ReAct agent runs out of the box. Then graduate to LangGraph, CrewAI, the OpenAI SDK, and typed Pydantic AI agents.</p>
+    <div class="code">
+      <div class="bar"><i style="background:#ff5f56"></i><i style="background:#ffbd2e"></i><i style="background:#27c93f"></i><span class="t mono">examples/minimal_react_agent.py</span></div>
+      <pre class="mono"><span class="cm"># A tiny ReAct loop — reason, act, observe, repeat</span>
+<span class="ky">def</span> <span class="fn">run</span>(goal):
+    state = {<span class="st">"goal"</span>: goal, <span class="st">"scratch"</span>: []}
+    <span class="ky">while</span> <span class="ky">not</span> done(state):
+        thought = reason(state)        <span class="cm"># LLM picks next action</span>
+        result  = act(thought.tool)    <span class="cm"># call a tool</span>
+        state[<span class="st">"scratch"</span>].append(observe(result))
+    <span class="ky">return</span> finalize(state)
+
+<span class="ky">if</span> __name__ == <span class="st">"__main__"</span>:
+    <span class="fn">print</span>(run(<span class="st">"What's 17% of 2,480?"</span>))</pre>
+    </div>
+    <div class="hero-btns" style="justify-content:flex-start">
+      <a class="btn solid" href="tutorial/">READ THE FULL TUTORIAL</a>
+      <a class="btn ghost" href="https://github.com/Ayush7614/agentic-ai-ecosystem/tree/main/guides/ai-agents-masterclass/examples" target="_blank" rel="noopener">BROWSE EXAMPLES →</a>
+    </div>
+  </section>
+
+  <section id="install" class="wrap">
+    <div class="eyebrow">Install</div>
+    <h2 class="h2">Running in three commands</h2>
+    <div class="install-grid">
+      <div class="step"><div class="n">01</div><h4>Clone</h4><p>Grab the ecosystem repo with every guide and asset.</p><code class="mono">git clone https://github.com/Ayush7614/agentic-ai-ecosystem.git</code></div>
+      <div class="step"><div class="n">02</div><h4>Set up</h4><p>Create a venv inside the masterclass guide folder.</p><code class="mono">cd guides/ai-agents-masterclass &amp;&amp; python -m venv .venv</code></div>
+      <div class="step"><div class="n">03</div><h4>Run</h4><p>Launch the minimal ReAct agent — no API key needed.</p><code class="mono">python examples/minimal_react_agent.py</code></div>
+    </div>
+  </section>
+
+  <div class="cta-band">
+    <div class="wrap">
+      <h2>Build agents that <span style="color:var(--amber)">actually move</span>.</h2>
+      <p>Thirty-five parts, five frameworks, every concept animated. Your agents deserve a real mental model.</p>
+      <div class="hero-btns">
+        <a class="btn solid" href="tutorial/">START THE MASTERCLASS</a>
+        <a class="btn ghost" href="https://github.com/Ayush7614/agentic-ai-ecosystem" target="_blank" rel="noopener">★ STAR ON GITHUB</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="wrap foot-inner">
+      <div>© 2026 Agentic AI Ecosystem · MIT licensed · Built by <a href="https://github.com/Ayush7614" style="color:var(--amber)">Ayush Kumar</a></div>
+      <div class="foot-links">
+        <a href="./">Docs</a>
+        <a href="tutorial/">Tutorial</a>
+        <a href="https://github.com/Ayush7614/agentic-ai-ecosystem" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<div class="toast" id="toast">Copied to clipboard</div>
+
+<script>
+  // ---- copy to clipboard ----
+  const toast = document.getElementById('toast');
+  function showToast(msg){ toast.textContent = msg; toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'), 1600); }
+  document.getElementById('copyBtn').addEventListener('click', () => {
+    const txt = document.getElementById('cmd').textContent.trim();
+    navigator.clipboard.writeText(txt).then(()=>showToast('Copied: ' + txt)).catch(()=>showToast('Copy failed'));
+  });
+
+  // ---- starfield ----
+  const c = document.getElementById('stars');
+  const ctx = c.getContext('2d');
+  let w, h, stars, dpr;
+  function resize(){
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = c.width = innerWidth * dpr; h = c.height = innerHeight * dpr;
+    c.style.width = innerWidth + 'px'; c.style.height = innerHeight + 'px';
+    const count = Math.floor((innerWidth * innerHeight) / 9000);
+    stars = Array.from({length: count}, () => ({
+      x: Math.random() * w, y: Math.random() * h,
+      r: (Math.random() * 1.4 + 0.3) * dpr,
+      a: Math.random() * 0.6 + 0.2,
+      tw: Math.random() * 0.02 + 0.004,
+      ph: Math.random() * Math.PI * 2,
+      amber: Math.random() < 0.12
+    }));
+  }
+  function draw(t){
+    ctx.clearRect(0,0,w,h);
+    for (const s of stars){
+      const alpha = s.a * (0.6 + 0.4 * Math.sin(t * s.tw + s.ph));
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+      ctx.fillStyle = s.amber ? `rgba(255,184,0,${alpha})` : `rgba(255,255,255,${alpha})`;
+      ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  addEventListener('resize', resize);
+  resize();
+  requestAnimationFrame(draw);
+</script>
+</body>
+</html>
