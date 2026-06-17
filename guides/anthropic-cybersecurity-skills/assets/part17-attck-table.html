@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Part 17 — MITRE ATT&CK v19.1</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@500;700;800&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #0f1419;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      font-family: Inter, system-ui, sans-serif;
+    }
+    #capture {
+      width: 880px;
+      background: linear-gradient(165deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+      border-radius: 20px;
+      padding: 28px 32px 32px;
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+    }
+    .header { margin-bottom: 16px; }
+    h1 { font-size: 24px; font-weight: 800; color: #f8fafc; letter-spacing: -0.03em; }
+    h1 span { color: #f87171; }
+    .sub { font-size: 12px; color: #94a3b8; margin-top: 6px; font-weight: 500; }
+    .sub em { color: #6fdc8c; font-style: normal; font-weight: 700; }
+    table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    thead th {
+      text-align: left; padding: 8px 10px;
+      color: #64748b; font-weight: 700; font-size: 10px;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      border-bottom: 2px solid #334155;
+    }
+    tbody tr { opacity: 0.12; }
+    tbody tr.visible { opacity: 1; }
+    tbody tr.active { background: rgba(248, 113, 113, 0.08); }
+    tbody tr.active td:first-child { box-shadow: inset 3px 0 0 #f87171; }
+    td { padding: 7px 10px; border-bottom: 1px solid rgba(51,65,85,0.6); vertical-align: middle; }
+    td.tactic { color: #f1f5f9; font-weight: 600; }
+    td.id {
+      font-family: "JetBrains Mono", monospace;
+      color: #5eb3ff; font-size: 11px; width: 72px;
+    }
+    td.count {
+      font-family: "JetBrains Mono", monospace;
+      color: #6fdc8c; font-weight: 600; text-align: right; width: 48px;
+    }
+    .bar-cell { width: 42%; padding-left: 4px; }
+    .bar-wrap {
+      height: 8px; background: rgba(51,65,85,0.8); border-radius: 4px; overflow: hidden;
+    }
+    .bar {
+      height: 100%; border-radius: 4px;
+      background: linear-gradient(90deg, #f87171, #fb923c);
+      width: 0%;
+      transition: none;
+    }
+    .footer { margin-top: 14px; font-size: 10px; color: #64748b; text-align: center; }
+  </style>
+</head>
+<body>
+  <div id="capture">
+    <div class="header">
+      <h1>Part 17 · <span>MITRE ATT&CK v19.1</span></h1>
+      <div class="sub"><em>754/754</em> skills mapped · Defense Evasion → Stealth + Defense Impairment</div>
+    </div>
+    <table>
+      <thead>
+        <tr><th>Tactic</th><th>ID</th><th style="text-align:right">Skills</th><th>Coverage</th></tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <div class="footer">Validated with mitreattack-python · zero revoked IDs</div>
+  </div>
+  <script>
+    const MAX = 467;
+    const DATA = [
+      ["Reconnaissance", "TA0043", 103],
+      ["Resource Development", "TA0042", 22],
+      ["Initial Access", "TA0001", 467],
+      ["Execution", "TA0002", 350],
+      ["Persistence", "TA0003", 444],
+      ["Privilege Escalation", "TA0004", 464],
+      ["Stealth", "TA0005", 442],
+      ["Defense Impairment", "TA0112", 92],
+      ["Credential Access", "TA0006", 202],
+      ["Discovery", "TA0007", 237],
+      ["Lateral Movement", "TA0008", 68],
+      ["Collection", "TA0009", 172],
+      ["Command and Control", "TA0011", 123],
+      ["Exfiltration", "TA0010", 82],
+      ["Impact", "TA0040", 50],
+    ];
+
+    const progress = parseFloat(new URLSearchParams(location.search).get("frame") || "1");
+    const total = DATA.length;
+    const visible = Math.min(total, Math.max(0, Math.ceil(progress * total)));
+    const activeIdx = Math.min(total - 1, Math.max(0, visible - 1));
+    const barScale = Math.min(1, progress);
+
+    const tbody = document.getElementById("rows");
+    DATA.forEach(([tactic, id, count], i) => {
+      const tr = document.createElement("tr");
+      if (i < visible) tr.classList.add("visible");
+      if (i === activeIdx && visible > 0) tr.classList.add("active");
+      const pct = i < visible ? (count / MAX * 100 * barScale) : 0;
+      tr.innerHTML = `
+        <td class="tactic">${tactic}</td>
+        <td class="id">${id}</td>
+        <td class="count">${count}</td>
+        <td class="bar-cell"><div class="bar-wrap"><div class="bar" style="width:${pct}%"></div></div></td>`;
+      tbody.appendChild(tr);
+    });
+    window.__READY = true;
+  </script>
+</body>
+</html>

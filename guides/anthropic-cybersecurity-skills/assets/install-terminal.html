@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cybersec Skills — Install Terminal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(ellipse at 50% 30%, #3a3a42 0%, #1c1c20 55%, #121214 100%);
+      font-family: "JetBrains Mono", "SF Mono", Menlo, Monaco, monospace;
+    }
+
+    #capture {
+      width: 920px;
+      padding: 28px;
+    }
+
+    .terminal {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow:
+        0 24px 80px rgba(0, 0, 0, 0.55),
+        0 0 0 1px rgba(255, 255, 255, 0.06);
+      background: #2a2a2e;
+    }
+
+    .titlebar {
+      height: 44px;
+      background: linear-gradient(180deg, #3a3a3e 0%, #323236 100%);
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      gap: 8px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.35);
+    }
+
+    .dot {
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+    }
+
+    .dot.red { background: #ff5f57; box-shadow: inset 0 -1px 2px rgba(0,0,0,0.2); }
+    .dot.yellow { background: #febc2e; box-shadow: inset 0 -1px 2px rgba(0,0,0,0.2); }
+    .dot.green { background: #28c840; box-shadow: inset 0 -1px 2px rgba(0,0,0,0.2); }
+
+    .titlebar-label {
+      flex: 1;
+      text-align: center;
+      font-size: 12px;
+      color: #8a8a90;
+      margin-right: 52px;
+      letter-spacing: 0.02em;
+    }
+
+    .body {
+      min-height: 320px;
+      padding: 28px 32px 36px;
+      background: #28282c;
+      font-size: 15px;
+      line-height: 1.75;
+      color: #d4d4d8;
+    }
+
+    .line { white-space: pre-wrap; word-break: break-all; }
+
+    .prompt-user { color: #6fdc8c; font-weight: 500; }
+    .prompt-path { color: #5eb3ff; }
+    .prompt-arrow { color: #e06cff; margin: 0 6px 0 2px; }
+
+    .cmd { color: #f0f0f4; }
+    .dim { color: #8b8b95; }
+    .success { color: #6fdc8c; }
+    .info { color: #5eb3ff; }
+    .warn { color: #febc2e; }
+
+    .cursor {
+      display: inline-block;
+      width: 9px;
+      height: 18px;
+      background: #c8c8cc;
+      vertical-align: text-bottom;
+      margin-left: 1px;
+    }
+
+    .cursor.blink { animation: blink 1.05s step-end infinite; }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    .spacer { height: 10px; }
+  </style>
+</head>
+<body>
+  <div id="capture">
+    <div class="terminal">
+      <div class="titlebar">
+        <span class="dot red"></span>
+        <span class="dot yellow"></span>
+        <span class="dot green"></span>
+        <span class="titlebar-label">Terminal — zsh</span>
+      </div>
+      <div class="body" id="terminal-body"></div>
+    </div>
+  </div>
+
+  <script>
+    const STEPS = {
+      "01-npx": {
+        user: "techlatest",
+        path: "~",
+        lines: [
+          { type: "cmd", text: "npx skills add mukul975/Anthropic-Cybersecurity-Skills" },
+          { type: "out", text: "Need to install the following packages: skills@latest" },
+          { type: "out", text: "Ok to proceed? (y) ··· y" },
+          { type: "out", text: "" },
+          { type: "success", text: "✔ Added 754 skills → ~/.agents/skills/" },
+          { type: "dim", text: "Compatible: Cursor · Claude Code · Copilot · Codex CLI" },
+        ],
+        showCursor: false,
+      },
+      "02-clone": {
+        user: "techlatest",
+        path: "~/projects",
+        lines: [
+          { type: "cmd", text: "git clone https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git" },
+          { type: "out", text: "Cloning into 'Anthropic-Cybersecurity-Skills'..." },
+          { type: "out", text: "remote: Enumerating objects: 8421, done." },
+          { type: "out", text: "Receiving objects: 100% (8421/8421), done." },
+          { type: "cmd", text: "cd Anthropic-Cybersecurity-Skills && ls skills | wc -l" },
+          { type: "success", text: "754" },
+        ],
+        showCursor: false,
+      },
+      "03-script": {
+        user: "techlatest",
+        path: "~/agentic-ai-ecosystem/guides/anthropic-cybersecurity-skills",
+        lines: [
+          { type: "cmd", text: "chmod +x install-skills.sh verify-install.sh" },
+          { type: "cmd", text: "./install-skills.sh" },
+          { type: "out", text: "==> Cloning" },
+          { type: "out", text: "==> Done. 754 skill directories under skills/" },
+          { type: "cmd", text: "./verify-install.sh" },
+          { type: "success", text: "  OK   skills/ directory exists" },
+          { type: "success", text: "  OK   skill count 754 (expected ~754)" },
+          { type: "success", text: "All checks passed (5)." },
+        ],
+        showCursor: false,
+      },
+      "04-claude": {
+        user: "techlatest",
+        path: "~",
+        lines: [
+          { type: "cmd", text: 'SKILLS_SRC=~/.cybersec-skills/Anthropic-Cybersecurity-Skills/skills' },
+          { type: "cmd", text: "mkdir -p ~/.claude/skills" },
+          { type: "cmd", text: 'ln -sf "${SKILLS_SRC}"/* ~/.claude/skills/' },
+          { type: "out", text: "" },
+          { type: "cmd", text: "ls ~/.claude/skills | wc -l" },
+          { type: "success", text: "754" },
+          { type: "dim", text: "Claude Code will scan frontmatter on each session." },
+        ],
+        showCursor: false,
+      },
+      "05-cursor": {
+        user: "techlatest",
+        path: "~",
+        lines: [
+          { type: "cmd", text: "npx skills add mukul975/Anthropic-Cybersecurity-Skills" },
+          { type: "success", text: "✔ Detected Cursor — skills linked to ~/.cursor/skills/" },
+          { type: "out", text: "" },
+          { type: "dim", text: "# or manual:" },
+          { type: "cmd", text: "mkdir -p ~/.cursor/skills" },
+          { type: "cmd", text: "ln -sf ~/.cybersec-skills/Anthropic-Cybersecurity-Skills/skills/* ~/.cursor/skills/" },
+        ],
+        showCursor: false,
+      },
+      "06-hermes": {
+        user: "techlatest",
+        path: "~",
+        lines: [
+          { type: "cmd", text: "git clone https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git /tmp/cybersec-skills" },
+          { type: "cmd", text: "cp -r /tmp/cybersec-skills/skills/* ~/.hermes/skills/" },
+          { type: "cmd", text: "hermes skills list | head -5" },
+          { type: "out", text: "performing-memory-forensics-with-volatility3" },
+          { type: "out", text: "hunting-for-credential-dumping-lsass" },
+          { type: "out", text: "analyzing-network-traffic-of-malware" },
+          { type: "success", text: "… 751 more skills" },
+        ],
+        showCursor: false,
+      },
+      "07-codex": {
+        user: "techlatest",
+        path: "~",
+        lines: [
+          { type: "cmd", text: "npx skills add mukul975/Anthropic-Cybersecurity-Skills" },
+          { type: "success", text: "✔ 754 skills → ~/.codex/skills/ (Codex CLI)" },
+          { type: "dim", text: "# Copilot: point agent skills setting at skills/ folder" },
+          { type: "cmd", text: "codex" },
+          { type: "out", text: "Codex CLI · 754 cybersecurity skills loaded" },
+          { type: "out", text: "" },
+          { type: "info", text: "> Use hunting-for-lateral-movement-with-sysmon — Workflow step 1 only" },
+          { type: "success", text: "→ Loaded SKILL.md · ATT&CK T1021 · Verification pending" },
+        ],
+        showCursor: false,
+      },
+      "08-gemini": {
+        user: "techlatest",
+        path: "~",
+        lines: [
+          { type: "cmd", text: "npx skills add mukul975/Anthropic-Cybersecurity-Skills" },
+          { type: "success", text: "✔ Gemini CLI detected — ~/.gemini/skills/ linked" },
+          { type: "cmd", text: 'gemini "Load analyzing-network-traffic-of-malware. Show Prerequisites."' },
+          { type: "out", text: "Scanning 754 skill frontmatters…" },
+          { type: "success", text: "→ Match: analyzing-network-traffic-of-malware" },
+          { type: "dim", text: "tags: malware · network-analysis · dfir" },
+          { type: "dim", text: "# MCP agents: expose skills/ as searchable resources" },
+        ],
+        showCursor: false,
+      },
+      "09-skill-anatomy": {
+        user: "techlatest",
+        path: "~/.cybersec-skills/Anthropic-Cybersecurity-Skills/skills/performing-memory-forensics-with-volatility3",
+        lines: [
+          { type: "cmd", text: "./inspect-skill-anatomy.sh" },
+          { type: "out", text: "==> Skill anatomy demo (real files from upstream repo)" },
+          { type: "out", text: "" },
+          { type: "dim", text: "── Directory layout ──" },
+          { type: "out", text: "SKILL.md   references/   scripts/   LICENSE" },
+          { type: "out", text: "references/api-reference.md · scripts/agent.py" },
+          { type: "out", text: "" },
+          { type: "dim", text: "── YAML frontmatter ──" },
+          { type: "out", text: "name: performing-memory-forensics-with-volatility3" },
+          { type: "out", text: "domain: cybersecurity · subdomain: digital-forensics" },
+          { type: "out", text: "tags: forensics · memory-forensics · volatility · dfir" },
+          { type: "out", text: "mitre_attack: T1005 · T1074 · T1119" },
+          { type: "out", text: "" },
+          { type: "dim", text: "── Markdown sections ──" },
+          { type: "success", text: "When to Use · Prerequisites · Workflow · Output Format" },
+          { type: "out", text: "" },
+          { type: "dim", text: "── Workflow Step 1 (from real SKILL.md) ──" },
+          { type: "out", text: "pip install volatility3" },
+          { type: "success", text: "Done. Read-only inspection — no memory dump executed." },
+        ],
+        showCursor: false,
+      },
+      "10-part13": {
+        user: "techlatest",
+        path: "~/agentic-ai-ecosystem/guides/anthropic-cybersecurity-skills",
+        lines: [
+          { type: "cmd", text: "./walkthrough-credential-dump.sh" },
+          { type: "out", text: "==> Part 13: Credential theft in a memory dump" },
+          { type: "out", text: "Scenario: suspected Mimikatz · image: server01.raw" },
+          { type: "out", text: "" },
+          { type: "dim", text: "── Step 1: Discover skills ──" },
+          { type: "success", text: "Matched 32 skills · top 3 loaded" },
+          { type: "out", text: "• performing-memory-forensics-with-volatility3" },
+          { type: "out", text: "• extracting-credentials-from-memory-dump" },
+          { type: "out", text: "• detecting-credential-dumping-techniques" },
+          { type: "out", text: "" },
+          { type: "dim", text: "── Step 2: Prerequisites ──" },
+          { type: "out", text: "Volatility 3 · Windows ISF symbols · authorized DFIR scope" },
+          { type: "out", text: "" },
+          { type: "dim", text: "── Step 3: Workflow (from real SKILL.md) ──" },
+          { type: "out", text: "vol -f server01.raw windows.info" },
+          { type: "out", text: "vol -f server01.raw windows.pslist | grep -i lsass" },
+          { type: "out", text: "vol -f server01.raw windows.malfind | head -20" },
+          { type: "out", text: "" },
+          { type: "dim", text: "── Step 4: Verification ──" },
+          { type: "success", text: "ATT&CK T1003.001 — LSASS Memory credential dumping" },
+          { type: "dim", text: "Lab: pip install volatility3 · export MEMORY_IMAGE=/path/to/dump.raw" },
+        ],
+        showCursor: false,
+      },
+    };
+
+    function prompt(user, path) {
+      return `<span class="prompt-user">${user}</span><span class="prompt-path"> (${path})</span><span class="prompt-arrow">⇒</span>`;
+    }
+
+    function renderLine(line, user, path, isLastCmd) {
+      if (line.type === "cmd") {
+        const cur = isLastCmd ? '<span class="cursor blink"></span>' : "";
+        return `<div class="line">${prompt(user, path)}<span class="cmd">${line.text}</span>${cur}</div>`;
+      }
+      const cls = line.type === "success" ? "success" : line.type === "info" ? "info" : line.type === "warn" ? "warn" : line.type === "dim" ? "dim" : "dim";
+      if (line.text === "") return '<div class="spacer"></div>';
+      return `<div class="line ${cls}">${line.text}</div>`;
+    }
+
+    function renderStep(stepId, progress) {
+      const step = STEPS[stepId];
+      if (!step) return;
+
+      const body = document.getElementById("terminal-body");
+      const totalLines = step.lines.length;
+      const visibleCount = progress === undefined ? totalLines : Math.min(totalLines, Math.ceil(progress * totalLines));
+
+      let html = "";
+      let lastCmdIdx = -1;
+      for (let i = 0; i < visibleCount; i++) {
+        if (step.lines[i].type === "cmd") lastCmdIdx = i;
+      }
+
+      for (let i = 0; i < visibleCount; i++) {
+        const isLastCmd = i === lastCmdIdx && step.showCursor !== false && visibleCount === totalLines;
+        html += renderLine(step.lines[i], step.user, step.path, isLastCmd);
+      }
+
+      if (visibleCount === 0) {
+        html = `<div class="line">${prompt(step.user, step.path)}<span class="cursor blink"></span></div>`;
+      }
+
+      body.innerHTML = html;
+    }
+
+    const params = new URLSearchParams(location.search);
+    const stepId = params.get("step") || "01-npx";
+    const frame = params.get("frame");
+
+    if (frame !== null) {
+      const f = parseFloat(frame);
+      renderStep(stepId, f);
+    } else {
+      renderStep(stepId);
+    }
+
+    window.__READY = true;
+  </script>
+</body>
+</html>
