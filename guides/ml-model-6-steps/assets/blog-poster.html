@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>10 Steps to Build an ML Model — Blog Poster</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      margin: 0;
+      background: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    #capture {
+      width: 1200px;
+      height: 600px;
+      overflow: hidden;
+      position: relative;
+      background: linear-gradient(128deg, #1a0a2e 0%, #312e81 42%, #4c1d95 72%, #92400e 100%);
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      color: #fff;
+    }
+    .glow {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.42;
+    }
+    .glow-a { width: 480px; height: 480px; top: -140px; left: -100px; background: #8b5cf6; }
+    .glow-b { width: 420px; height: 420px; bottom: -120px; right: -80px; background: #f59e0b; }
+
+    .content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      padding: 40px 52px;
+      display: grid;
+      grid-template-columns: 0.92fr 1.08fr;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .badge-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #fbbf24;
+      box-shadow: 0 0 10px #fbbf24;
+    }
+
+    h1 {
+      font-size: 46px;
+      line-height: 1.06;
+      font-weight: 800;
+      letter-spacing: -1.3px;
+      margin-bottom: 14px;
+    }
+    h1 .count {
+      font-size: 54px;
+      background: linear-gradient(90deg, #fbbf24, #fb923c);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    h1 .line2 { color: #e9d5ff; }
+
+    .subtitle {
+      font-size: 19px;
+      line-height: 1.38;
+      color: rgba(255,255,255,0.84);
+      max-width: 480px;
+      margin-bottom: 20px;
+    }
+    .subtitle strong { color: #fde68a; font-weight: 700; }
+
+    .macro-note {
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 16px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      max-width: 480px;
+    }
+    .macro-note span { color: #c4b5fd; font-weight: 800; }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+    .tag {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 6px 11px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.14);
+    }
+    .tag.hot { border-color: rgba(251, 191, 36, 0.45); color: #fde68a; }
+
+    .panel {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 20px;
+      padding: 20px 22px 16px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.28);
+    }
+    .panel-title {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #fbbf24;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px 8px;
+    }
+    .step-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 9px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .step-num {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+    .step-num.purple { background: #7c3aed; }
+    .step-num.indigo { background: #6366f1; }
+    .step-num.amber { background: #d97706; }
+    .step-num.green { background: #059669; }
+    .step-num.teal { background: #0d9488; }
+    .step-label {
+      font-size: 11.5px;
+      font-weight: 700;
+      flex: 1;
+      line-height: 1.2;
+    }
+    .step-hint {
+      font-size: 9px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.4);
+      white-space: nowrap;
+    }
+
+    .belt {
+      margin-top: 10px;
+      height: 8px;
+      border-radius: 999px;
+      background: linear-gradient(90deg,
+        #7c3aed 0%, #7c3aed 10%,
+        #8b5cf6 10%, #8b5cf6 20%,
+        #6366f1 20%, #6366f1 30%,
+        #a78bfa 30%, #a78bfa 40%,
+        #818cf8 40%, #818cf8 50%,
+        #d97706 50%, #d97706 60%,
+        #f59e0b 60%, #f59e0b 70%,
+        #ea580c 70%, #ea580c 80%,
+        #10b981 80%, #10b981 90%,
+        #0d9488 90%, #0d9488 100%);
+      opacity: 0.9;
+    }
+
+    .footer-note {
+      margin-top: 8px;
+      font-size: 9.5px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.48);
+      text-align: center;
+      line-height: 1.35;
+    }
+  </style>
+</head>
+<body>
+  <div id="capture">
+    <div class="glow glow-a"></div>
+    <div class="glow glow-b"></div>
+
+    <div class="content">
+      <div>
+        <div class="badge"><span class="badge-dot"></span> Explained visually</div>
+        <h1>
+          <span class="count">10 Steps</span> to Build<br/>
+          <span class="line2">an ML Model</span>
+        </h1>
+        <p class="subtitle">
+          The full lifecycle — from <strong>scoping</strong> to <strong>production monitoring</strong>.
+        </p>
+        <p class="macro-note">
+          Blog groups these into <span>6 macro stages</span>; poster shows every step practitioners actually run.
+        </p>
+        <div class="tags">
+          <span class="tag hot">MLOps</span>
+          <span class="tag">EDA</span>
+          <span class="tag">Features</span>
+          <span class="tag">Train &amp; tune</span>
+          <span class="tag">Deploy</span>
+          <span class="tag">Drift</span>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">Complete pipeline — 10 steps</div>
+        <div class="steps-grid">
+          <div class="step-row">
+            <div class="step-num purple">1</div>
+            <div class="step-label">Define problem</div>
+            <div class="step-hint">KPIs</div>
+          </div>
+          <div class="step-row">
+            <div class="step-num purple">2</div>
+            <div class="step-label">Feasibility check</div>
+            <div class="step-hint">ML needed?</div>
+          </div>
+          <div class="step-row">
+            <div class="step-num purple">3</div>
+            <div class="step-label">Collect data</div>
+            <div class="step-hint">labels</div>
+          </div>
+          <div class="step-row">
+            <div class="step-num indigo">4</div>
+            <div class="step-label">Clean &amp; explore</div>
+            <div class="step-hint">EDA</div>
+          </div>
+          <div class="step-row">
+            <div class="step-num indigo">5</div>
+            <div class="step-label">Feature engineering</div>
+            <div class="step-hint">encode</div>
+          </div>
+          <div class="step-row">
+            <div class="step-num indigo">6</div>
+            <div class="step-label">Train/val/test split</div>
+            <div class="step-hint">no leak</div>
+          </div>
+          <div class="step-row">
+            <div class="step-num amber">7</div>
+            <div class="step-label">Choose model</div>
+            <div class="step-hint">baseline</div>
+          </div>
+          <div class="step-row">
+            <div class="step-num amber">8</div>
+            <div class="step-label">Train &amp; tune</div>
+            <div class="step-hint">plateau</div>
+          </div>
+          <div class="step-row">
+            <div class="step-num amber">9</div>
+            <div class="step-label">Evaluate &amp; test</div>
+            <div class="step-hint">slices</div>
+          </div>
+          <div class="step-row">
+            <div class="step-num green">10</div>
+            <div class="step-label">Deploy &amp; monitor</div>
+            <div class="step-hint">retrain</div>
+          </div>
+        </div>
+        <div class="belt"></div>
+        <div class="footer-note">
+          Scope → Data → Features → Split → Model → Train → Test → Ship → Monitor
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

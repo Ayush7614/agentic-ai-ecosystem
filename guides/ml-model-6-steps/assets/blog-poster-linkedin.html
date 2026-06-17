@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>LinkedIn Article Poster — 6 Steps ML Model</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      margin: 0;
+      background: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    /* LinkedIn article / link share: 1200 × 627 (1.91:1) */
+    #capture {
+      width: 1200px;
+      height: 627px;
+      overflow: hidden;
+      position: relative;
+      background: linear-gradient(128deg, #1a0a2e 0%, #312e81 42%, #4c1d95 72%, #92400e 100%);
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      color: #fff;
+    }
+    .glow {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.42;
+    }
+    .glow-a { width: 500px; height: 500px; top: -150px; left: -100px; background: #8b5cf6; }
+    .glow-b { width: 440px; height: 440px; bottom: -130px; right: -60px; background: #f59e0b; }
+
+    .content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      padding: 44px 56px 40px;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 999px;
+      padding: 7px 15px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+    .badge-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #fbbf24;
+      box-shadow: 0 0 10px #fbbf24;
+    }
+
+    h1 {
+      font-size: 48px;
+      line-height: 1.06;
+      font-weight: 800;
+      letter-spacing: -1.3px;
+      margin-bottom: 12px;
+    }
+    h1 .six {
+      font-size: 56px;
+      background: linear-gradient(90deg, #fbbf24, #fb923c);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    h1 .line2 { color: #e9d5ff; }
+
+    .kicker {
+      font-size: 17px;
+      font-weight: 700;
+      color: #fde68a;
+      margin-bottom: 14px;
+      letter-spacing: -0.2px;
+    }
+
+    .subtitle {
+      font-size: 19px;
+      line-height: 1.4;
+      color: rgba(255,255,255,0.86);
+      max-width: 520px;
+      margin-bottom: 22px;
+    }
+    .subtitle strong { color: #fde68a; font-weight: 700; }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .tag {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 7px 12px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.14);
+    }
+    .tag.hot { border-color: rgba(251, 191, 36, 0.45); color: #fde68a; }
+
+    .panel {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 20px;
+      padding: 22px 24px 18px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.28);
+    }
+    .panel-title {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #fbbf24;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .step-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 11px;
+      border-radius: 9px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .step-num {
+      width: 24px;
+      height: 24px;
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+    .step-num.purple { background: #7c3aed; }
+    .step-num.amber { background: #d97706; }
+    .step-num.green { background: #059669; }
+    .step-label { font-size: 13px; font-weight: 700; flex: 1; }
+    .step-hint {
+      font-size: 10px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.42);
+    }
+
+    .belt {
+      margin-top: 12px;
+      height: 9px;
+      border-radius: 999px;
+      background: linear-gradient(90deg,
+        #7c3aed 0%, #7c3aed 16%,
+        #8b5cf6 16%, #8b5cf6 32%,
+        #a78bfa 32%, #a78bfa 48%,
+        #d97706 48%, #d97706 64%,
+        #f59e0b 64%, #f59e0b 80%,
+        #10b981 80%, #10b981 100%);
+      opacity: 0.9;
+      position: relative;
+    }
+    .belt::after {
+      content: "";
+      position: absolute;
+      top: -4px;
+      left: 22%;
+      width: 16px;
+      height: 16px;
+      border-radius: 4px;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+    }
+
+    .footer-note {
+      margin-top: 10px;
+      font-size: 10px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="capture">
+    <div class="glow glow-a"></div>
+    <div class="glow glow-b"></div>
+
+    <div class="content">
+      <div>
+        <div class="badge"><span class="badge-dot"></span> Explained visually</div>
+        <h1>
+          <span class="six">6 Steps</span> to Build<br/>
+          <span class="line2">an ML Model</span>
+        </h1>
+        <p class="kicker">That actually ships</p>
+        <p class="subtitle">
+          From problem definition to production — the <strong>algorithm is only one step</strong>.
+        </p>
+        <div class="tags">
+          <span class="tag hot">MLOps</span>
+          <span class="tag">Data prep</span>
+          <span class="tag">Train &amp; evaluate</span>
+          <span class="tag">Deploy &amp; monitor</span>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">The full pipeline</div>
+        <div class="steps">
+          <div class="step-row">
+            <div class="step-num purple">1</div>
+            <div class="step-label">Define the problem</div>
+            <div class="step-hint">KPIs</div>
+          </div>
+          <div class="step-row">
+            <div class="step-num purple">2</div>
+            <div class="step-label">Prepare data</div>
+            <div class="step-hint">clean · split</div>
+          </div>
+          <div class="step-row">
+            <div class="step-num purple">3</div>
+            <div class="step-label">Choose model</div>
+            <div class="step-hint">baseline first</div>
+          </div>
+          <div class="step-row">
+            <div class="step-num amber">4</div>
+            <div class="step-label">Train &amp; tune</div>
+            <div class="step-hint">until plateau</div>
+          </div>
+          <div class="step-row">
+            <div class="step-num amber">5</div>
+            <div class="step-label">Evaluate &amp; test</div>
+            <div class="step-hint">slice analysis</div>
+          </div>
+          <div class="step-row">
+            <div class="step-num green">6</div>
+            <div class="step-label">Deploy &amp; monitor</div>
+            <div class="step-hint">drift loop</div>
+          </div>
+        </div>
+        <div class="belt"></div>
+        <div class="footer-note">Problem → Data → Model → Train → Evaluate → Deploy</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

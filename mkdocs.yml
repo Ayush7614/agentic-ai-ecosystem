@@ -79,6 +79,9 @@ nav:
     - MCP Visual Guide:
       - Overview: guides/mcp-visual-guide/index.md
       - Full tutorial: guides/mcp-visual-guide/tutorial.md
+    - ML Model in 6 Steps:
+      - Overview: guides/ml-model-6-steps/index.md
+      - Full tutorial: guides/ml-model-6-steps/tutorial.md
   - Publishing: publishing.md
 
 extra:
