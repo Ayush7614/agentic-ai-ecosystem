@@ -79,6 +79,16 @@
   .bp-btn.solid { background: var(--bp-blue); color: #0a0d16; border-color: var(--bp-blue); }
   .bp-btn.solid:hover { background: var(--bp-blue2); box-shadow: 0 8px 30px rgba(255,255,255,.3); }
 
+  /* ---------- crazy ticker ---------- */
+  .bp-ticker { border-bottom: 1px solid var(--bp-line2); overflow: hidden; padding: 26px 0; white-space: nowrap; position: relative; z-index: 2; }
+  .bp-ticker-track { display: inline-flex; align-items: center; animation: bp-marq 28s linear infinite; will-change: transform; }
+  .bp-ticker:hover .bp-ticker-track { animation-play-state: paused; }
+  .bp-ticker span { font-family: "Silkscreen", "JetBrains Mono", monospace; font-size: clamp(24px, 4.4vw, 54px); letter-spacing: .02em; padding: 0 .32em; }
+  .bp-ticker .fill { color: var(--bp-text); }
+  .bp-ticker .out { color: transparent; -webkit-text-stroke: 1.4px rgba(255,255,255,.55); }
+  .bp-ticker .star { color: var(--bp-dim); }
+  @keyframes bp-marq { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
   /* ---------- how this works ---------- */
   .bp-sec { padding: 70px 0; border-bottom: 1px solid var(--bp-line2); }
   .bp-eyebrow { font-size: 11px; letter-spacing: .28em; color: var(--bp-blue); text-transform: uppercase; font-weight: 600; }
@@ -140,7 +150,7 @@
         <span>OPEN SOURCE · MIT</span>
       </div>
       <h1 class="bp-title">AGENTIC AI<br>ECOSYSTEM</h1>
-      <p class="bp-lead serif">16 hands-on guides. RAG pipelines, multi-agent crews, MCP tooling, and production-style APIs — every system built <strong>local-first and private</strong> before a single cloud key gets pasted.</p>
+      <p class="bp-lead serif">A growing ecosystem of hands-on guides, runnable code, full tutorials, and reference examples — RAG pipelines, multi-agent crews, MCP tooling, and production-style APIs. Every system built <strong>local-first and private</strong> before a single cloud key gets pasted.</p>
       <p class="bp-by">Maintained by Ayush Kumar and contributors. Run on your own machine.</p>
       <div class="bp-btns">
         <a class="bp-btn solid" href="#catalog">▚ Browse the catalog</a>
@@ -149,6 +159,13 @@
       </div>
     </div>
   </section>
+
+  <div class="bp-ticker" aria-hidden="true">
+    <div class="bp-ticker-track">
+      <span class="fill">MORE CRAZY THINGS COMING</span><span class="star">✦</span><span class="out">NEW GUIDES</span><span class="star">✦</span><span class="fill">CODE LABS</span><span class="star">✦</span><span class="out">LIVE DEMOS</span><span class="star">✦</span><span class="fill">VIDEO WALKTHROUGHS</span><span class="star">✦</span><span class="out">BUILT IN PUBLIC</span><span class="star">✦</span>
+      <span class="fill">MORE CRAZY THINGS COMING</span><span class="star">✦</span><span class="out">NEW GUIDES</span><span class="star">✦</span><span class="fill">CODE LABS</span><span class="star">✦</span><span class="out">LIVE DEMOS</span><span class="star">✦</span><span class="fill">VIDEO WALKTHROUGHS</span><span class="star">✦</span><span class="out">BUILT IN PUBLIC</span><span class="star">✦</span>
+    </div>
+  </div>
 
   <section class="bp-sec">
     <div class="wrap">
@@ -171,7 +188,7 @@
       <div class="bp-sechead">
         <div>
           <p class="bp-eyebrow">Catalog</p>
-          <h2>16 guides · one ecosystem</h2>
+          <h2>the catalog · always growing</h2>
         </div>
         <span class="hint">// tap a card to open its overview + tutorial</span>
       </div>
@@ -272,6 +289,12 @@
           <h3>Anthropic Cybersecurity Skills</h3>
           <p>754 MITRE-mapped security skills for AI agents — install, frameworks, SOC walkthroughs.</p>
           <span class="open">→ Open</span>
+        </a>
+        <a class="bp-card feat" href="{{ config.repo_url }}" target="_blank" rel="noopener">
+          <div class="row"><span>FIG_0XX</span><span class="kind">Soon</span></div>
+          <h3>+ more crazy things coming</h3>
+          <p>New guides, runnable code labs, live demos, and video walkthroughs are on the way. Star the repo to follow along.</p>
+          <span class="open">→ Watch on GitHub</span>
         </a>
       </div>
     </div>
