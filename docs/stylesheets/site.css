@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap');
+
+/* ============================================================
+   Blueprint theme for guide pages — monochrome, cohesive with
+   the home landing. Applies to all docs content.
+   ============================================================ */
+
+:root {
+  --bpf-line: rgba(127,127,127,.22);
+  --bpf-line-soft: rgba(127,127,127,.14);
+}
+
+/* ---- dark (slate) surfaces → near-black blueprint ---- */
+[data-md-color-scheme="slate"] {
+  --md-default-bg-color: #08080a;
+  --md-default-fg-color: #e9ebf2;
+  --md-default-fg-color--light: #b9bdcc;
+  --md-default-fg-color--lighter: #8d93a6;
+  --md-default-fg-color--lightest: #2a2a30;
+  --md-code-bg-color: #06070c;
+  --md-code-fg-color: #d6d9e8;
+  --md-typeset-a-color: #ffffff;
+  --md-accent-fg-color: #ffffff;
+}
+[data-md-color-scheme="default"] {
+  --md-typeset-a-color: #111418;
+  --md-accent-fg-color: #111418;
+}
+
+/* dotted blueprint grid behind the content */
+.md-main {
+  background-image: radial-gradient(rgba(127,127,127,.10) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* ---- headings: mono, blueprint ticks ---- */
+.md-typeset h1 {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-weight: 700; letter-spacing: -.015em; text-transform: none;
+}
+.md-typeset h2 {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-weight: 600; letter-spacing: -.01em;
+  margin-top: 2.4em; padding-top: .7em; border-top: 1px solid var(--bpf-line-soft);
+}
+.md-typeset h2::before { content: "// "; color: var(--md-accent-fg-color); opacity: .45; }
+.md-typeset h3, .md-typeset h4 {
+  font-family: "JetBrains Mono", ui-monospace, monospace; font-weight: 600;
+}
+
+/* ---- images / GIFs: framed like figures ---- */
+.md-typeset img {
+  display: block; margin: 1.4em auto;
+  border: 1px solid var(--bpf-line); border-radius: 10px;
+  box-shadow: 0 16px 50px rgba(0,0,0,.35); max-width: 100%;
+}
+
+/* ---- code: terminal-style frame ---- */
+.md-typeset .highlight {
+  border: 1px solid var(--bpf-line); border-radius: 10px; overflow: hidden;
+}
+.md-typeset pre > code { border-radius: 0; }
+.md-typeset code { font-family: "JetBrains Mono", ui-monospace, monospace; }
+
+/* ---- buttons → blueprint ---- */
+.md-typeset .md-button {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  text-transform: uppercase; letter-spacing: .08em; font-size: .68rem; font-weight: 600;
+  border-radius: 6px; border: 1px solid var(--md-default-fg-color);
+  background: transparent; color: var(--md-default-fg-color);
+  transition: transform .12s, background .15s, color .15s;
+}
+.md-typeset .md-button:hover {
+  transform: translateY(-1px);
+  background: var(--md-default-fg-color); color: var(--md-default-bg-color);
+  border-color: var(--md-default-fg-color);
+}
+.md-typeset .md-button--primary {
+  background: var(--md-default-fg-color); color: var(--md-default-bg-color);
+  border-color: var(--md-default-fg-color);
+}
+.md-typeset .md-button--primary:hover { filter: brightness(.85); }
+
+/* ---- tables → blueprint grid ---- */
+.md-typeset table:not([class]) {
+  border: 1px solid var(--bpf-line); border-radius: 8px; overflow: hidden;
+}
+.md-typeset table:not([class]) th {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-weight: 600; letter-spacing: .03em;
+  background: rgba(127,127,127,.08);
+}
+.md-typeset table:not([class]) td,
+.md-typeset table:not([class]) th { border-color: var(--bpf-line-soft); }
+
+/* ---- active nav link gets a blueprint tick ---- */
+.md-nav__link--active { font-weight: 700; }
+
+/* ---- mermaid diagrams sit on a framed panel ---- */
+.md-typeset .mermaid {
+  border: 1px solid var(--bpf-line); border-radius: 10px; padding: 18px;
+  background: rgba(127,127,127,.04);
+}
