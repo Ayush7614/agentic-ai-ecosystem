@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1200px;height:600px;overflow:hidden;font-family:Inter,sans-serif}
+#capture{width:1200px;height:600px;position:relative;overflow:hidden;background:#050810}
+.aurora{position:absolute;inset:-50%;background:conic-gradient(from 0deg at 50% 50%,#0ea5e9,#8b5cf6,#f97316,#0ea5e9);opacity:.12;animation:spin 20s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.vignette{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 40%,#050810 85%)}
+.top{padding:32px 40px 0;position:relative;z-index:2}
+.brand{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.22em;color:#38bdf8;text-transform:uppercase;font-weight:700}
+h1{font-size:36px;font-weight:900;color:#fff;letter-spacing:-1.5px;margin-top:6px}
+h1 em{font-style:normal;background:linear-gradient(90deg,#38bdf8,#a78bfa,#fb923c);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stage{position:absolute;left:40px;right:40px;top:100px;bottom:36px;z-index:2}
+.act-tag{position:absolute;top:0;right:0;text-align:right}
+.act-tag .n{font-size:10px;font-weight:800;color:#fb923c;letter-spacing:.15em}
+.act-tag .t{font-size:16px;font-weight:800;color:#e2e8f0;margin-top:2px}
+.bar{position:absolute;bottom:0;left:0;height:4px;background:linear-gradient(90deg,#38bdf8,#a78bfa,#fb923c);z-index:10}
+/* harness box diagram */
+.harness-wrap{display:flex;align-items:center;justify-content:center;height:100%}
+.harness-box{width:920px;padding:24px;border-radius:20px;border:2px solid rgba(56,189,248,.35);background:rgba(10,15,30,.85);box-shadow:0 0 60px rgba(56,189,248,.08)}
+.harness-box .title{text-align:center;font-size:11px;font-weight:800;letter-spacing:.2em;color:#38bdf8;margin-bottom:18px}
+.grid5{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.cell{padding:16px 10px;border-radius:14px;text-align:center;border:1px solid rgba(51,65,85,.8);background:rgba(15,23,42,.9);opacity:.15;transform:translateY(12px)}
+.cell.on{opacity:1;transform:none;border-color:rgba(56,189,248,.5)}
+.cell.hot{box-shadow:0 0 24px rgba(56,189,248,.25);border-color:#38bdf8}
+.cell .ic{font-size:24px;margin-bottom:6px}
+.cell .nm{font-size:11px;font-weight:800;color:#f1f5f9}
+.cell .sub{font-size:9px;color:#64748b;margin-top:4px;line-height:1.3}
+.center-eq{text-align:center;margin-top:16px;font-family:"JetBrains Mono",monospace;font-size:12px;color:#94a3b8}
+.center-eq b{color:#6ee7b7}
+/* compare split */
+.split{display:flex;gap:20px;height:100%;align-items:stretch}
+.half{flex:1;border-radius:18px;padding:22px;border:2px solid rgba(255,255,255,.06);background:rgba(10,15,28,.8)}
+.half.bad{border-color:rgba(239,68,68,.3)}.half.good{border-color:rgba(52,211,153,.35)}
+.half h4{font-size:13px;font-weight:800;margin-bottom:12px;text-transform:uppercase;letter-spacing:.08em}
+.half.bad h4{color:#f87171}.half.good h4{color:#6ee7b7}
+.line{font-size:11px;color:#94a3b8;margin:8px 0;padding-left:12px;border-left:2px solid rgba(255,255,255,.1);opacity:0;transform:translateX(-8px)}
+.line.on{opacity:1;transform:none}
+/* lifecycle */
+.life{display:flex;flex-direction:column;gap:8px;max-width:800px;margin:0 auto}
+.step{display:flex;align-items:center;gap:14px;padding:10px 16px;border-radius:10px;background:rgba(15,23,42,.7);border:1px solid rgba(51,65,85,.6);opacity:.12}
+.step.on{opacity:1;border-color:rgba(167,139,250,.4)}
+.step .num{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#6366f1,#38bdf8);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff;flex-shrink:0}
+.step .tx{font-size:12px;font-weight:600;color:#e2e8f0}
+/* experiment */
+.stat{display:flex;gap:24px;justify-content:center;align-items:flex-end;height:100%;padding-bottom:20px}
+.stat-col{text-align:center;opacity:0;transform:translateY(20px)}
+.stat-col.on{opacity:1;transform:none}
+.stat-col .bar-v{width:100px;border-radius:10px 10px 4px 4px;margin:0 auto 10px;background:linear-gradient(180deg,#38bdf8,#1d4ed8)}
+.stat-col .bar-v.weak{height:60px;background:linear-gradient(180deg,#64748b,#334155)}
+.stat-col .bar-v.strong{height:200px;background:linear-gradient(180deg,#6ee7b7,#059669)}
+.stat-col .lbl{font-size:12px;font-weight:800;color:#e2e8f0}
+.stat-col .val{font-size:10px;color:#64748b;margin-top:4px}
+.finale{text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%}
+.finale .eq{font-size:42px;font-weight:900;margin-bottom:12px}
+.finale .eq span{color:#38bdf8}
+.finale p{font-size:14px;color:#94a3b8;max-width:480px;line-height:1.6}
+</style>
+</head>
+<body>
+<div id="capture"><div class="aurora"></div><div class="vignette"></div>
+<div class="top"><div class="brand">Agent = Model + Harness</div><h1><em>Harness</em> Engineering</h1></div>
+<div class="stage" id="stage"></div>
+<div class="act-tag"><div class="n" id="an">ACT I</div><div class="t" id="at">The problem</div></div>
+<div class="bar" id="bar"></div></div>
+<script>
+const ACTS=[
+  {n:"ACT I",t:"The problem",r:(p)=>{
+    return `<div class="finale"><div class="eq">Model <span>≠</span> Reliable</div><p>Same Opus · same prompt · retro game editor<br><b style="color:#f87171">$9 / 20min → broken</b> vs <b style="color:#6ee7b7">$200 / 6hr → playable</b></p></div>`;
+  }},
+  {n:"ACT II",t:"Five subsystems",r:(p)=>{
+    const cells=[["📜","Instructions","AGENTS.md map"],["💾","State","progress · features"],["✅","Verify","tests · lint"],["🎯","Scope","one feature"],["🔄","Lifecycle","init · handoff"]];
+    const vis=Math.ceil(p*5);
+    return `<div class="harness-wrap"><div class="harness-box"><div class="title">THE HARNESS</div><div class="grid5">${cells.map((c,i)=>`<div class="cell${i<vis?' on':''}${i===vis-1?' hot':''}"><div class="ic">${c[0]}</div><div class="nm">${c[1]}</div><div class="sub">${c[2]}</div></div>`).join("")}</div><div class="center-eq">Model writes code · <b>Harness governs when & how</b></div></div></div>`;
+  }},
+  {n:"ACT III",t:"Without vs with",r:(p)=>{
+    const l=(i,side)=>`<div class="line${p*4>i?' on':''}">${side}</div>`;
+    return `<div class="split"><div class="half bad"><h4>Without harness</h4>${l(0,"Session 2: no memory of session 1")}${l(1,"Agent says done · tests broken")}${l(2,"You rescue · merge manually")}</div><div class="half good"><h4>With harness</h4>${l(0,"Reads progress.md · continues F03")}${l(1,"init.sh · verify before claim")}${l(2,"You review · not rescue")}</div></div>`;
+  }},
+  {n:"ACT IV",t:"Session lifecycle",r:(p)=>{
+    const steps=["Read AGENTS.md + run init.sh","Pick ONE feature from list","Implement · run verification","Update progress + feature_list","Commit clean handoff"];
+    const vis=Math.ceil(p*5);
+    return `<div class="life">${steps.map((s,i)=>`<div class="step${i<vis?' on':''}"><div class="num">${i+1}</div><div class="tx">${s}</div></div>`).join("")}</div>`;
+  }},
+  {n:"ACT V",t:"Ratchet rule",r:(p)=>{
+    return `<div class="finale"><div class="eq" style="font-size:28px;line-height:1.4">Every mistake<br>→ <span>permanent rule</span></div><p>Failed test skipped? → hook greps .skip(<br>Stale AGENTS.md? → doc-gardening agent<br>Harness is shaped by <b style="color:#a78bfa">your failure history</b></p></div>`;
+  }},
+  {n:"FINALE",t:"Ship reliably",r:()=>`
+    <div class="finale"><div class="eq"><span>Agent</span> = Model + Harness</div><p>Progressive disclosure · eval gates · hooks · planner/evaluator split<br>You design the environment. The agent executes inside it.</p></div>`}
+];
+function render(prog){
+  const n=ACTS.length, idx=Math.min(n-1,Math.floor(prog*n)), local=(prog*n)-idx, a=ACTS[idx];
+  document.getElementById("an").textContent=a.n;
+  document.getElementById("at").textContent=a.t;
+  document.getElementById("bar").style.width=(prog*100)+"%";
+  document.getElementById("stage").innerHTML=a.r(local);
+}
+render(parseFloat(new URLSearchParams(location.search).get("frame")||"0"));
+window.__READY=true;
+</script>
+</body>
+</html>

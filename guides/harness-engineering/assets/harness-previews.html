@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1200px;height:600px;overflow:hidden;font-family:Inter,sans-serif}
+#capture{width:1200px;height:600px;position:relative;background:#070b14}
+.bg{position:absolute;inset:0;background:
+  radial-gradient(ellipse 70% 60% at 20% 30%,rgba(56,189,248,.12),transparent),
+  radial-gradient(ellipse 60% 50% at 85% 70%,rgba(251,146,60,.1),transparent),
+  linear-gradient(180deg,#0c1222,#070b14)}
+.grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:40px 40px}
+.scan{position:absolute;inset:0;background:linear-gradient(transparent 48%,rgba(56,189,248,.04) 50%,transparent 52%);background-size:100% 8px;pointer-events:none}
+.frame{position:absolute;inset:20px 24px;border-radius:16px;border:1px solid rgba(255,255,255,.08);background:rgba(10,15,28,.92);box-shadow:0 40px 100px rgba(0,0,0,.55);overflow:hidden;display:flex;flex-direction:column}
+.chrome{height:38px;background:linear-gradient(180deg,#1a2236,#141c2e);border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;padding:0 14px;gap:7px;flex-shrink:0}
+.d{width:11px;height:11px;border-radius:50%}.d.r{background:#ff5f57}.d.y{background:#febc2e}.d.g{background:#28c840}
+.url{flex:1;margin-left:10px;height:22px;border-radius:6px;background:rgba(0,0,0,.35);font-family:"JetBrains Mono",monospace;font-size:10px;color:#64748b;display:flex;align-items:center;padding:0 10px}
+.body{flex:1;padding:0;position:relative;overflow:hidden}
+/* HOME */
+.home{padding:28px 32px}
+.home h2{font-size:28px;font-weight:900;color:#f8fafc;letter-spacing:-1px}
+.home h2 span{color:#38bdf8}
+.home p{font-size:13px;color:#94a3b8;margin:8px 0 20px;max-width:520px;line-height:1.5}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.card{padding:18px;border-radius:14px;border:1px solid rgba(255,255,255,.08);background:rgba(15,23,42,.7);transform:translateY(24px);opacity:0}
+.card.on{transform:none;opacity:1}
+.card .ico{font-size:22px;margin-bottom:8px}
+.card .t{font-size:13px;font-weight:800;color:#e2e8f0}
+.card .s{font-size:10px;color:#64748b;margin-top:4px;line-height:1.4}
+.card.hot{border-color:#38bdf8;box-shadow:0 0 30px rgba(56,189,248,.15)}
+/* LECTURE */
+.lecture{display:flex;height:100%}
+.sidebar{width:220px;background:rgba(0,0,0,.25);border-right:1px solid rgba(255,255,255,.06);padding:16px 12px}
+.sidebar .item{padding:8px 10px;border-radius:8px;font-size:11px;color:#64748b;margin-bottom:4px;font-weight:600}
+.sidebar .item.on{background:rgba(56,189,248,.15);color:#38bdf8}
+.main{flex:1;padding:24px 28px}
+.main .tag{font-size:10px;font-weight:800;color:#fb923c;letter-spacing:.12em;text-transform:uppercase}
+.main h3{font-size:22px;font-weight:900;color:#f1f5f9;margin:6px 0 14px}
+.main .box{padding:14px 16px;border-radius:10px;background:rgba(15,23,42,.8);border-left:3px solid #38bdf8;font-size:12px;color:#cbd5e1;line-height:1.6;margin-bottom:10px;opacity:0;transform:translateX(16px)}
+.main .box.on{opacity:1;transform:none}
+/* RESOURCES */
+.resources{padding:22px 28px}
+.resources h3{font-size:20px;font-weight:900;color:#f8fafc;margin-bottom:16px}
+.grid-r{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.tile{padding:16px 12px;border-radius:12px;text-align:center;border:1px solid rgba(255,255,255,.07);background:rgba(15,23,42,.65);opacity:0;transform:scale(.9)}
+.tile.on{opacity:1;transform:scale(1)}
+.tile .f{font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:600;color:#6ee7b7;margin-top:8px}
+.tile .d{font-size:9px;color:#64748b;margin-top:4px}
+.badge{position:absolute;top:28px;right:32px;padding:6px 12px;border-radius:999px;font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;background:rgba(251,146,60,.15);color:#fb923c;border:1px solid rgba(251,146,60,.3)}
+</style>
+</head>
+<body>
+<div id="capture"><div class="bg"></div><div class="grid"></div><div class="scan"></div>
+<div class="frame"><div class="chrome"><span class="d r"></span><span class="d y"></span><span class="d g"></span><div class="url" id="url">harness-engineering.dev</div></div>
+<div class="body" id="body"></div></div></div>
+<script>
+const SCENES={
+  home:(p)=>{
+    const c=Math.floor(p*3);
+    return `<div class="home"><div class="badge">Visual Preview</div>
+      <h2>Harness <span>Engineering</span> Course</h2>
+      <p>12 lectures · 6 projects · resource library — the model is smart; the harness makes it reliable.</p>
+      <div class="cards">
+        <div class="card${c>=0?' on':''}${c===0?' hot':''}"><div class="ico">🏠</div><div class="t">Course Homepage</div><div class="s">Philosophy + learning path</div></div>
+        <div class="card${c>=1?' on':''}${c===1?' hot':''}"><div class="ico">📖</div><div class="t">Immersive Lectures</div><div class="s">L01–L12 deep dives</div></div>
+        <div class="card${c>=2?' on':''}${c===2?' hot':''}"><div class="ico">🗂️</div><div class="t">Resource Library</div><div class="s">AGENTS.md · init.sh templates</div></div>
+      </div></div>`;
+  },
+  lecture:(p)=>{
+    const b=Math.floor(p*4);
+    return `<div class="lecture"><div class="sidebar">
+      <div class="item">L01 Capability gap</div><div class="item on">L02 Five subsystems</div>
+      <div class="item">L05 Context alive</div><div class="item">L09 No early victory</div></div>
+      <div class="main"><div class="tag">Lecture 02</div><h3>What "harness" actually means</h3>
+      <div class="box${b>=0?' on':''}">Instructions — AGENTS.md as map, not encyclopedia</div>
+      <div class="box${b>=1?' on':''}">State — progress.md + feature_list.json on disk</div>
+      <div class="box${b>=2?' on':''}">Verification — tests pass = only valid "done"</div>
+      <div class="box${b>=3?' on':''}">Scope + Lifecycle — one feature · init.sh · handoff</div>
+      </div></div>`;
+  },
+  resources:(p)=>{
+    const files=[["📄","AGENTS.md","Operating manual"],["⚙️","init.sh","Session bootstrap"],["📋","feature_list.json","Scope boundary"],["📝","claude-progress.md","Handoff log"],["✅","verify.sh","Test gate"],["📁","docs/","Progressive disclosure"],["🪝","hooks/","Enforcement"],["🏗️","ARCHITECTURE.md","Repo map"]];
+    const vis=Math.ceil(p*files.length);
+    return `<div class="resources"><h3>Ready-to-Use Resource Library</h3><div class="grid-r">${files.map((f,i)=>`<div class="tile${i<vis?' on':''}"><div>${f[0]}</div><div class="f">${f[1]}</div><div class="d">${f[2]}</div></div>`).join("")}</div></div>`;
+  }
+};
+const q=new URLSearchParams(location.search);
+const scene=q.get("scene")||"home";
+const p=parseFloat(q.get("frame")||"0");
+document.getElementById("url").textContent=scene==="home"?"learn-harness-engineering.dev":scene==="lecture"?"learn-harness-engineering.dev/lectures/02":"learn-harness-engineering.dev/resources";
+document.getElementById("body").innerHTML=SCENES[scene](p);
+window.__READY=true;
+</script>
+</body>
+</html>
