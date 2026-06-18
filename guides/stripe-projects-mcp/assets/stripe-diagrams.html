@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#ffffff;--text:#1e293b;--muted:#64748b;
+  --blue:#e8f4fc;--blue-b:#7eb8da;
+  --purple:#eee8f8;--purple-b:#b8a9d4;
+  --yellow:#fff8e7;--yellow-b:#e8c86a;
+  --green:#e8f8ef;--green-b:#6bc49a;--hl:#c8f0d8;
+  --pink:#fdecf2;--pink-b:#e79bb6;
+  --dash:#94a3b8;--shadow:0 3px 14px rgba(0,0,0,.07);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1200px;height:600px;overflow:hidden;font-family:Nunito,sans-serif}
+body{background:var(--bg);display:flex;align-items:center;justify-content:center}
+#capture{width:1200px;height:600px;padding:26px 40px 22px;background:var(--bg);display:flex;flex-direction:column}
+.eyebrow{font-family:Caveat,cursive;font-size:22px;font-weight:700;color:var(--muted);margin-bottom:2px}
+h1{font-family:Caveat,cursive;font-size:42px;font-weight:700;color:var(--text);margin-bottom:14px;line-height:1.1}
+h1 span{color:#2d9f6f}
+h1 .pill{display:inline-block;background:var(--hl);border-radius:999px;padding:0 14px;margin:0 2px}
+#content{flex:1;display:flex;align-items:center;justify-content:center;width:100%;position:relative}
+
+.box{border-radius:14px;border:2px solid;box-shadow:var(--shadow);text-align:center}
+.box.blue{background:var(--blue);border-color:var(--blue-b)}
+.box.purple{background:var(--purple);border-color:var(--purple-b)}
+.box.yellow{background:var(--yellow);border-color:var(--yellow-b)}
+.box.green{background:var(--green);border-color:var(--green-b)}
+.box.pink{background:var(--pink);border-color:var(--pink-b)}
+.box .ic{font-size:26px;line-height:1}
+.box .lb{font-family:Caveat,cursive;font-size:18px;font-weight:700;color:var(--text);margin-top:4px}
+.box .sm{font-size:12px;color:var(--muted);margin-top:2px;font-weight:600}
+
+.fade{opacity:.12;transform:translateY(6px) scale(.97);transition:opacity .2s,transform .2s}
+.fade.on{opacity:1;transform:none}
+.fade.hot{box-shadow:0 0 0 3px rgba(45,159,111,.3),var(--shadow)}
+.lbl{font-family:Caveat,cursive;font-size:16px;font-weight:700;color:var(--text);white-space:nowrap}
+.dash-h{height:2px;flex:1;min-width:30px;background:repeating-linear-gradient(90deg,var(--dash) 0 5px,transparent 5px 10px);opacity:.15}
+.dash-h.on{opacity:.8}
+
+/* capability layout */
+.cap{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;max-width:1110px}
+.col-hosts{flex:0 0 250px;display:flex;flex-direction:column;gap:12px}
+.hostcard{padding:12px 12px;border-radius:12px;background:#fff;border:2px solid var(--blue-b);text-align:left;display:flex;align-items:center;gap:10px}
+.hostcard .ic{font-size:24px}
+.hostcard .nm{font-family:Caveat,cursive;font-size:19px;font-weight:700;color:var(--text)}
+.hostcard .cl{margin-left:auto;font-size:11px;font-weight:700;color:#7c6bbf;background:var(--purple);border:1.5px solid var(--purple-b);border-radius:999px;padding:2px 8px}
+.cap-link{flex:0 0 110px;display:flex;flex-direction:column;align-items:center;gap:4px}
+.cap-link .lbl{font-size:15px;color:#2d9f6f}
+.server{flex:0 0 220px;padding:16px 14px}
+.server .lb{font-size:20px}
+.tools{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.tool{font-family:"Nunito",monospace;font-size:14px;font-weight:800;color:#166534;background:#fff;border:1.5px solid var(--green-b);border-radius:8px;padding:7px 6px}
+.col-prov{flex:0 0 230px;display:flex;flex-direction:column;gap:10px}
+.provhead{padding:12px;border-radius:12px}
+.provhead .lb{font-size:18px}
+.prov{padding:10px 12px;border-radius:10px;text-align:left;display:flex;align-items:center;gap:8px;background:#fff;border:1.5px solid var(--pink-b)}
+.prov .ic{font-size:20px}
+.prov .nm{font-family:Caveat,cursive;font-size:17px;font-weight:700}
+.prov .cap-usd{margin-left:auto;font-size:11px;font-weight:700;color:var(--muted)}
+
+/* mega flow */
+.row{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;width:100%;max-width:1100px}
+.node{min-width:130px;max-width:170px;padding:14px 12px;border-radius:14px;text-align:center;border:2px solid var(--blue-b);background:var(--blue);box-shadow:var(--shadow);opacity:.12;transform:translateY(6px);transition:opacity .2s,transform .2s}
+.node.on{opacity:1;transform:none}
+.node.hot{box-shadow:0 0 0 3px rgba(45,159,111,.25),var(--shadow)}
+.node.bad{background:#fee2e2;border-color:#fca5a5}
+.node.good{background:var(--green);border-color:var(--green-b)}
+.node .ic{font-size:24px}
+.node h2{font-family:Caveat,cursive;font-size:17px;font-weight:700;color:var(--text);margin-top:4px}
+.node p{font-size:11px;color:var(--muted);font-weight:600;margin-top:2px;line-height:1.3}
+.arrow{color:var(--dash);font-size:22px;font-weight:700;opacity:.15}
+.arrow.on{opacity:1}
+</style>
+</head>
+<body>
+<div id="capture"><div class="eyebrow" id="eyebrow"></div><h1 id="title"></h1><div id="content"></div></div>
+<script>
+const HOSTS=[["🟦","Cursor"],["🤖","Claude Code"],["⚡","Hermes"]];
+const TOOLS=["provision()","list()","rotate_key()","teardown()"];
+const PROVS=[["🧠","Supermemory","$25"],["🗂️","Vector DB","$50"],["📧","Email","$10"]];
+
+function renderCapability(prog){
+  const v=Math.ceil(prog*5); // 1 hosts, 2 +link+server, 3 +tools, 4 +stripe, 5 +providers
+  let hosts=HOSTS.map(h=>`<div class="hostcard fade${v>=1?' on':''}">
+      <span class="ic">${h[0]}</span><span class="nm">${h[1]}</span>
+      <span class="cl" style="${v>=2?'':'opacity:.2'}">client</span></div>`).join('');
+  let tools=TOOLS.map(t=>`<div class="tool fade${v>=3?' on':''}">${t}</div>`).join('');
+  let provs=PROVS.map((p,i)=>`<div class="prov fade${v>=5?' on':''}${i===0?' hot':''}" ${i===0?'style="border-color:#2d9f6f;border-width:2px"':''}>
+      <span class="ic">${p[0]}</span><span class="nm">${p[1]}</span><span class="cap-usd">cap ${p[2]}</span></div>`).join('');
+  return `<div class="cap">
+    <div class="col-hosts">${hosts}</div>
+    <div class="cap-link"><div class="dash-h${v>=2?' on':''}" style="width:90px"></div><div class="lbl">one MCP</div><div class="dash-h${v>=2?' on':''}" style="width:90px"></div></div>
+    <div class="box yellow server fade${v>=2?' on':''}">
+      <div class="ic">🏦</div><div class="lb">stripe-projects</div><div class="sm">MCP server</div>
+      <div class="tools">${tools}</div></div>
+    <div class="cap-link"><div class="dash-h${v>=4?' on':''}" style="width:90px"></div><div class="lbl">provision</div><div class="dash-h${v>=4?' on':''}" style="width:90px"></div></div>
+    <div class="col-prov">
+      <div class="box blue provhead fade${v>=4?' on':''}"><div class="ic">💳</div><div class="lb">Stripe Projects</div><div class="sm">capped · scoped · revocable</div></div>
+      ${provs}</div>
+  </div>`;
+}
+
+const MEGA=[
+  {ic:"🔑",t:"Root key?",p:"too much power, never expires",cls:"bad"},
+  {ic:"🧰",t:"4 MCP tools",p:"provision · list · rotate · teardown",cls:""},
+  {ic:"🧠",t:"provision()",p:"supermemory, $20 cap",cls:""},
+  {ic:"📄",t:"key → .env",p:"scoped key, masked to model",cls:""},
+  {ic:"💬",t:"agent uses memory",p:"add() / search() next turn",cls:"good"},
+  {ic:"♻️",t:"rotate / teardown",p:"kill key, stop billing",cls:""},
+];
+function renderMega(prog){
+  const total=MEGA.length*2-1,vis=Math.ceil(prog*total);let h='<div class="row">',idx=0;
+  MEGA.forEach((n,i)=>{
+    h+=`<div class="node ${n.cls}${idx<vis?' on':''}${idx===vis-1?' hot':''}">
+      <div class="ic">${n.ic}</div><h2>${n.t}</h2><p>${n.p}</p></div>`;idx++;
+    if(i<MEGA.length-1){h+=`<span class="arrow${idx<vis?' on':''}">→</span>`;idx++;}
+  });
+  return h+'</div>';
+}
+
+const D={
+  "capability-exchange":{eyebrow:"One protocol, every host",title:'Capability <span>exchange</span>',fn:renderCapability},
+  "mega":{eyebrow:"The whole story",title:'Give your agent a <span class="pill">safe</span> credit card',fn:renderMega},
+};
+function render(id,prog){
+  const d=D[id]||D["capability-exchange"];
+  document.getElementById("eyebrow").textContent=d.eyebrow;
+  document.getElementById("title").innerHTML=d.title;
+  document.getElementById("content").innerHTML=d.fn(prog);
+}
+const p=new URLSearchParams(location.search);
+render(p.get("diagram")||"capability-exchange",parseFloat(p.get("frame")||"1"));
+window.__READY=true;
+</script>
+</body>
+</html>
