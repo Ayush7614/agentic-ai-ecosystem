@@ -1,0 +1,6 @@
+# Stripe Projects MCP Server — guide dependencies
+mcp[cli]>=1.2
+
+# Optional: the real Supermemory SDK. The demo falls back to a local memory
+# store when this is absent or no live key is provisioned, so it stays optional.
+# supermemory>=3.0

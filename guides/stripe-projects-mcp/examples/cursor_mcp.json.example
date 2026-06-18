@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "stripe-projects": {
+      "command": "python",
+      "args": ["examples/server.py"],
+      "cwd": "/absolute/path/to/guides/stripe-projects-mcp",
+      "env": {
+        "AGENT_ENV_FILE": "/absolute/path/to/guides/stripe-projects-mcp/examples/.env"
+      }
+    }
+  }
+}

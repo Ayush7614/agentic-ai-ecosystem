@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "stripe-projects": {
+      "command": "python",
+      "args": [
+        "/absolute/path/to/guides/stripe-projects-mcp/examples/server.py"
+      ]
+    }
+  }
+}
