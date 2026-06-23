@@ -18,6 +18,7 @@ Maintained by [Ayush Kumar](https://github.com/Ayush7614) · [NeuralVerse](https
 |-------|-------------------|
 | [Qwen Agentic RAG](guides/qwen-agentic-rag/index.md) | Private two-agent RAG API with Qwen (Ollama), CrewAI, Qdrant, Firecrawl, LitServe, and Gradio |
 | [OpenClaw + Gemma + RAG](guides/openclaw-gemma-rag/index.md) | Messaging assistant on `gemma4:e2b` with a local RAG skill calling the LitServe API |
+| [OpenClaw + MiniCPM-V](guides/openclaw-minicpm-v/index.md) | Photo assistant on Telegram/WhatsApp with MiniCPM-V 4.6 vision LitServe API |
 | [Claude Code `.claude/`](guides/claude-code-dot-claude/index.md) | Team-aware Claude Code layout — `CLAUDE.md`, permissions, rules, skills, and subagents |
 | [Awesome Hermes Agent](guides/awesome-hermes-agent/index.md) | Install Hermes Agent and map the skills, plugins, GUIs, and integrations ecosystem |
 | [Hermes vs OpenClaw](guides/hermes-vs-openclaw/index.md) | Compare Hermes Agent and OpenClaw — gateways, skills, migration, decision guide |
@@ -32,6 +33,7 @@ Maintained by [Ayush Kumar](https://github.com/Ayush7614) · [NeuralVerse](https
 | [Hermes Profile Builder](guides/hermes-profile-builder/index.md) | Quick index — full Profile Builder walkthrough in Masterclass Parts 11–12 |
 | [OpenClaw](guides/openclaw/index.md) | Install and extend the personal AI assistant from openclaw.ai — gateway, channels, skills |
 | [Anthropic Cybersecurity Skills](guides/anthropic-cybersecurity-skills/index.md) | 754 MITRE-mapped security skills for AI agents — install, frameworks, SOC walkthroughs |
+| [MiniCPM-V MCP Server](guides/minicpm-v-mcp-server/index.md) | Vision MCP server with MiniCPM-V 4.6 — describe_image, ocr_document, compare_images on Ollama |
 | [MiniCPM-V Benchmark](guides/minicpm-v-benchmark/index.md) | Compare MiniCPM-V 4.6 vs Qwen3.5-0.8B vs Gemma4-E2B on 16 GB Mac |
 
 Each guide is a self-contained project under `guides/<name>/` in the repo. The site pages mirror those READMEs and tutorials so you can read online without cloning.

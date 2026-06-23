@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "minicpm-vision": {
+      "command": "python",
+      "args": ["examples/server.py"],
+      "cwd": "/absolute/path/to/guides/minicpm-v-mcp-server",
+      "env": {
+        "OLLAMA_VISION_MODEL": "minicpm-v4.6",
+        "OLLAMA_HOST": "http://127.0.0.1:11434"
+      }
+    }
+  }
+}
