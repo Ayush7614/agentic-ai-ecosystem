@@ -98,6 +98,9 @@ nav:
     - Stripe Projects MCP Server:
       - Overview: guides/stripe-projects-mcp/index.md
       - Full tutorial: guides/stripe-projects-mcp/tutorial.md
+    - MiniCPM-V MCP Server:
+      - Overview: guides/minicpm-v-mcp-server/index.md
+      - Full tutorial: guides/minicpm-v-mcp-server/tutorial.md
     - ML Model in 6 Steps:
       - Overview: guides/ml-model-6-steps/index.md
       - Full tutorial: guides/ml-model-6-steps/tutorial.md
