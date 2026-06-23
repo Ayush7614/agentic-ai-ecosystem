@@ -1,0 +1,4 @@
+examples/.env
+examples/fixtures/*.png
+__pycache__/
+.venv/

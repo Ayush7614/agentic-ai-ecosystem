@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=JetBrains+Mono:wght@400;500&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#fff;--text:#1e293b;--muted:#64748b;--blue:#e8f4fc;--blue-b:#7eb8da;--purple:#eee8f8;--purple-b:#b8a9d4;--green:#e8f8ef;--green-b:#6bc49a;--hl:#c8f0d8;--pink:#fdecf2;--pink-b:#e79bb6;--dash:#94a3b8;--shadow:0 3px 14px rgba(0,0,0,.07)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1200px;height:600px;overflow:hidden;font-family:Nunito,sans-serif}
+body{background:var(--bg);display:flex;align-items:center;justify-content:center}
+#capture{width:1200px;height:600px;padding:26px 40px 22px;background:var(--bg);display:flex;flex-direction:column}
+.eyebrow{font-family:Caveat,cursive;font-size:22px;font-weight:700;color:var(--muted);margin-bottom:2px}
+h1{font-family:Caveat,cursive;font-size:42px;font-weight:700;color:var(--text);margin-bottom:14px;line-height:1.1}
+h1 span{color:#2d9f6f}
+.fade{opacity:.12;transform:translateY(6px);transition:opacity .2s,transform .2s}
+.fade.on{opacity:1;transform:none}
+.cap{display:flex;align-items:center;justify-content:center;gap:10px;width:100%}
+.col{flex:0 0 240px;display:flex;flex-direction:column;gap:10px}
+.hostcard{padding:12px;border-radius:12px;background:#fff;border:2px solid var(--blue-b);display:flex;align-items:center;gap:10px}
+.hostcard .ic{font-size:22px}
+.hostcard .nm{font-family:Caveat,cursive;font-size:18px;font-weight:700}
+.cap-link{flex:0 0 100px;text-align:center;font-family:Caveat,cursive;font-size:15px;color:#2d9f6f;opacity:.15;transition:opacity .2s}
+.cap-link.on{opacity:1}
+.server{flex:0 0 230px;padding:16px;border-radius:14px;background:var(--green);border:2px solid var(--green-b);text-align:center;box-shadow:var(--shadow)}
+.server .lb{font-family:Caveat,cursive;font-size:20px;font-weight:700}
+.tool{font-family:JetBrains Mono,monospace;font-size:13px;font-weight:600;background:#fff;border:1.5px solid var(--green-b);border-radius:8px;padding:8px;margin-top:8px;text-align:left}
+.ollama{flex:0 0 200px;padding:14px;border-radius:14px;background:var(--purple);border:2px solid var(--purple-b);text-align:center}
+.ollama .tag{font-size:11px;font-weight:800;color:#7c6bbf;background:#fff;border-radius:999px;padding:3px 10px;display:inline-block;margin-top:8px}
+.imgchip{display:flex;align-items:center;gap:8px;padding:10px;border-radius:10px;background:var(--pink);border:1.5px solid var(--pink-b);font-size:13px;font-weight:700}
+</style>
+</head>
+<body>
+<div id="capture"><div class="eyebrow">MiniCPM-V 4.6 · MCP</div><h1>Give your agent <span>eyes</span></h1><div id="content"></div></div>
+<script>
+const STEPS=[
+  {t:0,fn:()=>{document.getElementById('content').innerHTML='<div style="text-align:center;color:#64748b;font-size:18px;margin-top:80px">Host connects → capability exchange → vision tools discovered</div>';}},
+  {t:.15,fn:()=>{
+    document.getElementById('content').innerHTML=`<div class="cap">
+      <div class="col"><div class="hostcard fade" id="h1"><span class="ic">⌨️</span><span class="nm">Cursor</span></div>
+      <div class="hostcard fade" id="h2"><span class="ic">🤖</span><span class="nm">Claude Desktop</span></div></div>
+      <div class="cap-link" id="lnk">MCP tools</div>
+      <div class="server fade" id="srv"><div class="lb">minicpm-vision</div>
+        <div class="tool fade" id="t1">describe_image()</div>
+        <div class="tool fade" id="t2">ocr_document()</div>
+        <div class="tool fade" id="t3">compare_images()</div></div>
+      <div class="cap-link" id="lnk2">Ollama API</div>
+      <div class="ollama fade" id="oll"><div style="font-family:Caveat,cursive;font-size:22px;font-weight:700">MiniCPM-V 4.6</div>
+        <div class="tag">1.6 GB · vision</div>
+        <div class="imgchip fade" id="img" style="margin-top:12px">📷 screenshot in</div></div>
+    </div>`;
+  }},
+  {t:.35,fn:()=>['h1','h2'].forEach(id=>document.getElementById(id)?.classList.add('on'))},
+  {t:.45,fn:()=>document.getElementById('lnk')?.classList.add('on')},
+  {t:.55,fn:()=>{document.getElementById('srv')?.classList.add('on');document.getElementById('t1')?.classList.add('on');}},
+  {t:.65,fn:()=>{document.getElementById('t2')?.classList.add('on');document.getElementById('t3')?.classList.add('on');}},
+  {t:.75,fn:()=>{document.getElementById('lnk2')?.classList.add('on');document.getElementById('oll')?.classList.add('on');}},
+  {t:.9,fn:()=>document.getElementById('img')?.classList.add('on')},
+];
+const p=parseFloat(new URLSearchParams(location.search).get('frame')||'1');
+STEPS.forEach(s=>{if(p>=s.t)s.fn();});
+window.__READY=true;
+</script>
+</body>
+</html>
