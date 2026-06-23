@@ -1,0 +1,59 @@
+[
+  {
+    "model": "minicpm-v4.6",
+    "size_gb": 1.53,
+    "installed": true,
+    "text": {
+      "ttft_ms": 219.4,
+      "total_ms": 1385.8,
+      "eval_count": 120,
+      "tokens_per_sec": 102.9,
+      "preview": "First, I need to explain cross-validation in machine learning in exactly three short sentences. Cross-validation is a technique used to evaluate model performance by splitting the data into subsets and repeatedly training and testing the model on different subsamples.\n\nI should e",
+      "error": ""
+    },
+    "vision": {
+      "total_ms": 1176.9,
+      "preview": "Now, I need to read all the visible text in the image and list the model names mentioned. Let's look at the elements:\n\n1. The first item is \"Edge Model Benchmark\". That doesn't seem to be a model name, just a category.\n2. Then there's \"MiniCPM-V 46\u00b7Qwen3.5\u00b7Gemma4\". Here, the mode",
+      "skipped": false,
+      "error": ""
+    }
+  },
+  {
+    "model": "qwen3.5:0.8b",
+    "size_gb": null,
+    "installed": false,
+    "text": {
+      "ttft_ms": null,
+      "total_ms": null,
+      "eval_count": 0,
+      "tokens_per_sec": null,
+      "preview": "",
+      "error": "not installed (set SKIP_PULL=0 to pull)"
+    },
+    "vision": {
+      "total_ms": null,
+      "preview": "",
+      "skipped": false,
+      "error": ""
+    }
+  },
+  {
+    "model": "gemma4:e2b",
+    "size_gb": null,
+    "installed": false,
+    "text": {
+      "ttft_ms": null,
+      "total_ms": null,
+      "eval_count": 0,
+      "tokens_per_sec": null,
+      "preview": "",
+      "error": "not installed (set SKIP_PULL=0 to pull)"
+    },
+    "vision": {
+      "total_ms": null,
+      "preview": "",
+      "skipped": false,
+      "error": ""
+    }
+  }
+]

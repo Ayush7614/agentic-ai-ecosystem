@@ -34,6 +34,7 @@ Maintained by [Ayush Kumar](https://github.com/Ayush7614) · [NeuralVerse](https
 | [OpenClaw](guides/openclaw/index.md) | Install and extend the personal AI assistant from openclaw.ai — gateway, channels, skills |
 | [Anthropic Cybersecurity Skills](guides/anthropic-cybersecurity-skills/index.md) | 754 MITRE-mapped security skills for AI agents — install, frameworks, SOC walkthroughs |
 | [MiniCPM-V MCP Server](guides/minicpm-v-mcp-server/index.md) | Vision MCP server with MiniCPM-V 4.6 — describe_image, ocr_document, compare_images on Ollama |
+| [MiniCPM-V Benchmark](guides/minicpm-v-benchmark/index.md) | Compare MiniCPM-V 4.6 vs Qwen3.5-0.8B vs Gemma4-E2B on 16 GB Mac |
 
 Each guide is a self-contained project under `guides/<name>/` in the repo. The site pages mirror those READMEs and tutorials so you can read online without cloning.
 

@@ -17,6 +17,7 @@ Maintained by [Ayush Kumar](https://github.com/Ayush7614) · [NeuralVerse](https
 | [hermes-vs-openclaw](./guides/hermes-vs-openclaw/) · [blog](https://ayush7614.github.io/agentic-ai-ecosystem/guides/hermes-vs-openclaw/) | Hermes · OpenClaw | Side-by-side comparison — architecture, skills, migration, when to pick which |
 | [minicpm-v-mcp-server](./guides/minicpm-v-mcp-server/) · [blog](https://ayush7614.github.io/agentic-ai-ecosystem/guides/minicpm-v-mcp-server/) | MiniCPM-V 4.6 · Ollama · MCP | Vision MCP tools — describe_image, ocr_document, compare_images for Cursor and Claude Desktop |
 | [openclaw-minicpm-v](./guides/openclaw-minicpm-v/) · [blog](https://ayush7614.github.io/agentic-ai-ecosystem/guides/openclaw-minicpm-v/) | OpenClaw · MiniCPM-V 4.6 · LitServe | Photo assistant on Telegram/WhatsApp with local vision API and vision-photo skill |
+| [minicpm-v-benchmark](./guides/minicpm-v-benchmark/) · [blog](https://ayush7614.github.io/agentic-ai-ecosystem/guides/minicpm-v-benchmark/) | MiniCPM-V · Qwen3.5 · Gemma4 | Edge model shootout on 16 GB Mac — TTFT, tok/s, vision latency |
 
 ## Quick start (any guide)
 

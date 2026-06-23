@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1000px;height:560px;background:#fff;font-family:Nunito,sans-serif;display:flex;align-items:center;justify-content:center;padding:32px}
+#capture{width:100%;max-width:920px}
+h1{font-size:28px;font-weight:800;margin-bottom:20px;color:#0f172a}
+h1 span{color:#0891b2}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{border:1px solid #e2e8f0;padding:12px 14px;text-align:left}
+th{background:#f1f5f9;font-weight:800;color:#334155}
+tr{opacity:.15;transform:translateY(4px);transition:all .2s}
+tr.on{opacity:1;transform:none}
+.highlight{background:#ecfeff}
+.badge{display:inline-block;background:#dcfce7;color:#166534;font-size:11px;font-weight:800;padding:2px 8px;border-radius:999px}
+.dim{color:#94a3b8;font-style:italic}
+</style>
+</head>
+<body>
+<div id="capture"><h1>16 GB Mac · <span>Edge Model</span> Shootout</h1>
+<table><thead><tr><th>Model</th><th>Size</th><th>TTFT</th><th>tok/s</th><th>Vision</th><th>Best for</th></tr></thead>
+<tbody id="rows"></tbody></table></div>
+<script>
+const ROWS=[
+  ["minicpm-v4.6","1.53 GB","222 ms","103","✅ 1159 ms","Vision MCP + photos","highlight"],
+  ["qwen3.5:0.8b","~0.5 GB","pull to measure","—","—","Text-only RAG",""],
+  ["gemma4:e2b","~7 GB","pull to measure","—","—","Best chat quality",""],
+];
+const tb=document.getElementById('rows');
+ROWS.forEach((r,i)=>{tb.innerHTML+=`<tr id="r${i}" class="${r[6]}"><td><strong>${r[0]}</strong></td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td><td>${r[4]}</td><td>${r[5]}</td></tr>`;});
+const p=parseFloat(new URLSearchParams(location.search).get('frame')||'1');
+ROWS.forEach((_,i)=>{if(p>=(i+1)/ROWS.length)document.getElementById('r'+i)?.classList.add('on');});
+window.__READY=true;
+</script>
+</body>
+</html>

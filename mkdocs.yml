@@ -101,6 +101,9 @@ nav:
     - MiniCPM-V MCP Server:
       - Overview: guides/minicpm-v-mcp-server/index.md
       - Full tutorial: guides/minicpm-v-mcp-server/tutorial.md
+    - MiniCPM-V Benchmark:
+      - Overview: guides/minicpm-v-benchmark/index.md
+      - Full tutorial: guides/minicpm-v-benchmark/tutorial.md
     - ML Model in 6 Steps:
       - Overview: guides/ml-model-6-steps/index.md
       - Full tutorial: guides/ml-model-6-steps/tutorial.md
