@@ -6,6 +6,16 @@ Build a **photo assistant** on Telegram, WhatsApp, or CLI using **MiniCPM-V 4.6*
 
 ---
 
+## Media assets (copy for Medium)
+
+| Asset | URL |
+|-------|-----|
+| Workflow GIF | `https://ayush7614.github.io/agentic-ai-ecosystem/guides/openclaw-minicpm-v/assets/openclaw-minicpm-v-workflow.gif` |
+| Telegram / terminal demo | `https://ayush7614.github.io/agentic-ai-ecosystem/guides/openclaw-minicpm-v/assets/step-telegram-photo.gif` |
+| Sample receipt | `https://ayush7614.github.io/agentic-ai-ecosystem/guides/openclaw-minicpm-v/assets/sample-receipt.png` |
+
+---
+
 ## What you end up with
 
 1. **OpenClaw Gateway** — always-on control plane  
@@ -13,7 +23,14 @@ Build a **photo assistant** on Telegram, WhatsApp, or CLI using **MiniCPM-V 4.6*
 3. **vision-photo skill** — `vision_query.sh` → POST `/predict` on port **8002**  
 4. **Structured markdown replies** — summary, details, OCR text, suggested channel message  
 
-![Workflow](./assets/openclaw-minicpm-v-workflow.gif)
+![Photo → OpenClaw → MiniCPM-V workflow](./assets/openclaw-minicpm-v-workflow.gif)
+
+**Flow:**
+
+1. User sends a **photo** on Telegram, WhatsApp, or CLI  
+2. **MiniCPM-V 4.6** plans and invokes the **vision-photo** skill  
+3. Skill POSTs to LitServe `http://127.0.0.1:8002/predict`  
+4. Structured answer returns to the same channel  
 
 ---
 
@@ -45,6 +62,8 @@ ollama run minicpm-v4.6 "Hello" --image ./photo.jpg
 
 ## Part 2 — Vision LitServe API
 
+**Terminal A** — start the vision server:
+
 ```bash
 cd guides/openclaw-minicpm-v
 python -m venv .venv && source .venv/bin/activate
@@ -53,6 +72,10 @@ cp .env.example .env
 python generate_sample.py
 python vision_server.py
 ```
+
+![Architecture — channels through OpenClaw to LitServe and MiniCPM-V](./assets/openclaw-minicpm-v-workflow.gif)
+
+Server prints: `Vision API on http://127.0.0.1:8002/predict`
 
 **Request shape:**
 
@@ -73,17 +96,26 @@ python vision_server.py
 }
 ```
 
+**Sample image** the API reads:
+
+![Sample receipt — COFFEE BEAN Co. $10.75](./assets/sample-receipt.png)
+
 Test with [`client.py`](./client.py):
 
 ```bash
 python client.py --image samples/receipt.png --query "OCR this receipt"
 ```
 
+Expected sections in the output: **Summary**, **Details**, **Text found**, **Suggested reply**.
+
 ---
 
 ## Part 3 — Install OpenClaw
 
+**Terminal B:**
+
 ```bash
+cd guides/openclaw-minicpm-v
 source ./use-node22.sh
 npm install -g openclaw@latest
 openclaw onboard --install-daemon
@@ -123,9 +155,13 @@ When a user sends a photo:
 1. OpenClaw saves media to a local path  
 2. Agent invokes **vision-photo** with path + caption  
 3. LitServe returns structured markdown  
-4. Agent sends **Suggested reply** (or a shortened summary) to the channel  
+4. Agent sends **Suggested reply** to the channel  
 
-![Terminal demo — photo on Telegram](./assets/step-telegram-photo.gif)
+![Terminal demo — vision server + OpenClaw receipt analysis](./assets/step-telegram-photo.gif)
+
+Example channel reply from the demo receipt:
+
+> Your receipt total is **$10.75** ☕
 
 ---
 
@@ -136,6 +172,8 @@ When a user sends a photo:
 ```
 
 Runs: Ollama check → sample image → API health → skill script query.
+
+![End-to-end terminal flow](./assets/step-telegram-photo.gif)
 
 ---
 
@@ -152,9 +190,9 @@ Runs: Ollama check → sample image → API health → skill script query.
 
 ## Next steps
 
-- **[MiniCPM-V MCP](../minicpm-v-mcp-server/)** — same model in Cursor as MCP tools  
-- **[MiniCPM-V Benchmark](../minicpm-v-benchmark/)** — compare edge models on 16 GB Mac  
-- **[OpenClaw + Gemma + RAG](../openclaw-gemma-rag/)** — add text RAG crew alongside photos  
+- **[MiniCPM-V MCP](../minicpm-v-mcp-server/TUTORIAL.md)** — same model in Cursor as MCP tools  
+- **[MiniCPM-V Benchmark](../minicpm-v-benchmark/TUTORIAL.md)** — compare edge models on 16 GB Mac  
+- **[OpenClaw + Gemma + RAG](../openclaw-gemma-rag/TUTORIAL.md)** — add text RAG crew alongside photos  
 
 ---
 

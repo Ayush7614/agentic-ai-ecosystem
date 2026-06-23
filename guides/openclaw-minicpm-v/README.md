@@ -35,7 +35,7 @@ flowchart LR
 
 ![OpenClaw + MiniCPM-V workflow](./assets/openclaw-minicpm-v-workflow.gif)
 
-**Terminal demo:** [step-telegram-photo.gif](./assets/step-telegram-photo.gif)
+![Terminal demo — vision server + OpenClaw on receipt photo](./assets/step-telegram-photo.gif)
 
 ## Prerequisites
 

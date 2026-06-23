@@ -7,7 +7,22 @@ Cursor, Claude Desktop, and Hermes all see images the same way.
 
 Format matches our [Stripe Projects MCP](../stripe-projects-mcp/TUTORIAL.md)
 and [MCP Visual Guide](../mcp-visual-guide/TUTORIAL.md) guides: prose, runnable
-Python, terminal screenshots, and animated diagrams.
+Python, terminal GIFs at each step, and architecture diagrams.
+
+---
+
+## Media assets (copy for Medium)
+
+Paste these **full URLs** into Medium if relative paths do not resolve:
+
+| Asset | URL |
+|-------|-----|
+| Architecture GIF | `https://ayush7614.github.io/agentic-ai-ecosystem/guides/minicpm-v-mcp-server/assets/diagram-capability-exchange.gif` |
+| Ollama pull terminal | `https://ayush7614.github.io/agentic-ai-ecosystem/guides/minicpm-v-mcp-server/assets/step-ollama-minicpm.gif` |
+| Agent demo terminal | `https://ayush7614.github.io/agentic-ai-ecosystem/guides/minicpm-v-mcp-server/assets/step-mcp-vision-demo.gif` |
+| Sample receipt | `https://ayush7614.github.io/agentic-ai-ecosystem/guides/minicpm-v-mcp-server/assets/sample_receipt.png` |
+| Diagram v1 (before) | `https://ayush7614.github.io/agentic-ai-ecosystem/guides/minicpm-v-mcp-server/assets/diagram_v1.png` |
+| Diagram v2 (after) | `https://ayush7614.github.io/agentic-ai-ecosystem/guides/minicpm-v-mcp-server/assets/diagram_v2.png` |
 
 ---
 
@@ -20,8 +35,6 @@ Python, terminal screenshots, and animated diagrams.
 - Running the **agent demo** offline (`OLLAMA_MOCK=1`) or live with Ollama
 
 ![Capability exchange — vision tools over MCP](./assets/diagram-capability-exchange.gif)
-
-**Terminal demo:** [step-mcp-vision-demo.gif](./assets/step-mcp-vision-demo.gif)
 
 ---
 
@@ -52,6 +65,8 @@ ollama pull minicpm-v4.6
 ollama run minicpm-v4.6 "Describe this image" --image ./photo.jpg
 ```
 
+![Pull and run MiniCPM-V 4.6 in the terminal](./assets/step-ollama-minicpm.gif)
+
 This guide uses the same model through Ollama's **HTTP API** so the MCP server can
 batch tool calls without spawning a CLI per request.
 
@@ -66,15 +81,35 @@ MCP collapses that. You write **one server**; hosts discover tools at **capabili
 exchange**. Add a fourth tool later and every host sees it on reconnect — no
 host-side changes.
 
+![MCP hosts connect to minicpm-vision server and Ollama](./assets/diagram-capability-exchange.gif)
+
 | Role | Here |
 |------|------|
 | **Host** | Cursor / Claude Desktop / Hermes |
 | **Client** | MCP client inside the host |
 | **Server** | `minicpm-vision` — vision tools backed by Ollama |
 
+If host/client/server isn't second nature yet, read the
+[MCP Visual Guide](../mcp-visual-guide/TUTORIAL.md) first.
+
 ---
 
-## Part 3 — The vision backend
+## Part 3 — Quick start
+
+```bash
+cd guides/minicpm-v-mcp-server
+python -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env
+
+ollama pull minicpm-v4.6
+python examples/generate_fixtures.py
+python examples/agent_demo.py
+```
+
+---
+
+## Part 4 — The vision backend
 
 [`examples/vision_backend.py`](./examples/vision_backend.py) encodes images as
 base64 and POSTs to `OLLAMA_HOST/api/chat`:
@@ -97,41 +132,54 @@ Environment variables (see [`.env.example`](./.env.example)):
 
 ---
 
-## Part 4 — The three tools
+## Part 5 — The three tools
 
 [`examples/server.py`](./examples/server.py) is a `FastMCP` server.
 
 ### `describe_image`
 
-General-purpose image Q&A. Default prompt asks for objects, visible text, layout,
-and developer-relevant details. Pass a custom `question` for targeted queries.
+General-purpose image Q&A. Pass a custom `question` for targeted queries.
+
+**Sample input** — architecture diagram the demo describes:
+
+![Agentic pipeline diagram v2](./assets/diagram_v2.png)
 
 ### `ocr_document`
 
-Uses a structured OCR prompt — markdown headings, bullet lists, tables. Ideal for
+Structured OCR prompt — markdown headings, bullet lists, tables. Ideal for
 receipts, invoices, and whiteboard photos.
+
+**Sample input** — coffee shop receipt:
+
+![Sample receipt for OCR](./assets/sample_receipt.png)
 
 ### `compare_images`
 
-Accepts two paths and an optional `focus` string (e.g. `"navigation bar"`). Returns
-similarities, differences, and UI change notes.
+Two paths + optional `focus` (e.g. `"navigation bar"`). Returns similarities,
+differences, and UI change notes.
 
-Each tool returns **JSON** with `result`, `tool`, paths, and `model` — easy for the
-host to parse and display.
+**Sample inputs** — before and after pipeline:
+
+| Before (`diagram_v1.png`) | After (`diagram_v2.png`) |
+|---------------------------|--------------------------|
+| ![Diagram v1 — sync pipeline](./assets/diagram_v1.png) | ![Diagram v2 — agentic pipeline](./assets/diagram_v2.png) |
+
+Each tool returns **JSON** with `result`, `tool`, paths, and `model`.
 
 ---
 
-## Part 5 — Agent demo
+## Part 6 — Agent demo (terminal walkthrough)
 
-[`examples/agent_demo.py`](./examples/agent_demo.py) runs all three scenarios against
-generated fixtures:
+[`examples/agent_demo.py`](./examples/agent_demo.py) runs all three scenarios:
 
 ```bash
-python examples/generate_fixtures.py   # receipt + two diagram PNGs
+python examples/generate_fixtures.py
 python examples/agent_demo.py
 ```
 
-Output mirrors what you see when an agent chains tools:
+![Agent demo — describe_image, ocr_document, compare_images](./assets/step-mcp-vision-demo.gif)
+
+The terminal shows the same flow your MCP host runs:
 
 ```
 [Tool: describe_image]  path=fixtures/diagram_v2.png
@@ -139,7 +187,7 @@ Output mirrors what you see when an agent chains tools:
 [Tool: compare_images]  v1 → v2 pipeline diagrams
 ```
 
-Offline smoke test:
+Offline smoke test (no Ollama):
 
 ```bash
 OLLAMA_MOCK=1 python examples/agent_demo.py
@@ -147,19 +195,18 @@ OLLAMA_MOCK=1 python examples/agent_demo.py
 
 ---
 
-## Part 6 — Wire into Cursor
+## Part 7 — Wire into Cursor
 
 Copy [`examples/cursor_mcp.json.example`](./examples/cursor_mcp.json.example) into
 Cursor → Settings → MCP. Use **absolute paths** for `cwd`.
 
-Restart Cursor, open MCP tool list — you should see `describe_image`, `ocr_document`,
-`compare_images`.
+Restart Cursor — you should see `describe_image`, `ocr_document`, `compare_images`.
 
 Try: *"Use ocr_document on /path/to/receipt.png and summarize the total."*
 
 ---
 
-## Part 7 — Wire into Claude Desktop
+## Part 8 — Wire into Claude Desktop
 
 Add the server block from
 [`examples/claude_desktop_config.json.example`](./examples/claude_desktop_config.json.example)
@@ -169,17 +216,17 @@ Restart Claude Desktop. Vision tools appear alongside your other MCP servers.
 
 ---
 
-## Part 8 — Sample fixtures
+## Part 9 — Sample fixtures
 
 [`examples/generate_fixtures.py`](./examples/generate_fixtures.py) creates:
 
-| File | Purpose |
-|------|---------|
-| `sample_receipt.png` | OCR demo — coffee shop receipt |
-| `diagram_v1.png` | Compare demo — simple API → Qdrant |
-| `diagram_v2.png` | Compare demo — adds CrewAI + LitServe |
+| File | Purpose | Preview |
+|------|---------|---------|
+| `sample_receipt.png` | OCR demo | ![Receipt](./assets/sample_receipt.png) |
+| `diagram_v1.png` | Compare — before | ![v1](./assets/diagram_v1.png) |
+| `diagram_v2.png` | Compare — after | ![v2](./assets/diagram_v2.png) |
 
-No external downloads required — the guide is self-contained.
+Copies for the docs site and Medium live under [`assets/`](./assets/).
 
 ---
 
@@ -196,9 +243,9 @@ No external downloads required — the guide is self-contained.
 
 ## Next steps
 
-- **[OpenClaw + MiniCPM-V](../openclaw-minicpm-v/)** — send photos on Telegram/WhatsApp
-- **[MiniCPM-V Benchmark](../minicpm-v-benchmark/)** — compare vs Qwen3.5-0.8B and Gemma4-E2B
-- **[Qwen Agentic RAG](../qwen-agentic-rag/)** — text RAG crew; pair with this guide for multimodal agents
+- **[OpenClaw + MiniCPM-V](../openclaw-minicpm-v/TUTORIAL.md)** — send photos on Telegram/WhatsApp
+- **[MiniCPM-V Benchmark](../minicpm-v-benchmark/TUTORIAL.md)** — compare vs Qwen3.5-0.8B and Gemma4-E2B
+- **[Qwen Agentic RAG](../qwen-agentic-rag/TUTORIAL.md)** — text RAG crew; pair with this guide for multimodal agents
 
 ---
 

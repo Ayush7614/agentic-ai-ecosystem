@@ -13,7 +13,7 @@ Part of the [Agentic AI Ecosystem](https://github.com/Ayush7614/agentic-ai-ecosy
 
 ![Benchmark terminal demo](./assets/step-benchmark-run.gif)
 
-**Results table GIF:** [benchmark-comparison.gif](./assets/benchmark-comparison.gif)
+![Comparison table — 16 GB Mac shootout](./assets/benchmark-comparison.gif)
 
 ## Quick start
 
