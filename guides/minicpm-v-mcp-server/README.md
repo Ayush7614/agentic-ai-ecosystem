@@ -22,7 +22,7 @@ The agent calls `compare_images` — no cloud vision API, no API key.
 
 ![Capability exchange — vision tools over MCP](./assets/diagram-capability-exchange.gif)
 
-**Terminal demo GIF:** [step-mcp-vision-demo.gif](./assets/step-mcp-vision-demo.gif)
+![Agent demo terminal — describe_image, ocr_document, compare_images](./assets/step-mcp-vision-demo.gif)
 
 ## Quick start
 
