@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 30%,#1a2e1a,#0f172a 55%,#020617);font-family:"JetBrains Mono",monospace}
+#capture{width:920px;padding:28px}
+.terminal{border-radius:12px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.55);background:#1e1e24;border:1px solid rgba(255,140,80,.12)}
+.titlebar{height:44px;background:linear-gradient(180deg,#2d2d35,#25252c);display:flex;align-items:center;padding:0 16px;gap:8px}
+.dot{width:13px;height:13px;border-radius:50%}.dot.red{background:#ff5f57}.dot.yellow{background:#febc2e}.dot.green{background:#28c840}
+.titlebar-label{flex:1;text-align:center;font-size:12px;color:#8a8a90;margin-right:52px}
+.body{min-height:360px;padding:28px 32px;background:#18181c;font-size:13px;line-height:1.72;color:#d4d4d8}
+.line{white-space:pre-wrap;margin-bottom:2px}
+.prompt-user{color:#ff9f6b}.prompt-path{color:#5eb3ff}.prompt-arrow{color:#e06cff;margin:0 6px}
+.cmd{color:#f0f0f4}.success{color:#6fdc8c}.info{color:#5eb3ff}.head{color:#fbbf24}.dim{color:#8b8b95}
+</style>
+</head>
+<body>
+<div id="capture"><div class="terminal">
+<div class="titlebar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+<span class="titlebar-label">Terminal — OpenClaw + MiniCPM-V 📷</span></div>
+<div class="body" id="body"></div></div></div>
+<script>
+const L=[
+{t:"cmd",x:"ollama pull minicpm-v4.6 && python vision_server.py"},
+{t:"success",x:"Vision API → http://127.0.0.1:8002/predict"},
+{t:"cmd",x:'openclaw agent --message "Analyze samples/receipt.png — total?"'},
+{t:"info",x:"[Skill: vision-photo] → vision_query.sh"},
+{t:"head",x:"## Summary"},
+{t:"success",x:"Coffee shop receipt · San Francisco"},
+{t:"head",x:"## Text found"},
+{t:"info",x:"TOTAL $10.75 · 2026-06-23"},
+{t:"head",x:"## Suggested reply"},
+{t:"success",x:"Your receipt total is $10.75 ☕"},
+{t:"dim",x:"# Reply sent to Telegram / WhatsApp"},
+];
+function pr(){return `<span class="prompt-user">(venv) ayush@Mac-mini</span><span class="prompt-path"> openclaw-minicpm-v</span><span class="prompt-arrow">%</span> `;}
+const prog=parseFloat(new URLSearchParams(location.search).get('frame')||'1');
+const n=Math.ceil(prog*L.length);
+let h='';
+for(let i=0;i<n;i++){const l=L[i];h+=l.t==='cmd'?`<div class="line">${pr()}<span class="cmd">${l.x}</span></div>`:`<div class="line ${l.t}">${l.x}</div>`;}
+document.getElementById('body').innerHTML=h;
+window.__READY=true;
+</script>
+</body>
+</html>
