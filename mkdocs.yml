@@ -78,6 +78,9 @@ nav:
     - OpenClaw + Gemma + RAG:
       - Overview: guides/openclaw-gemma-rag/index.md
       - Full tutorial: guides/openclaw-gemma-rag/tutorial.md
+    - OpenClaw + MiniCPM-V:
+      - Overview: guides/openclaw-minicpm-v/index.md
+      - Full tutorial: guides/openclaw-minicpm-v/tutorial.md
     - Claude Code .claude/:
       - Overview: guides/claude-code-dot-claude/index.md
       - Full tutorial: guides/claude-code-dot-claude/tutorial.md

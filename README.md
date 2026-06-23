@@ -15,6 +15,7 @@ Maintained by [Ayush Kumar](https://github.com/Ayush7614) · [NeuralVerse](https
 | [claude-code-dot-claude](./guides/claude-code-dot-claude/) · [blog](https://ayush7614.github.io/agentic-ai-ecosystem/guides/claude-code-dot-claude/) | Claude Code · `.claude/` | Anatomy of the `.claude/` folder — skills, rules, agents, permissions |
 | [awesome-hermes-agent](./guides/awesome-hermes-agent/) · [blog](https://ayush7614.github.io/agentic-ai-ecosystem/guides/awesome-hermes-agent/) | Hermes Agent · ecosystem | Install Hermes + awesome-hermes-agent skills, tools, and level-up blueprints |
 | [hermes-vs-openclaw](./guides/hermes-vs-openclaw/) · [blog](https://ayush7614.github.io/agentic-ai-ecosystem/guides/hermes-vs-openclaw/) | Hermes · OpenClaw | Side-by-side comparison — architecture, skills, migration, when to pick which |
+| [openclaw-minicpm-v](./guides/openclaw-minicpm-v/) · [blog](https://ayush7614.github.io/agentic-ai-ecosystem/guides/openclaw-minicpm-v/) | OpenClaw · MiniCPM-V 4.6 · LitServe | Photo assistant on Telegram/WhatsApp with local vision API and vision-photo skill |
 
 ## Quick start (any guide)
 
