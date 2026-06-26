@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 30%,#1a1a1a 0%,#0a0a0a 55%,#000 100%);font-family:"JetBrains Mono",monospace}
+#capture{width:920px;padding:28px}
+.terminal{border-radius:12px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.55);background:#111;border:1px solid rgba(255,255,255,.06)}
+.titlebar{height:44px;background:linear-gradient(180deg,#222,#181818);display:flex;align-items:center;padding:0 16px;gap:8px;border-bottom:1px solid rgba(0,0,0,.35)}
+.dot{width:13px;height:13px;border-radius:50%}.dot.red{background:#ff5f57}.dot.yellow{background:#febc2e}.dot.green{background:#28c840}
+.titlebar-label{flex:1;text-align:center;font-size:12px;color:#737373;margin-right:52px}
+.body{min-height:340px;padding:28px 32px 36px;background:#0a0a0a;font-size:14px;line-height:1.72;color:#d4d4d4}
+.line{white-space:pre-wrap}.prompt-user{color:#fafafa;font-weight:500}.prompt-path{color:#a3a3a3}
+.prompt-arrow{color:#737373;margin:0 6px 0 2px}.cmd{color:#fafafa}.dim{color:#737373}.success{color:#86efac}.info{color:#a3a3a3}
+</style>
+</head>
+<body>
+<div id="capture"><div class="terminal"><div class="titlebar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+<span class="titlebar-label">OpenCode — Agent Masterclass</span></div><div class="body" id="body"></div></div></div>
+<script>
+const STEPS={
+"01-install-connect":{user:"dev",path:"~",lines:[
+{type:"cmd",text:"curl -fsSL https://opencode.ai/install | bash"},
+{type:"success",text:"opencode → ~/.opencode/bin"},
+{type:"cmd",text:"cd my-app && opencode"},
+{type:"info",text:"/connect → OpenCode Zen · paste API key"},
+{type:"success",text:"Provider connected ✓"},
+]},
+"02-init-agents":{user:"dev",path:"my-app",lines:[
+{type:"cmd",text:"/init"},
+{type:"info",text:"Analyzing repo structure…"},
+{type:"success",text:"Created AGENTS.md"},
+{type:"cmd",text:"git add AGENTS.md && git commit -m 'Add AGENTS.md'"},
+{type:"dim",text:"# Harness map committed for all sessions"},
+]},
+"03-plan-build":{user:"dev",path:"my-app",lines:[
+{type:"info",text:"[Plan mode] Tab → read-only analysis"},
+{type:"cmd",text:"Add soft-delete notes + trash screen"},
+{type:"info",text:"Plan: DB flag · API route · UI list"},
+{type:"info",text:"[Build mode] Tab → full access"},
+{type:"success",text:"Implementing plan… tests green ✓"},
+]},
+"04-at-reference":{user:"dev",path:"my-app",lines:[
+{type:"cmd",text:"How is auth handled in @src/api/index.ts ?"},
+{type:"info",text:"@ fuzzy file picker → injects file context"},
+{type:"success",text:"JWT middleware · session cookie · OAuth branch"},
+]},
+"05-share-undo":{user:"dev",path:"my-app",lines:[
+{type:"cmd",text:"/undo"},
+{type:"success",text:"Reverted last edit · prompt restored"},
+{type:"cmd",text:"/share"},
+{type:"success",text:"Link copied → team review session"},
+]},
+};
+function render(step,prog){const s=STEPS[step];if(!s)return;const vis=Math.max(1,Math.ceil(prog*s.lines.length));
+let h=`<div class="line"><span class="prompt-user">${s.user}</span><span class="prompt-path">${s.path}</span><span class="prompt-arrow">$</span></div>`;
+for(let i=0;i<vis&&i<s.lines.length;i++){const l=s.lines[i];const cls=l.type==="cmd"?"cmd":l.type==="success"?"success":l.type==="info"?"info":"dim";
+if(l.type==="cmd")h+=`<div class="line"><span class="prompt-arrow">› </span><span class="${cls}">${l.text}</span></div>`;
+else h+=`<div class="line"><span class="${cls}">${l.text}</span></div>`;}
+document.getElementById("body").innerHTML=h;}
+const p=new URLSearchParams(location.search);render(p.get("step")||"01-install-connect",parseFloat(p.get("frame")||"1"));
+window.__READY=true;
+</script>
+</body>
+</html>

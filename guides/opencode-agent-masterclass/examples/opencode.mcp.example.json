@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/path/to/project"]
+    },
+    "minicpm-vision": {
+      "command": "python",
+      "args": ["guides/minicpm-v-mcp-server/examples/server.py"],
+      "env": {
+        "OLLAMA_HOST": "http://127.0.0.1:11434",
+        "OLLAMA_MODEL": "minicpm-v4.6"
+      }
+    }
+  }
+}

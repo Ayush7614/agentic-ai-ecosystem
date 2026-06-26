@@ -35,6 +35,8 @@ Maintained by [Ayush Kumar](https://github.com/Ayush7614) · [NeuralVerse](https
 | [Anthropic Cybersecurity Skills](guides/anthropic-cybersecurity-skills/index.md) | 754 MITRE-mapped security skills for AI agents — install, frameworks, SOC walkthroughs |
 | [MiniCPM-V MCP Server](guides/minicpm-v-mcp-server/index.md) | Vision MCP server with MiniCPM-V 4.6 — describe_image, ocr_document, compare_images on Ollama |
 | [MiniCPM-V Benchmark](guides/minicpm-v-benchmark/index.md) | Compare MiniCPM-V 4.6 vs Qwen3.5-0.8B vs Gemma4-E2B on 16 GB Mac |
+| [OpenCode Agent Masterclass](guides/opencode-agent-masterclass/index.md) | **Visual masterclass** — Build vs Plan agents, AGENTS.md, MCP, LSP, 75+ providers |
+| [ZeroClaw Agent Masterclass](guides/zeroclaw-agent-masterclass/index.md) | **Visual masterclass** — Rust runtime, config.toml, 30+ channels, security policy, SOP |
 
 Each guide is a self-contained project under `guides/<name>/` in the repo. The site pages mirror those READMEs and tutorials so you can read online without cloning.
 

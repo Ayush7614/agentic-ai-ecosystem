@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 30%,#2d1810 0%,#1c0f0a 55%,#0a0503 100%);font-family:"JetBrains Mono",monospace}
+#capture{width:920px;padding:28px}
+.terminal{border-radius:12px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.55);background:#1a1008;border:1px solid rgba(251,146,60,.12)}
+.titlebar{height:44px;background:linear-gradient(180deg,#3d2515,#2a180f);display:flex;align-items:center;padding:0 16px;gap:8px;border-bottom:1px solid rgba(0,0,0,.35)}
+.dot{width:13px;height:13px;border-radius:50%}.dot.red{background:#ff5f57}.dot.yellow{background:#febc2e}.dot.green{background:#28c840}
+.titlebar-label{flex:1;text-align:center;font-size:12px;color:#fdba74;margin-right:52px}
+.body{min-height:340px;padding:28px 32px 36px;background:#140c06;font-size:14px;line-height:1.72;color:#fed7aa}
+.line{white-space:pre-wrap}.prompt-user{color:#fb923c;font-weight:500}.prompt-path{color:#fdba74}
+.prompt-arrow{color:#ea580c;margin:0 6px 0 2px}.cmd{color:#fff7ed}.dim{color:#a8a29e}.success{color:#86efac}.info{color:#fdba74}
+</style>
+</head>
+<body>
+<div id="capture"><div class="terminal"><div class="titlebar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+<span class="titlebar-label">ZeroClaw — Agent Masterclass</span></div><div class="body" id="body"></div></div></div>
+<script>
+const STEPS={
+"01-install-quickstart":{user:"dev",path:"~",lines:[
+{type:"cmd",text:"curl -fsSL .../zeroclaw/master/install.sh | bash"},
+{type:"info",text:"Prebuilt binary · ~seconds"},
+{type:"cmd",text:"zeroclaw quickstart"},
+{type:"success",text:"~/.zeroclaw/config.toml written"},
+{type:"cmd",text:"zeroclaw agent -a main"},
+{type:"success",text:"CLI agent ready 🦀"},
+]},
+"02-telegram-channel":{user:"dev",path:"~",lines:[
+{type:"info",text:"# Add [channels.telegram.main] to config"},
+{type:"cmd",text:"export TELEGRAM_BOT_TOKEN=..."},
+{type:"cmd",text:"zeroclaw service restart"},
+{type:"success",text:"Telegram → same agent loop as CLI"},
+]},
+"03-gateway-dashboard":{user:"dev",path:"~",lines:[
+{type:"cmd",text:"zeroclaw gateway status"},
+{type:"success",text:"HTTP/WS gateway · dashboard up"},
+{type:"info",text:"Chat · memory · cron · tool inspect"},
+]},
+"04-service-install":{user:"dev",path:"~",lines:[
+{type:"cmd",text:"zeroclaw service install"},
+{type:"cmd",text:"zeroclaw service start"},
+{type:"success",text:"launchctl/systemd · always-on channels"},
+]},
+};
+function render(step,prog){const s=STEPS[step];if(!s)return;const vis=Math.max(1,Math.ceil(prog*s.lines.length));
+let h=`<div class="line"><span class="prompt-user">${s.user}</span><span class="prompt-path">${s.path}</span><span class="prompt-arrow">$</span></div>`;
+for(let i=0;i<vis&&i<s.lines.length;i++){const l=s.lines[i];const cls=l.type==="cmd"?"cmd":l.type==="success"?"success":l.type==="info"?"info":"dim";
+if(l.type==="cmd")h+=`<div class="line"><span class="prompt-arrow">› </span><span class="${cls}">${l.text}</span></div>`;
+else h+=`<div class="line"><span class="${cls}">${l.text}</span></div>`;}
+document.getElementById("body").innerHTML=h;}
+const p=new URLSearchParams(location.search);render(p.get("step")||"01-install-quickstart",parseFloat(p.get("frame")||"1"));
+window.__READY=true;
+</script>
+</body>
+</html>

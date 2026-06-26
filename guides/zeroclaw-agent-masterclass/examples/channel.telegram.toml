@@ -1,0 +1,11 @@
+# Telegram channel block — merge into ~/.zeroclaw/config.toml
+
+[channels.telegram.main]
+bot_token_env = "TELEGRAM_BOT_TOKEN"
+allowed_users = [123456789]   # your numeric user ID from @userinfobot
+agent = "main"
+dm_only = true
+
+# Export before starting service:
+# export TELEGRAM_BOT_TOKEN="..."
+# zeroclaw service restart

@@ -1,0 +1,23 @@
+# ZeroClaw minimal config — copy to ~/.zeroclaw/config.toml
+# Run: zeroclaw quickstart (overwrites) or merge sections manually
+
+[providers.models.ollama.local]
+type = "ollama"
+base_url = "http://127.0.0.1:11434"
+model = "llama3.2"
+
+[risk.supervised]
+autonomy = "supervised"
+approve_medium_risk = true
+block_high_risk = true
+
+[agents.main]
+model_provider = "ollama.local"
+risk_profile = "supervised"
+system_prompt = "You are a helpful personal assistant. Be concise and safe."
+
+# Optional — uncomment after creating Telegram bot
+# [channels.telegram.main]
+# bot_token_env = "TELEGRAM_BOT_TOKEN"
+# allowed_users = [123456789]
+# agent = "main"

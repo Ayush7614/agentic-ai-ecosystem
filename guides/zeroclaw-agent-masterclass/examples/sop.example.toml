@@ -1,0 +1,14 @@
+# SOP example — event-triggered workflow (merge into config)
+
+[sop.daily_digest]
+trigger = "cron"
+schedule = "0 8 * * 1-5"
+agent = "main"
+prompt = "Summarize overnight email and calendar for the user."
+require_approval = false
+
+[sop.deploy_webhook]
+trigger = "webhook"
+path = "/hooks/deploy"
+agent = "main"
+require_approval = true
