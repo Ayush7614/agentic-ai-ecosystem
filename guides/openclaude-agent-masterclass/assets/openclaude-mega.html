@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#111;display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:Inter,sans-serif}
+#capture{width:1200px;height:600px;position:relative;overflow:hidden;background:linear-gradient(135deg,#0c1222,#164e63);color:#f0f9ff}
+.scene{position:absolute;inset:0;padding:36px 44px;opacity:0;display:flex;flex-direction:column;justify-content:center}
+.scene.on{opacity:1}
+.ey{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#38bdf8;margin-bottom:10px}
+h2{font-size:32px;font-weight:900;margin-bottom:16px}
+.flow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-family:"JetBrains Mono",monospace;font-size:13px}
+.flow span{padding:8px 14px;border-radius:10px;background:rgba(14,165,233,.12);border:1px solid rgba(56,189,248,.35);color:#e0f2fe}
+.arrow{color:#334155}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;max-width:700px}
+.card{padding:14px;border-radius:12px;background:rgba(0,0,0,.25);border:1px solid rgba(56,189,248,.2);font-size:13px;color:#94a3b8}
+.card strong{color:#7dd3fc;display:block;margin-bottom:4px}
+</style>
+</head>
+<body>
+<div id="capture">
+<div class="scene" id="s0"><div class="ey">OpenClaude Masterclass</div><h2>Install → /provider</h2>
+<div class="flow"><span>npm -g</span><span class="arrow">→</span><span>openclaude</span><span class="arrow">→</span><span>/provider</span></div></div>
+<div class="scene" id="s1"><div class="ey">First session</div><h2>Task → tools → tests</h2>
+<div class="flow"><span>prompt</span><span class="arrow">→</span><span>bash · edit</span><span class="arrow">→</span><span>npm test</span></div></div>
+<div class="scene" id="s2"><div class="ey">Review</div><h2>/diff · /rewind · /cost</h2>
+<div class="grid"><div class="card"><strong>/diff</strong>Per-turn changes</div><div class="card"><strong>/permissions</strong>Tool gates</div></div></div>
+<div class="scene" id="s3"><div class="ey">Scale</div><h2>/mcp · agent routing · --bg</h2>
+<div class="flow"><span>/mcp</span><span class="arrow">→</span><span>agentModels</span><span class="arrow">→</span><span>--bg session</span></div></div>
+</div>
+<script>
+const p=parseFloat(new URLSearchParams(location.search).get("frame")||"1");
+const idx=Math.min(3,Math.floor(p*4));for(let i=0;i<4;i++)document.getElementById("s"+i).classList.toggle("on",i===idx);
+window.__READY=true;
+</script>
+</body>
+</html>

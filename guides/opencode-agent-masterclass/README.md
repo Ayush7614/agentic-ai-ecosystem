@@ -41,6 +41,7 @@ Press **Tab** to switch **Plan** (read-only analysis) ↔ **Build** (full access
 - [Harness Engineering](../harness-engineering/) · [Loop Engineering](../loop-engineering/)
 - [Claude Code `.claude/`](../claude-code-dot-claude/) · [MCP Visual Guide](../mcp-visual-guide/)
 - [OpenClaw](../openclaw/) · [ZeroClaw Agent Masterclass](../zeroclaw-agent-masterclass/)
+- [OpenClaude Agent Masterclass](../openclaude-agent-masterclass/)
 
 **Blog header:** `assets/blog-poster-1200x600.png` · Regenerate: `cd assets && python3 render_blog_poster.py && python3 render_gifs.py all`
 
