@@ -141,6 +141,9 @@ nav:
     - OpenClaude Agent Masterclass:
       - Overview: guides/openclaude-agent-masterclass/index.md
       - Full tutorial: guides/openclaude-agent-masterclass/tutorial.md
+    - PicoClaw Agent Masterclass:
+      - Overview: guides/picoclaw-agent-masterclass/index.md
+      - Full tutorial: guides/picoclaw-agent-masterclass/tutorial.md
     - Anthropic Cybersecurity Skills:
       - Overview: guides/anthropic-cybersecurity-skills/index.md
       - Full tutorial: guides/anthropic-cybersecurity-skills/tutorial.md

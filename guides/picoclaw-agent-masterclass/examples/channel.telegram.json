@@ -1,0 +1,13 @@
+{
+  "channels": {
+    "telegram": {
+      "enabled": true,
+      "bot_token": "STORE_IN_.security.yml",
+      "allowed_user_ids": [123456789]
+    }
+  }
+}
+
+// Merge into ~/.picoclaw/config.json
+// Put bot_token in ~/.picoclaw/.security.yml per docs:
+// https://docs.picoclaw.io/docs/configuration

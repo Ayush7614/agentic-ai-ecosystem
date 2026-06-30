@@ -38,6 +38,7 @@ Maintained by [Ayush Kumar](https://github.com/Ayush7614) · [NeuralVerse](https
 | [OpenCode Agent Masterclass](guides/opencode-agent-masterclass/index.md) | **Visual masterclass** — Build vs Plan agents, AGENTS.md, MCP, LSP, 75+ providers |
 | [ZeroClaw Agent Masterclass](guides/zeroclaw-agent-masterclass/index.md) | **Visual masterclass** — Rust runtime, config.toml, 30+ channels, security policy, SOP |
 | [OpenClaude Agent Masterclass](guides/openclaude-agent-masterclass/index.md) | **Visual masterclass** — GitLawb CLI, 69+ slash commands, /provider, MCP, agent routing |
+| [PicoClaw Agent Masterclass](guides/picoclaw-agent-masterclass/index.md) | **Visual masterclass** — Go edge agent, <10MB RAM, WebUI launcher, 19+ channels, MCP |
 
 Each guide is a self-contained project under `guides/<name>/` in the repo. The site pages mirror those READMEs and tutorials so you can read online without cloning.
 

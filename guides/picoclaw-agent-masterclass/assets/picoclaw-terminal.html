@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 30%,#142814 0%,#0a120a 55%,#050805 100%);font-family:"JetBrains Mono",monospace}
+#capture{width:920px;padding:28px}
+.terminal{border-radius:12px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.55);background:#0f1a0f;border:1px solid rgba(74,222,128,.15)}
+.titlebar{height:44px;background:linear-gradient(180deg,#1a2e1a,#0f1a0f);display:flex;align-items:center;padding:0 16px;gap:8px;border-bottom:1px solid rgba(0,0,0,.35)}
+.dot{width:13px;height:13px;border-radius:50%}.dot.red{background:#ff5f57}.dot.yellow{background:#febc2e}.dot.green{background:#28c840}
+.titlebar-label{flex:1;text-align:center;font-size:12px;color:#4ade80;margin-right:52px}
+.body{min-height:340px;padding:28px 32px 36px;background:#0a120a;font-size:14px;line-height:1.72;color:#bbf7d0}
+.line{white-space:pre-wrap}.prompt-user{color:#4ade80;font-weight:500}.prompt-path{color:#86efac}
+.prompt-arrow{color:#22c55e;margin:0 6px 0 2px}.cmd{color:#f0fdf4}.dim{color:#65a30d}.success{color:#6ee7b7}.info{color:#86efac}
+</style>
+</head>
+<body>
+<div id="capture"><div class="terminal"><div class="titlebar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+<span class="titlebar-label">PicoClaw — Agent Masterclass</span></div><div class="body" id="body"></div></div></div>
+<script>
+const STEPS={
+"01-launcher-webui":{user:"dev",path:"~",lines:[
+{type:"cmd",text:"picoclaw-launcher"},
+{type:"success",text:"→ http://localhost:18800"},
+{type:"info",text:"1. Provider  2. Channel  3. Gateway  4. Chat"},
+{type:"success",text:"WebUI ready · <10MB RAM"},
+]},
+"02-onboard-cli":{user:"dev",path:"~",lines:[
+{type:"cmd",text:"picoclaw onboard"},
+{type:"success",text:"~/.picoclaw/config.json created"},
+{type:"cmd",text:"picoclaw agent -m \"What is 2+2?\""},
+{type:"info",text:"4 · tool loop complete"},
+]},
+"03-telegram-gateway":{user:"dev",path:"~",lines:[
+{type:"cmd",text:"picoclaw gateway"},
+{type:"info",text:"Listening 127.0.0.1:18790"},
+{type:"success",text:"Telegram bot connected · long polling"},
+{type:"dim",text:"# Message bot from phone"},
+]},
+"04-mcp-skills":{user:"dev",path:"~",lines:[
+{type:"cmd",text:"picoclaw mcp add filesystem -- npx -y @modelcontextprotocol/server-filesystem /tmp"},
+{type:"cmd",text:"picoclaw skills search \"calendar\""},
+{type:"success",text:"MCP + ClawHub skills ready"},
+]},
+"05-cron-heartbeat":{user:"dev",path:"~",lines:[
+{type:"info",text:"> Remind me every day at 9am"},
+{type:"success",text:"Cron job → workspace/cron/"},
+{type:"info",text:"HEARTBEAT.md checked every 30min"},
+]},
+};
+function render(step,prog){const s=STEPS[step];if(!s)return;const vis=Math.max(1,Math.ceil(prog*s.lines.length));
+let h=`<div class="line"><span class="prompt-user">${s.user}</span><span class="prompt-path">${s.path}</span><span class="prompt-arrow">$</span></div>`;
+for(let i=0;i<vis&&i<s.lines.length;i++){const l=s.lines[i];const cls=l.type==="cmd"?"cmd":l.type==="success"?"success":l.type==="info"?"info":"dim";
+h+=`<div class="line"><span class="${cls}">${l.text}</span></div>`;}
+document.getElementById("body").innerHTML=h;}
+const p=new URLSearchParams(location.search);render(p.get("step")||"01-launcher-webui",parseFloat(p.get("frame")||"1"));
+window.__READY=true;
+</script>
+</body>
+</html>
