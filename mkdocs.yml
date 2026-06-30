@@ -138,6 +138,9 @@ nav:
     - ZeroClaw Agent Masterclass:
       - Overview: guides/zeroclaw-agent-masterclass/index.md
       - Full tutorial: guides/zeroclaw-agent-masterclass/tutorial.md
+    - OpenClaude Agent Masterclass:
+      - Overview: guides/openclaude-agent-masterclass/index.md
+      - Full tutorial: guides/openclaude-agent-masterclass/tutorial.md
     - Anthropic Cybersecurity Skills:
       - Overview: guides/anthropic-cybersecurity-skills/index.md
       - Full tutorial: guides/anthropic-cybersecurity-skills/tutorial.md

@@ -37,6 +37,7 @@ Maintained by [Ayush Kumar](https://github.com/Ayush7614) · [NeuralVerse](https
 | [MiniCPM-V Benchmark](guides/minicpm-v-benchmark/index.md) | Compare MiniCPM-V 4.6 vs Qwen3.5-0.8B vs Gemma4-E2B on 16 GB Mac |
 | [OpenCode Agent Masterclass](guides/opencode-agent-masterclass/index.md) | **Visual masterclass** — Build vs Plan agents, AGENTS.md, MCP, LSP, 75+ providers |
 | [ZeroClaw Agent Masterclass](guides/zeroclaw-agent-masterclass/index.md) | **Visual masterclass** — Rust runtime, config.toml, 30+ channels, security policy, SOP |
+| [OpenClaude Agent Masterclass](guides/openclaude-agent-masterclass/index.md) | **Visual masterclass** — GitLawb CLI, 69+ slash commands, /provider, MCP, agent routing |
 
 Each guide is a self-contained project under `guides/<name>/` in the repo. The site pages mirror those READMEs and tutorials so you can read online without cloning.
 
