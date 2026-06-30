@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#111;display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:Inter,sans-serif}
+#capture{width:1200px;height:600px;position:relative;overflow:hidden;background:linear-gradient(135deg,#0a120a,#166534);color:#f0fdf4}
+.scene{position:absolute;inset:0;padding:36px 44px;opacity:0;display:flex;flex-direction:column;justify-content:center}
+.scene.on{opacity:1}
+.ey{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#4ade80;margin-bottom:10px}
+h2{font-size:32px;font-weight:900;margin-bottom:16px}
+.flow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-family:"JetBrains Mono",monospace;font-size:13px}
+.flow span{padding:8px 14px;border-radius:10px;background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.35);color:#dcfce7}
+.arrow{color:#365314}
+.stats{display:flex;gap:20px;margin-top:8px}
+.stat{font-size:14px;color:#86efac}.stat strong{color:#f0fdf4;font-size:28px;display:block}
+</style>
+</head>
+<body>
+<div id="capture">
+<div class="scene" id="s0"><div class="ey">PicoClaw Masterclass</div><h2>Download → WebUI</h2>
+<div class="flow"><span>picoclaw.io</span><span class="arrow">→</span><span>launcher :18800</span></div>
+<div class="stats"><div class="stat"><strong>&lt;10MB</strong>RAM</div><div class="stat"><strong>&lt;1s</strong>boot</div><div class="stat"><strong>$10</strong>HW</div></div></div>
+<div class="scene" id="s1"><div class="ey">Configure</div><h2>Provider → Channel → Gateway</h2>
+<div class="flow"><span>model_list</span><span class="arrow">→</span><span>Telegram</span><span class="arrow">→</span><span>chat</span></div></div>
+<div class="scene" id="s2"><div class="ey">Harness</div><h2>workspace/ · AGENTS.md</h2>
+<div class="flow"><span>SOUL.md</span><span class="arrow">→</span><span>skills/</span><span class="arrow">→</span><span>cron/</span></div></div>
+<div class="scene" id="s3"><div class="ey">Extend</div><h2>MCP · search · heartbeat</h2>
+<div class="flow"><span>picoclaw mcp</span><span class="arrow">→</span><span>Brave search</span><span class="arrow">→</span><span>HEARTBEAT.md</span></div></div>
+</div>
+<script>
+const p=parseFloat(new URLSearchParams(location.search).get("frame")||"1");
+const idx=Math.min(3,Math.floor(p*4));for(let i=0;i<4;i++)document.getElementById("s"+i).classList.toggle("on",i===idx);
+window.__READY=true;
+</script>
+</body>
+</html>

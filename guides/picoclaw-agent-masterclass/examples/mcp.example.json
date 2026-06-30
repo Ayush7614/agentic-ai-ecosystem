@@ -1,0 +1,17 @@
+{
+  "tools": {
+    "mcp": {
+      "enabled": true,
+      "servers": {
+        "filesystem": {
+          "enabled": true,
+          "command": "npx",
+          "args": ["-y", "@modelcontextprotocol/server-filesystem", "/tmp"]
+        }
+      }
+    }
+  }
+}
+
+// CLI alternative:
+// picoclaw mcp add filesystem -- npx -y @modelcontextprotocol/server-filesystem /tmp
