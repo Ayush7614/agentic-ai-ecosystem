@@ -1,0 +1,4 @@
+FROM qwen3.5:4b
+SYSTEM You are a concise senior engineer. Prefer working code blocks. One short explanation after code.
+PARAMETER temperature 0.2
+PARAMETER num_ctx 4096

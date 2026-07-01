@@ -1,0 +1,21 @@
+// Snippet for OpenClaw config — Ollama local provider
+{
+  models: {
+    providers: {
+      ollama: {
+        baseUrl: "http://127.0.0.1:11434/v1",
+        apiKey: "ollama",
+        models: [
+          { id: "qwen3.5:0.8b", name: "Qwen 3.5 0.8B" },
+          { id: "gemma4:e2b", name: "Gemma 4 E2B" },
+          { id: "minicpm-v4.6", name: "MiniCPM-V 4.6" },
+        ],
+      },
+    },
+  },
+  agents: {
+    defaults: {
+      model: { provider: "ollama", id: "gemma4:e2b" },
+    },
+  },
+}

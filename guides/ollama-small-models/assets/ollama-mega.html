@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#050508;display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:Inter,sans-serif}
+#capture{width:1200px;height:600px;position:relative;overflow:hidden;background:linear-gradient(135deg,#0d0d12,#27272a 40%,#fafafa 100%);color:#fff}
+.g1,.g2{position:absolute;border-radius:50%;filter:blur(90px);opacity:.3}
+.g1{width:400px;height:400px;background:#fff;top:-80px;left:-60px}
+.g2{width:280px;height:280px;background:#a78bfa;bottom:-40px;right:60px;opacity:.25}
+.inner{position:relative;z-index:2;height:100%;padding:36px 44px;display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center}
+.left .ey{font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.7)}
+.left h1{font-size:34px;font-weight:900;line-height:1.05;margin:8px 0 12px;color:#fff}
+.left p{font-size:13px;line-height:1.5;color:rgba(255,255,255,.85);margin-bottom:14px}
+.term{background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.15);border-radius:14px;padding:16px 18px;font-family:"JetBrains Mono",monospace;font-size:11px;line-height:1.65;color:#e4e4e7;min-height:200px}
+.term .cmd{color:#fff}.term .ok{color:#86efac}.term .dim{color:#71717a}
+.right{display:flex;flex-direction:column;gap:8px}
+.chip{opacity:.2;transform:translateX(12px);padding:10px 14px;border-radius:10px;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.12);font-size:12px;color:#fafafa;display:flex;justify-content:space-between}
+.chip.on{opacity:1;transform:none;border-color:#fff}
+.chip span{font-family:"JetBrains Mono",monospace;font-size:10px;color:#a1a1aa}
+</style>
+</head>
+<body>
+<div id="capture"><div class="g1"></div><div class="g2"></div>
+<div class="inner"><div class="left">
+<div class="ey">ollama.com · local LLMs</div>
+<h1>Small models.<br/>Big laptop life.</h1>
+<p>8 GB → qwen3.5:0.8b · 16 GB → gemma4:e2b · pull · run · API</p>
+<div class="term" id="term"></div>
+</div><div class="right" id="chips"></div></div></div>
+<script>
+const CHIPS=[["qwen3.5:0.8b","0.5 GB"],["minicpm-v4.6","1.6 GB"],["gemma4:e2b","7 GB"],["glm-4.7-flash","30B class"],["nomic-embed-text","RAG"]];
+const LINES=[
+['$ ollama pull qwen3.5:0.8b','pull'],
+['pulling... 100% ▕████▏ 0.5 GB','dim'],
+['success','ok'],
+['$ ollama run qwen3.5:0.8b "Hello local AI"','cmd'],
+['Hello! Running fully on your laptop.','dim'],
+];
+function render(p){const vis=Math.ceil(p*LINES.length);let h='';
+for(let i=0;i<vis&&i<LINES.length;i++){const [t,c]=LINES[i];h+=`<div class="${c}">${t}</div>`;}
+document.getElementById('term').innerHTML=h;
+const cv=Math.ceil(p*CHIPS.length);
+document.getElementById('chips').innerHTML=CHIPS.map((c,i)=>`<div class="chip${i<cv?' on':''}">${c[0]}<span>${c[1]}</span></div>`).join('');}
+const prog=parseFloat(new URLSearchParams(location.search).get('frame')||'1');
+render(prog);window.__READY=true;
+</script>
+</body>
+</html>

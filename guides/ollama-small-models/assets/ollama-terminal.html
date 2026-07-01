@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 30%,#1a1a24 0%,#0d0d12 55%,#050508 100%);font-family:"JetBrains Mono",monospace}
+#capture{width:920px;padding:28px}
+.terminal{border-radius:12px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.55);background:#16161e;border:1px solid rgba(255,255,255,.1)}
+.titlebar{height:44px;background:linear-gradient(180deg,#2a2a35,#1a1a24);display:flex;align-items:center;padding:0 16px;gap:8px;border-bottom:1px solid rgba(0,0,0,.35)}
+.dot{width:13px;height:13px;border-radius:50%}.dot.red{background:#ff5f57}.dot.yellow{background:#febc2e}.dot.green{background:#28c840}
+.titlebar-label{flex:1;text-align:center;font-size:12px;color:#e4e4e7;margin-right:52px}
+.body{min-height:340px;padding:28px 32px 36px;background:#0d0d12;font-size:13px;line-height:1.72;color:#fafafa}
+.line{white-space:pre-wrap}.prompt-user{color:#fff;font-weight:500}.prompt-path{color:#a1a1aa}
+.prompt-arrow{color:#fff;margin:0 6px 0 2px}.cmd{color:#fafafa}.dim{color:#71717a}.success{color:#86efac}.info{color:#a78bfa}.pull{color:#fde047}.resp{color:#e4e4e7}
+</style>
+</head>
+<body>
+<div id="capture"><div class="terminal"><div class="titlebar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+<span class="titlebar-label">Ollama — Small Models Guide</span></div><div class="body" id="body"></div></div></div>
+<script>
+const STEPS={
+"01-install-verify":{user:"dev",path:"~",lines:[
+{type:"cmd",text:"curl -fsSL https://ollama.com/install.sh | sh"},
+{type:"success",text:"Ollama installed"},
+{type:"cmd",text:"ollama --version"},
+{type:"info",text:"0.6.x · daemon running"},
+{type:"cmd",text:"curl -s localhost:11434/api/tags | head -1"},
+{type:"success",text:"API ready on :11434"},
+]},
+"02-pull-qwen08b":{user:"dev",path:"~",lines:[
+{type:"cmd",text:"ollama pull qwen3.5:0.8b"},
+{type:"pull",text:"pulling manifest"},
+{type:"pull",text:"pulling 6a0746a1ec1a... 100% ▕████████▏ 0.5 GB"},
+{type:"pull",text:"verifying sha256 digest"},
+{type:"success",text:"success · qwen3.5:0.8b ready"},
+]},
+"03-run-chat-response":{user:"dev",path:"~",lines:[
+{type:"cmd",text:"ollama run qwen3.5:0.8b \"Explain RAG in 3 sentences.\""},
+{type:"dim",text:"⠋ thinking..."},
+{type:"resp",text:"RAG retrieves relevant docs before generating."},
+{type:"resp",text:"It grounds answers in your data, not just training."},
+{type:"resp",text:"Local models + embeddings make this free and private."},
+{type:"success",text:"▌ streaming complete"},
+]},
+"04-vision-minicpm":{user:"dev",path:"~",lines:[
+{type:"cmd",text:"ollama pull minicpm-v4.6"},
+{type:"success",text:"success · 1.6 GB vision model"},
+{type:"cmd",text:"ollama run minicpm-v4.6"},
+{type:"info",text:">>> Describe screenshot.png"},
+{type:"resp",text:"Login form · email field · Sign in button"},
+{type:"success",text:"Vision response · ~2 GB RAM"},
+]},
+"05-coding-glm":{user:"dev",path:"~",lines:[
+{type:"cmd",text:"ollama pull glm-4.7-flash"},
+{type:"pull",text:"pulling... 18 GB · 30B-class quant"},
+{type:"success",text:"success · glm-4.7-flash"},
+{type:"cmd",text:"ollama run glm-4.7-flash \"FastAPI health endpoint\""},
+{type:"resp",text:"@app.get(\"/health\") def health(): return {\"ok\": True}"},
+{type:"success",text:"Code generated locally"},
+]},
+"06-embed-ps":{user:"dev",path:"~",lines:[
+{type:"cmd",text:"ollama pull nomic-embed-text"},
+{type:"success",text:"success · 0.3 GB embedding model"},
+{type:"cmd",text:"ollama ps"},
+{type:"info",text:"NAME              SIZE    RAM"},
+{type:"info",text:"qwen3.5:0.8b      0.5GB   1.1GB"},
+{type:"cmd",text:"ollama list"},
+{type:"success",text:"6 models · localhost:11434/v1 ready"},
+]},
+};
+function render(step,prog){const s=STEPS[step];if(!s)return;const vis=Math.max(1,Math.ceil(prog*s.lines.length));
+let h=`<div class="line"><span class="prompt-user">${s.user}</span><span class="prompt-path">${s.path}</span><span class="prompt-arrow">$</span></div>`;
+for(let i=0;i<vis&&i<s.lines.length;i++){const l=s.lines[i];const cls=l.type==="cmd"?"cmd":l.type==="success"?"success":l.type==="info"?"info":l.type==="pull"?"pull":l.type==="resp"?"resp":"dim";
+h+=`<div class="line"><span class="${cls}">${l.text}</span></div>`;}
+document.getElementById("body").innerHTML=h;}
+const p=new URLSearchParams(location.search);render(p.get("step")||"01-install-verify",parseFloat(p.get("frame")||"1"));
+window.__READY=true;
+</script>
+</body>
+</html>
