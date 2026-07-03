@@ -147,6 +147,9 @@ nav:
     - Ollama Small Models:
       - Overview: guides/ollama-small-models/index.md
       - Full tutorial: guides/ollama-small-models/tutorial.md
+    - Google agents-cli Masterclass:
+      - Overview: guides/agents-cli-agent-masterclass/index.md
+      - Full tutorial: guides/agents-cli-agent-masterclass/tutorial.md
     - Anthropic Cybersecurity Skills:
       - Overview: guides/anthropic-cybersecurity-skills/index.md
       - Full tutorial: guides/anthropic-cybersecurity-skills/tutorial.md

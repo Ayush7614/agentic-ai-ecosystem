@@ -40,6 +40,7 @@ Maintained by [Ayush Kumar](https://github.com/Ayush7614) · [NeuralVerse](https
 | [OpenClaude Agent Masterclass](guides/openclaude-agent-masterclass/index.md) | **Visual masterclass** — GitLawb CLI, 69+ slash commands, /provider, MCP, agent routing |
 | [PicoClaw Agent Masterclass](guides/picoclaw-agent-masterclass/index.md) | **Visual masterclass** — Go edge agent, <10MB RAM, WebUI launcher, 19+ channels, MCP |
 | [Ollama Small Models](guides/ollama-small-models/index.md) | **Local LLM guide** — 8 GB & 16 GB laptop picks, pull/run GIFs, Gemma 4, Qwen 3.5, vision, coding, RAG |
+| [Google agents-cli Masterclass](guides/agents-cli-agent-masterclass/index.md) | **Visual masterclass** — ADK agents on GCP, 7 skills, eval, deploy, verified VHS terminal GIFs |
 
 Each guide is a self-contained project under `guides/<name>/` in the repo. The site pages mirror those READMEs and tutorials so you can read online without cloning.
 
