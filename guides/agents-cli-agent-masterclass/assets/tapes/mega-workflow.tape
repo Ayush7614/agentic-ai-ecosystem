@@ -17,10 +17,10 @@ Sleep 600ms
 Type "uvx google-agents-cli --version"
 Enter
 Sleep 2s
-Type "uvx google-agents-cli create demo-agent --prototype --yes"
+Type "cd /tmp && uvx google-agents-cli create demo-agent --prototype --yes"
 Enter
 Sleep 10s
-Type "cd demo-agent && uvx google-agents-cli info"
+Type "cd /tmp/demo-agent && uvx google-agents-cli info"
 Enter
 Sleep 3s
 Type "uvx google-agents-cli eval metric list | head -8"
